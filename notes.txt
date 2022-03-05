@@ -1,0 +1,5 @@
+#composer require laravel/breeze --dev
+php artisan breeze:install
+https://github.com/BootstrapDash/skydash-free-bootstrap-admin-template
+php artisan make:controller Admin/AdminController
+C:\xampp81\htdocs\ecom9\routes\web.php
