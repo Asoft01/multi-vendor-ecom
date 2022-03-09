@@ -33,7 +33,7 @@
               <h6 class="font-weight-light">Sign in to continue.</h6>
 
               @if(Session::has('error_message')) 
-                <div class="alert alert-warning alert-dismissbible fade show" role="alert">
+                <div class="alert alert-danger alert-dismissbible fade show" role="alert">
                     <strong>Error: </strong> {{ Session::get('error_message') }}  
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -41,7 +41,20 @@
                     <strong>{!! session('flash_message_error') !!}</strong>
                 </div>
               @endif   
+
+              @if($errors->any())
+                <div class="alert alert-danger alert-dismissbible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+
+                    @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>   
+                    @endforeach
+                </div>
+              @endif 
              
+              
               <form class="pt-3" action="{{ url('admin/login') }}" method="post">@csrf
                 <div class="form-group">
                   <input type="email" name="email" id="email" class="form-control form-control-lg" placeholder="Username" required>
@@ -94,4 +107,4 @@
   <!-- endinject -->
 </body>
 
-</html>
+</html
