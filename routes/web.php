@@ -31,6 +31,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         // Admin Dashboard Route with Admin Group
         Route::get('dashboard', 'AdminController@dashboard');
 
+        // Update Admin Password
+        Route::match(['get', 'post'], 'update-admin-password', 'AdminController@updateAdminPassword');
+
         // Admin Logout 
         Route::get('logout', 'AdminController@logout');
     });
