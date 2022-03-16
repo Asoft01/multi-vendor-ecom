@@ -61,7 +61,12 @@ class AdminController extends Controller
 
     public function checkAdminPassword(Request $request){
         $data = $request->all();
-        echo "<pre>"; print_r($data); die;
+        // echo "<pre>"; print_r($data); die;
+        if(Hash::check($data['current_password'], Auth::guard('admin')->user()->password)){
+            return "true";
+        }else{
+            return "false";
+        }
     }
 
     public function logout(){

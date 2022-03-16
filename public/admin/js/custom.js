@@ -11,8 +11,14 @@ $(document).ready(function(){
             url: '/admin/check-admin-password',
             data: {current_password: current_password},
             success: function(resp){
-                alert(resp);
-            },error: function(){
+                // alert(resp);
+                if(resp == "false"){
+                    $("#check_password").html("<font color='red'>Current Pasword is Incorrect! </font>");
+                }else if(resp == "true"){
+                    $("#check_password").html("<font color='green'>Current Password is Correct! </font>");
+                }
+            },
+            error: function(){
                 alert('Error');
             }
         })
