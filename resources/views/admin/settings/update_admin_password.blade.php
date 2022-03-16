@@ -33,8 +33,29 @@
                 <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Update Admin Password</h4>
-                   
-                    <form class="forms-sample">
+                    
+                    @if(Session::has('error_message')) 
+                        <div class="alert alert-danger alert-dismissbible fade show" role="alert">
+                            <strong>Error: </strong> {{ Session::get('error_message') }}  
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>{!! session('flash_message_error') !!}</strong>
+                        </div>
+                    @endif  
+                    
+                    @if(Session::has('success_message')) 
+                        <div class="alert alert-success alert-dismissbible fade show" role="alert">
+                            <strong>Success: </strong> {{ Session::get('success_message') }}  
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>{!! session('flash_message_success') !!}</strong>
+                        </div>
+                    @endif  
+                    
+                    <form class="forms-sample" action="{{ url('admin/update-admin-password') }}" method="post" id="updateAdminPasswordForm">
+                        @csrf
                     <div class="form-group">
                         <label>Admin Username/Email</label>
                         <input type="text" class="form-control" value="{{ $adminDetails['email'] }}" readonly="">
@@ -57,12 +78,7 @@
                         <label for="confirm_passowrd">Confirm Password</label>
                         <input type="password" class="form-control" id="confirm_passowrd" placeholder="Confirm Password" name="confirm_password" required>
                     </div>
-                    <div class="form-check form-check-flat form-check-primary">
-                        <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input">
-                        Remember me
-                        </label>
-                    </div>
+                   
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-light">Cancel</button>
                     </form>

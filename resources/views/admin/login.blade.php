@@ -53,7 +53,6 @@
                     @endforeach
                 </div>
               @endif 
-             
               
               <form class="pt-3" action="{{ url('admin/login') }}" method="post">@csrf
                 <div class="form-group">
