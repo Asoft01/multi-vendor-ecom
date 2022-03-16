@@ -37,6 +37,9 @@ class AdminController extends Controller
         return view('admin.settings.update_admin_password')->with(compact('adminDetails'));
     }
 
+    public function updateAdminDetails(){
+        
+    }
 
     public function login(Request $request){
         // echo $password = Hash::make('Adeleke1234'); die;
