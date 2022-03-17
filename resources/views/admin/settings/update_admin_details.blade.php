@@ -53,6 +53,18 @@
                             <strong>{!! session('flash_message_success') !!}</strong>
                         </div>
                     @endif  
+
+                    @if($errors->any())
+                        <div class="alert alert-danger alert-dismissbible fade show" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>   
+                            @endforeach
+                        </div>
+                    @endif 
                     
                     <form class="forms-sample" action="{{ url('admin/update-admin-details') }}" method="post" id="updateAdminPasswordForm">
                         @csrf
@@ -70,7 +82,7 @@
                     </div>
                     <div class="form-group">
                         <label for="admin_mobile">Mobile </label>
-                        <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="admin_mobile" placeholder="New Password" name="admin_mobile" required>
+                        <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="admin_mobile" placeholder="Enter 10 Digit Mobile Number" name="admin_mobile" required maxlength="11" minlength="11">
                     </div>
                    
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>

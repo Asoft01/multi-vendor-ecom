@@ -42,6 +42,13 @@ class AdminController extends Controller
             $data= $request->all();
             // echo "<pre>"; print_r($data); die;
 
+            $rules = [
+                'admin_name'=> 'required|regex:/^[\pL\s\-]+$/u',
+                'admin_mobile' => 'required|numeric'
+            ];
+
+            $this->validate($request, $rules);
+
             // Update Admin Details
             Admin::where('id', Auth::guard('admin')->user()->id)->update(['name' => $data['admin_name'], 'mobile' => $data['admin_mobile']]);
             return redirect()->back()->with('success_message', 'Admin details updated successfully');
