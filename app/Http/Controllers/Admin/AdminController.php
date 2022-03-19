@@ -17,7 +17,12 @@ class AdminController extends Controller
     public function updateAdminPassword(Request $request){
         if($request->isMethod('post')){
             $data = $request->all();
-            // echo "<pre>"; print_r($data); die;
+            // $data = $request->collect();
+            // $data = $request->collect('users')->each(function(){
+
+            // });
+
+            echo "<pre>"; print_r($data); die;
             // Check if current password entered by admin is correct
             if(Hash::check($data['current_password'], Auth::guard('admin')->user()->password)){
                 // Check if new password is matching with confirm password
