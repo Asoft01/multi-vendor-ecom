@@ -45,7 +45,7 @@ class AdminController extends Controller
     public function updateAdminDetails(Request $request){
         if($request->isMethod('post')){
             $data= $request->all();
-            echo "<pre>"; print_r($data); die;
+            // echo "<pre>"; print_r($data); die;
 
             $rules = [
                 'admin_name'=> 'required|regex:/^[\pL\s\-]+$/u',
@@ -63,6 +63,18 @@ class AdminController extends Controller
 
             $this->validate($request, $rules, $customMessages);
 
+            if($request->hasFile('admin_image')){
+                $image_tmp = $request->file('admin_image');
+                if($image_tmp->isValid()){
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    // Generate new image name 
+                    $imageName = rand(111, 999999).''.$extension;
+                    $imagePath = 'admin/images/photos'.$imageName;
+                    // Upload the Image
+                    Image::make($image_tmp)->save($imagePath);
+                    
+                }
+            }
             // Upload Admin Photo
 
             // Update Admin Details
