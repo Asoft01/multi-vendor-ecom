@@ -45,7 +45,7 @@ class AdminController extends Controller
     public function updateAdminDetails(Request $request){
         if($request->isMethod('post')){
             $data= $request->all();
-            // echo "<pre>"; print_r($data); die;
+            echo "<pre>"; print_r($data); die;
 
             $rules = [
                 'admin_name'=> 'required|regex:/^[\pL\s\-]+$/u',
@@ -62,6 +62,8 @@ class AdminController extends Controller
             ];
 
             $this->validate($request, $rules, $customMessages);
+
+            // Upload Admin Photo
 
             // Update Admin Details
             Admin::where('id', Auth::guard('admin')->user()->id)->update(['name' => $data['admin_name'], 'mobile' => $data['admin_mobile']]);

@@ -32,7 +32,7 @@
             <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Update Admin Password</h4>
+                    <h4 class="card-title">Update Admin Details</h4>
                     
                     @if(Session::has('error_message')) 
                         <div class="alert alert-danger alert-dismissbible fade show" role="alert">
@@ -66,11 +66,11 @@
                         </div>
                     @endif 
                     
-                    <form class="forms-sample" action="{{ url('admin/update-admin-details') }}" method="post" id="updateAdminPasswordForm">
+                    <form class="forms-sample" action="{{ url('admin/update-admin-details') }}" method="post" id="updateAdminPasswordForm" enctype="multipart/form-data">
                         @csrf
                     <div class="form-group">
-                        <label for="admin_name">Admin Username/Email</label>
-                        <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->email }}" readonly="">
+                        <label for="admin_email">Admin Username/Email</label>
+                        <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->email }}" name="admin_email" readonly="">
                     </div>
                     <div class="form-group">
                         <label for="admin_type">Admin Type</label>
@@ -78,11 +78,11 @@
                     </div>
                     <div class="form-group">
                         <label for="admin_name"> Name </label>
-                        <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->name }}" id="admin_name" name="admin_name" placeholder="Current Password" required>
+                        <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->name }}" id="admin_name" name="admin_name" placeholder="Enter Name" required>
                     </div>
                     <div class="form-group">
-                        <label for="admin_mobile">Mobile </label>
-                        <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="admin_mobile" placeholder="Enter 10 Digit Mobile Number" name="admin_mobile" required maxlength="11" minlength="11">
+                        <label for="admin_image">Admin Photo </label>
+                        <input type="file" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="admin_image" required name="admin_image">
                     </div>
                    
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
