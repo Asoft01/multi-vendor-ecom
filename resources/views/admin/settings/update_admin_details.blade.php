@@ -81,6 +81,10 @@
                         <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->name }}" id="admin_name" name="admin_name" placeholder="Enter Name" required>
                     </div>
                     <div class="form-group">
+                        <label for="admin_mobile"> Mobile </label>
+                        <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="admin_mobile" name="admin_mobile" placeholder="Enter Mobile" required>
+                    </div>
+                    <div class="form-group">
                         <label for="admin_image">Admin Photo </label>
                         <input type="file" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="admin_image" required name="admin_image">
                     </div>
