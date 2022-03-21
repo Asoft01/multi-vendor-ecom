@@ -65,21 +65,26 @@ class AdminController extends Controller
             $this->validate($request, $rules, $customMessages);
 
             if($request->hasFile('admin_image')){
+                // echo $image_tmp = $request->file('admin_image'); die;
                 $image_tmp = $request->file('admin_image');
                 if($image_tmp->isValid()){
                     $extension = $image_tmp->getClientOriginalExtension();
                     // Generate new image name 
-                    $imageName = rand(111, 999999).''.$extension;
-                    $imagePath = 'admin/images/photos'.$imageName;
+                    $imageName = rand(111, 999999).'.'.$extension; 
+                    // echo $imagePath = 'admin/images/photos/'.$imageName; die;
+                    $imagePath = 'admin/images/photos/'.$imageName;
                     // Upload the Image
                     Image::make($image_tmp)->save($imagePath);
-                    
                 }
+            }else if(!empty($data['current_admin_image'])){
+                $imageName = $data['current_admin_image'];
+            }else{
+                $imageName = "";
             }
             // Upload Admin Photo
 
             // Update Admin Details
-            Admin::where('id', Auth::guard('admin')->user()->id)->update(['name' => $data['admin_name'], 'mobile' => $data['admin_mobile']]);
+            Admin::where('id', Auth::guard('admin')->user()->id)->update(['name' => $data['admin_name'], 'mobile' => $data['admin_mobile'], 'image' => $imageName]);
             return redirect()->back()->with('success_message', 'Admin details updated successfully');
         }
         return view('admin.settings.update_admin_details');

@@ -86,7 +86,12 @@
                     </div>
                     <div class="form-group">
                         <label for="admin_image">Admin Photo </label>
-                        <input type="file" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="admin_image" required name="admin_image">
+                        <input type="file" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="admin_image"  name="admin_image">
+                        @if(!empty(Auth::guard('admin')->user()->image))
+                            <a target = "_blank" href="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image) }}">View Image</a>
+                            <input type="hidden" name="current_admin_image" value="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image) }}">
+                        @endif
+
                     </div>
                    
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
