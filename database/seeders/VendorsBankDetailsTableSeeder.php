@@ -15,6 +15,7 @@ class VendorsBankDetailsTableSeeder extends Seeder
      */
     public function run()
     {
+        // Vendors Records
         $vendorRecords =  [
             ['id' => 1, 'vendor_id' => 1, 'account_holder_name' => 'John Cena', 'bank_name' => 'ICICI', 'account_number' => '123456930299', 'bank_ifsc_code' => '1234532'],
         ];
