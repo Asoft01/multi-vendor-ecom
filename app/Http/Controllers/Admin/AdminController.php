@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Hash;
 use Auth;
 use App\Models\Admin;
+use App\Models\Vendor;
 use Image;
 
 class AdminController extends Controller
@@ -88,6 +89,22 @@ class AdminController extends Controller
             return redirect()->back()->with('success_message', 'Admin details updated successfully');
         }
         return view('admin.settings.update_admin_details');
+    }
+
+    public function updateVendorDetails(Request $request, $slug){
+        if($slug =="personal"){
+            if($request->isMethod('post')){
+                $data = $request->all();
+                echo "<pre>"; print_r($data); die;
+            }
+            $vendorDetails = Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+
+        }else if($slug =="business"){
+
+        }else if($slug == "bank"){
+
+        }
+        return view('admin.settings.update_vendor_details')->with(compact('slug', 'vendorDetails'));
     }
 
     public function login(Request $request){
