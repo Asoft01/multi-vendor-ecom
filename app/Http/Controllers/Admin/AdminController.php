@@ -95,7 +95,49 @@ class AdminController extends Controller
         if($slug =="personal"){
             if($request->isMethod('post')){
                 $data = $request->all();
-                echo "<pre>"; print_r($data); die;
+                // echo "<pre>"; print_r($data); die;
+                $rules = [
+                    'admin_name'=> 'required|regex:/^[\pL\s\-]+$/u',
+                    'admin_mobile' => 'required|numeric'
+                ];
+    
+                // $this->validate($request, $rules);
+    
+                $customMessages= [
+                    'admin_name.required' => 'Name is required',
+                    'admin_name.regex' => 'Valid Name is required',
+                    'admin_mobile.required' => 'Mobile is required',
+                    'admin_mobile.numeric' => 'Valid mobile is required'
+                ];
+    
+                $this->validate($request, $rules, $customMessages);
+    
+                if($request->hasFile('admin_image')){
+                    // echo $image_tmp = $request->file('admin_image'); die;
+                    $image_tmp = $request->file('admin_image');
+                    if($image_tmp->isValid()){
+                        $extension = $image_tmp->getClientOriginalExtension();
+                        // Generate new image name 
+                        $imageName = rand(111, 999999).'.'.$extension; 
+                        // echo $imagePath = 'admin/images/photos/'.$imageName; die;
+                        $imagePath = 'admin/images/photos/'.$imageName;
+                        // Upload the Image
+                        Image::make($image_tmp)->save($imagePath);
+                    }
+                }else if(!empty($data['current_admin_image'])){
+                    $imageName = $data['current_admin_image'];
+                }else{
+                    $imageName = "";
+                }
+                // Upload Admin Photo
+    
+                // Updates in Admins Table 
+                Admin::where('id', Auth::guard('admin')->user()->id)->update(['name' => $data['vendor_name'], 'mobile' => $data['vendor_mobile'], 'image' => $imageName]);
+
+                // Updates in Vendors Table
+                Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->update(['name'=> $data['vendor_name'], 'mobile' => $data['vendor_mobile'], 'address' => $data['vendor_address'], 'city'=> $data['vendor_city'], 'state'=> $data['vendor_state'], 'country' => $data['vendor_country'], 'pincode' => $data['vendor_pincode']]);
+                
+                return redirect()->back()->with('success_message', 'Vendor details updated successfully');
             }
             $vendorDetails = Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
 
