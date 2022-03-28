@@ -97,24 +97,27 @@ class AdminController extends Controller
                 $data = $request->all();
                 // echo "<pre>"; print_r($data); die;
                 $rules = [
-                    'admin_name'=> 'required|regex:/^[\pL\s\-]+$/u',
-                    'admin_mobile' => 'required|numeric'
+                    'vendor_name'=> 'required|regex:/^[\pL\s\-]+$/u',
+                    'vendor_city'=> 'required|regex:/^[\pL\s\-]+$/u',
+                    'vendor_mobile' => 'required|numeric'
                 ];
     
                 // $this->validate($request, $rules);
     
                 $customMessages= [
-                    'admin_name.required' => 'Name is required',
-                    'admin_name.regex' => 'Valid Name is required',
-                    'admin_mobile.required' => 'Mobile is required',
-                    'admin_mobile.numeric' => 'Valid mobile is required'
+                    'vendor_name.required' => 'Name is required',
+                    'vendor_city.required' => 'Name is required',
+                    'vendor_name.regex' => 'Valid Name is required',
+                    'vendor_city.regex' => 'Valid City is required',
+                    'vendor_mobile.required' => 'Mobile is required',
+                    'vendor_mobile.numeric' => 'Valid mobile is required'
                 ];
     
                 $this->validate($request, $rules, $customMessages);
     
-                if($request->hasFile('admin_image')){
+                if($request->hasFile('vendor_image')){
                     // echo $image_tmp = $request->file('admin_image'); die;
-                    $image_tmp = $request->file('admin_image');
+                    $image_tmp = $request->file('vendor_image');
                     if($image_tmp->isValid()){
                         $extension = $image_tmp->getClientOriginalExtension();
                         // Generate new image name 
@@ -124,8 +127,8 @@ class AdminController extends Controller
                         // Upload the Image
                         Image::make($image_tmp)->save($imagePath);
                     }
-                }else if(!empty($data['current_admin_image'])){
-                    $imageName = $data['current_admin_image'];
+                }else if(!empty($data['current_vendor_image'])){
+                    $imageName = $data['current_vendor_image'];
                 }else{
                     $imageName = "";
                 }
@@ -136,7 +139,7 @@ class AdminController extends Controller
 
                 // Updates in Vendors Table
                 Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->update(['name'=> $data['vendor_name'], 'mobile' => $data['vendor_mobile'], 'address' => $data['vendor_address'], 'city'=> $data['vendor_city'], 'state'=> $data['vendor_state'], 'country' => $data['vendor_country'], 'pincode' => $data['vendor_pincode']]);
-                
+            
                 return redirect()->back()->with('success_message', 'Vendor details updated successfully');
             }
             $vendorDetails = Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();

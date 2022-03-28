@@ -101,15 +101,15 @@
                             <input type="text" class="form-control" value="{{ $vendorDetails['pincode'] }}" id="vendor_pincode" name="vendor_pincode" placeholder="Enter Name" required>
                         </div>
                         <div class="form-group">
-                            <label for="admin_mobile"> Mobile </label>
-                            <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="admin_mobile" name="admin_mobile" placeholder="Enter Mobile" required>
+                            <label for="vendor_mobile"> Mobile </label>
+                            <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="vendor_mobile" name="vendor_mobile" placeholder="Enter Mobile" required>
                         </div>
                         <div class="form-group">
-                            <label for="admin_image"> Photo </label>
-                            <input type="file" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="admin_image"  name="admin_image">
+                            <label for="vendor_image"> Photo </label>
+                            <input type="file" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="vendor_image"  name="vendor_image">
                             @if(!empty(Auth::guard('admin')->user()->image))
                                 <a target = "_blank" href="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image) }}">View Image</a>
-                                <input type="hidden" name="current_admin_image" value="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image) }}">
+                                <input type="hidden" name="current_vendor_image" value="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image) }}">
                             @endif
 
                         </div>
