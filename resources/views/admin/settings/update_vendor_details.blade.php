@@ -195,10 +195,21 @@
                             <input type="text" class="form-control" value="{{ $vendorDetails['pincode'] }}" id="shop_pincode" name="shop_pincode" placeholder="Enter Shop Pincode" required>
                         </div>
                         <div class="form-group">
-                            <label for="shop_mobile"> Shop Mobile </label>
-                            <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="shop_mobile" name="shop_mobile" placeholder="Enter Shop Mobile" required>
+                            <label for="business_license_number"> Business License Number </label>
+                            <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="business_license_number" name="business_license_number" placeholder="Enter Business License Number" required>
                         </div>
-
+                        <div class="form-group">
+                            <label for="gst_number"> GST Number </label>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['country'] }}" id="gst_number" name="gst_number" placeholder="Enter GST Number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pan_number"> PAN Number </label>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['country'] }}" id="pan_number" name="pan_number" placeholder="Enter PAN Number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="shop_country"> Shop Country </label>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['country'] }}" id="shop_country" name="shop_country" placeholder="Enter Shop Country" required>
+                        </div>
                         <div class="form-group">
                             <label for="address_proof"> Address Proof </label>
                             <select class="form-control" name="address_proof" id="address_proof">
