@@ -145,6 +145,7 @@ class AdminController extends Controller
             $vendorDetails = Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
 
         }else if($slug =="business"){
+            $vendorDetails = VendorsBusinessDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
 
         }else if($slug == "bank"){
 

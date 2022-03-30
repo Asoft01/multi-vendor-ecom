@@ -122,7 +122,111 @@
                 </div>
             </div>
         @elseif($slug == "business")
+            <div class="row">
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Update Business Information</h4>
+                        
+                        @if(Session::has('error_message')) 
+                            <div class="alert alert-danger alert-dismissbible fade show" role="alert">
+                                <strong>Error: </strong> {{ Session::get('error_message') }}  
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <strong>{!! session('flash_message_error') !!}</strong>
+                            </div>
+                        @endif  
+                        
+                        @if(Session::has('success_message')) 
+                            <div class="alert alert-success alert-dismissbible fade show" role="alert">
+                                <strong>Success: </strong> {{ Session::get('success_message') }}  
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <strong>{!! session('flash_message_success') !!}</strong>
+                            </div>
+                        @endif  
 
+                        @if($errors->any())
+                            <div class="alert alert-danger alert-dismissbible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>   
+                                @endforeach
+                            </div>
+                        @endif 
+                        
+                        <form class="forms-sample" action="{{ url('admin/update-vendor-details/business') }}" method="post" id="updateAdminPasswordForm" enctype="multipart/form-data">
+                            @csrf
+                        <div class="form-group">
+                            <label for="admin_email">Vendor Username/Email</label>
+                            <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->email }}" name="admin_email" readonly="">
+                        </div>
+                        {{-- <div class="form-group">
+                            <label for="admin_type">Admin Type</label>
+                            <input type="email" class="form-control" value="{{ Auth::guard('admin')->user()->type }}" readonly>
+                        </div> --}}
+                        <div class="form-group">
+                            <label for="shop_name"> Shop Name </label>
+                            <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->name }}" id="shop_name" name="shop_name" placeholder="Enter Shop Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="shop_address"> Shop Address </label>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['address'] }}" id="shop_address" name="shop_address" placeholder="Enter Shop Address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="shop_city"> Shop City </label>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['city'] }}" id="shop_city" name="shop_city" placeholder="Enter Shop Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="shop_state"> Shop State </label>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['state'] }}" id="shop_state" name="shop_state" placeholder="Enter Shop State" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="shop_country"> Shop Country </label>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['country'] }}" id="shop_country" name="shop_country" placeholder="Enter Shop Country" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="shop_pincode"> Shop Pincode </label>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['pincode'] }}" id="shop_pincode" name="shop_pincode" placeholder="Enter Shop Pincode" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="shop_mobile"> Shop Mobile </label>
+                            <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="shop_mobile" name="shop_mobile" placeholder="Enter Shop Mobile" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address_proof"> Address Proof </label>
+                            <select class="form-control" name="address_proof" id="address_proof">
+                                <option value="Passport">Passport</option>
+                                <option value="Voting Card">Voting Card</option>
+                                <option value="PAN">PAN</option>
+                                <option value="Driving License">Driving License</option>
+                                <option value="Aadhar Card">Aadhar Card</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address_proof_image"> Address Proof Image </label>
+                            <input type="file" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="address_proof_image"  name="address_proof_image">
+                            @if(!empty(Auth::guard('admin')->user()->image))
+                                <a target = "_blank" href="{{ url('admin/images/proofs/'.Auth::guard('admin')->user()->image) }}">View Image</a>
+                                <input type="hidden" name="current_shop_image" value="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image) }}">
+                            @endif
+
+                        </div>
+                    
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <button class="btn btn-light">Cancel</button>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
         @elseif($slug == "bank")
 
         @endif
