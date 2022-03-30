@@ -106,7 +106,7 @@
                         </div>
                         <div class="form-group">
                             <label for="vendor_image"> Photo </label>
-                            <input type="file" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="vendor_image"  name="vendor_image">
+                            <input type="file" class="form-control" value="{{ Auth::guard('admin')->user()->image }}" id="vendor_image"  name="vendor_image">
                             @if(!empty(Auth::guard('admin')->user()->image))
                                 <a target = "_blank" href="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image) }}">View Image</a>
                                 <input type="hidden" name="current_vendor_image" value="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image) }}">
@@ -172,61 +172,65 @@
                         </div> --}}
                         <div class="form-group">
                             <label for="shop_name"> Shop Name </label>
-                            <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->name }}" id="shop_name" name="shop_name" placeholder="Enter Shop Name" required>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['shop_name'] }}" id="shop_name" name="shop_name" placeholder="Enter Shop Name" required>
                         </div>
                         <div class="form-group">
                             <label for="shop_address"> Shop Address </label>
-                            <input type="text" class="form-control" value="{{ $vendorDetails['address'] }}" id="shop_address" name="shop_address" placeholder="Enter Shop Address" required>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['shop_address'] }}" id="shop_address" name="shop_address" placeholder="Enter Shop Address" required>
                         </div>
                         <div class="form-group">
                             <label for="shop_city"> Shop City </label>
-                            <input type="text" class="form-control" value="{{ $vendorDetails['city'] }}" id="shop_city" name="shop_city" placeholder="Enter Shop Name" required>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['shop_city'] }}" id="shop_city" name="shop_city" placeholder="Enter Shop Name" required>
                         </div>
                         <div class="form-group">
                             <label for="shop_state"> Shop State </label>
-                            <input type="text" class="form-control" value="{{ $vendorDetails['state'] }}" id="shop_state" name="shop_state" placeholder="Enter Shop State" required>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['shop_state'] }}" id="shop_state" name="shop_state" placeholder="Enter Shop State" required>
                         </div>
                         <div class="form-group">
                             <label for="shop_country"> Shop Country </label>
-                            <input type="text" class="form-control" value="{{ $vendorDetails['country'] }}" id="shop_country" name="shop_country" placeholder="Enter Shop Country" required>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['shop_country'] }}" id="shop_country" name="shop_country" placeholder="Enter Shop Country" required>
                         </div>
                         <div class="form-group">
                             <label for="shop_pincode"> Shop Pincode </label>
-                            <input type="text" class="form-control" value="{{ $vendorDetails['pincode'] }}" id="shop_pincode" name="shop_pincode" placeholder="Enter Shop Pincode" required>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['shop_pincode'] }}" id="shop_pincode" name="shop_pincode" placeholder="Enter Shop Pincode" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="shop_mobile"> Shop Mobile </label>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['shop_mobile'] }}" id="shop_mobile" name="shop_mobile" placeholder="Enter Shop Mobile" required>
                         </div>
                         <div class="form-group">
                             <label for="business_license_number"> Business License Number </label>
-                            <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="business_license_number" name="business_license_number" placeholder="Enter Business License Number" required>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['business_license_number'] }}" id="business_license_number" name="business_license_number" placeholder="Enter Business License Number" required>
                         </div>
                         <div class="form-group">
                             <label for="gst_number"> GST Number </label>
-                            <input type="text" class="form-control" value="{{ $vendorDetails['country'] }}" id="gst_number" name="gst_number" placeholder="Enter GST Number" required>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['gst_number'] }}" id="gst_number" name="gst_number" placeholder="Enter GST Number" required>
                         </div>
                         <div class="form-group">
                             <label for="pan_number"> PAN Number </label>
-                            <input type="text" class="form-control" value="{{ $vendorDetails['country'] }}" id="pan_number" name="pan_number" placeholder="Enter PAN Number" required>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['pan_number'] }}" id="pan_number" name="pan_number" placeholder="Enter PAN Number" required>
                         </div>
                         <div class="form-group">
                             <label for="shop_country"> Shop Country </label>
-                            <input type="text" class="form-control" value="{{ $vendorDetails['country'] }}" id="shop_country" name="shop_country" placeholder="Enter Shop Country" required>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['shop_country'] }}" id="shop_country" name="shop_country" placeholder="Enter Shop Country" required>
                         </div>
                         <div class="form-group">
                             <label for="address_proof"> Address Proof </label>
                             <select class="form-control" name="address_proof" id="address_proof">
-                                <option value="Passport">Passport</option>
-                                <option value="Voting Card">Voting Card</option>
-                                <option value="PAN">PAN</option>
-                                <option value="Driving License">Driving License</option>
-                                <option value="Aadhar Card">Aadhar Card</option>
+                                <option value="Passport" @if($vendorDetails['address_proof'] == "Passport") selected @endif>Passport</option>
+                                <option value="Voting Card" @if($vendorDetails['address_proof'] == "Voting Card") selected @endif>Voting Card</option>
+                                <option value="PAN" @if($vendorDetails['address_proof'] == "PAN") selected @endif>PAN</option>
+                                <option value="Driving License" @if($vendorDetails['address_proof'] == "Driving License") selected @endif>Driving License</option>
+                                <option value="Aadhar Card" @if($vendorDetails['address_proof'] == "Aadhar Card") selected @endif>Aadhar Card</option>
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="address_proof_image"> Address Proof Image </label>
-                            <input type="file" class="form-control" value="{{ Auth::guard('admin')->user()->mobile }}" id="address_proof_image"  name="address_proof_image">
-                            @if(!empty(Auth::guard('admin')->user()->image))
-                                <a target = "_blank" href="{{ url('admin/images/proofs/'.Auth::guard('admin')->user()->image) }}">View Image</a>
-                                <input type="hidden" name="current_shop_image" value="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image) }}">
+                            <input type="file" class="form-control" id="address_proof_image"  name="address_proof_image">
+                            @if(!empty($vendorDetails['address_proof_image']))
+                                <a target = "_blank" href="{{ url('admin/images/proofs/'.$vendorDetails['address_proof_image']) }}">View Image</a>
+                                <input type="hidden" name="current_address_proof" value="{{ url('admin/images/proof/'.$vendorDetails['address_proof_image']) }}">
                             @endif
 
                         </div>
