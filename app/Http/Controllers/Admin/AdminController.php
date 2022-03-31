@@ -9,6 +9,7 @@ use Auth;
 use App\Models\Admin;
 use App\Models\Vendor;
 use App\Models\VendorsBusinessDetail;
+use App\Models\VendorsBankDetail;
 use Image;
 
 class AdminController extends Controller
@@ -200,7 +201,40 @@ class AdminController extends Controller
             // dd($vendorDetails); die;
 
         }else if($slug == "bank"){
+            if($request->isMethod('post')){
+                $data = $request->all();
+                // echo "<pre>"; print_r($data); die;
+                $rules = [
+                    'account_holder_name'=> 'required|regex:/^[\pL\s\-]+$/u',
+                    'bank_name'=> 'required',
+                    'account_number' => 'required|numeric',
+                    'bank_ifsc_code' => 'required', 
+                ];
+    
+                // $this->validate($request, $rules);
+    
+                $customMessages= [
+                    'account_holder_name.required' => 'Account Holder Name is required',
+                    'account_holder_name.regex' => 'Valid Account Holder Name is required',
+                    'bank_name.required' => 'Bank Name is required',
+                    'account_number.required' => 'Account Number is required',
+                    'account_number.numeric' => 'Valid Account Number is required',
+                    'bank_ifsc_code.required' => 'Bank IFSC Code is required',
+                ];
+    
+                $this->validate($request, $rules, $customMessages);
 
+                // Upload Admin Photo
+    
+                // Updates in Admins Table 
+                // Admin::where('id', Auth::guard('admin')->user()->id)->update(['name' => $data['vendor_name'], 'mobile' => $data['vendor_mobile'], 'image' => $imageName]);
+
+                // Updates in Vendors Business Details Table
+                VendorsBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->update(['account_holder_name'=> $data['account_holder_name'], 'bank_name' => $data['bank_name'], 'account_number' => $data['account_number'], 'bank_ifsc_code'=> $data['bank_ifsc_code']]);
+                
+                return redirect()->back()->with('success_message', 'Vendor details updated successfully');
+            }
+            $vendorDetails = VendorsBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         }
         return view('admin.settings.update_vendor_details')->with(compact('slug', 'vendorDetails'));
     }

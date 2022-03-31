@@ -243,7 +243,78 @@
                 </div>
             </div>
         @elseif($slug == "bank")
+            <div class="row">
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Update Bank Information</h4>
+                        
+                        @if(Session::has('error_message')) 
+                            <div class="alert alert-danger alert-dismissbible fade show" role="alert">
+                                <strong>Error: </strong> {{ Session::get('error_message') }}  
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <strong>{!! session('flash_message_error') !!}</strong>
+                            </div>
+                        @endif  
+                        
+                        @if(Session::has('success_message')) 
+                            <div class="alert alert-success alert-dismissbible fade show" role="alert">
+                                <strong>Success: </strong> {{ Session::get('success_message') }}  
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <strong>{!! session('flash_message_success') !!}</strong>
+                            </div>
+                        @endif  
 
+                        @if($errors->any())
+                            <div class="alert alert-danger alert-dismissbible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>   
+                                @endforeach
+                            </div>
+                        @endif 
+                        
+                        <form class="forms-sample" action="{{ url('admin/update-vendor-details/bank') }}" method="post" id="updateAdminPasswordForm" enctype="multipart/form-data">
+                            @csrf
+                        <div class="form-group">
+                            <label for="admin_email">Vendor Username/Email</label>
+                            <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->email }}" name="admin_email" readonly="">
+                        </div>
+                        {{-- <div class="form-group">
+                            <label for="admin_type">Admin Type</label>
+                            <input type="email" class="form-control" value="{{ Auth::guard('admin')->user()->type }}" readonly>
+                        </div> --}}
+                        <div class="form-group">
+                            <label for="account_holder_name"> Account Holder Name </label>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['account_holder_name'] }}" id="account_holder_name" name="account_holder_name" placeholder="Enter Account Holder Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bank_name"> Bank Name </label>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['bank_name'] }}" id="bank_name" name="bank_name" placeholder="Enter Bank Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="account_number"> Account Number </label>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['account_number'] }}" id="account_number" name="account_number" placeholder="Enter Account Number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bank_ifsc_code"> Bank IFSC Code </label>
+                            <input type="text" class="form-control" value="{{ $vendorDetails['bank_ifsc_code'] }}" id="bank_ifsc_code" name="bank_ifsc_code" placeholder="Enter Bank IFSC Code" required>
+                        </div>
+                    
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <button class="btn btn-light">Cancel</button>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
         @endif
     </div>
     <!-- content-wrapper ends -->
