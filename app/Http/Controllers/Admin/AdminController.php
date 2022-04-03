@@ -240,6 +240,7 @@ class AdminController extends Controller
     }
 
     public function login(Request $request){
+        // display the password that is hashed 
         // echo $password = Hash::make('Adeleke1234'); die;
 
         if($request->isMethod('post')){
