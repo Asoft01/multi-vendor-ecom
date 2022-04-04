@@ -26,7 +26,7 @@ class AdminController extends Controller
 
             // });
 
-            echo "<pre>"; print_r($data); die;
+            // echo "<pre>"; print_r($data); die;
             // Check if current password entered by admin is correct
             if(Hash::check($data['current_password'], Auth::guard('admin')->user()->password)){
                 // Check if new password is matching with confirm password
@@ -285,6 +285,22 @@ class AdminController extends Controller
         }else{
             return "false";
         }
+    }
+
+    public function admins($type = null){
+        $admins = Admin::query();
+        if(!empty($type)){
+            $admins = $admins->where('type', $type);
+            $title = ucfirst($type)."s";
+        }else{
+            $title = "All Admins/SubAdmins/Vendors";
+        }
+
+        // $admins = Admin::get()->toArray();
+        $admins = $admins->get()->toArray(); 
+        // echo "<pre>"; print_r($admin); die;
+        // dd($admins); die;
+        return view('admin.admins.admins')->with(compact('admins', 'title'));
     }
 
     public function logout(){
