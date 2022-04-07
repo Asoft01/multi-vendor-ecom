@@ -46,7 +46,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         // View Admins / Subadmins / Vendors
 
         Route::get('/admins/{type?}', 'AdminController@admins');
-        
+
+        // View Vendor Details 
+        Route::get('view-vendor-details/{id}', 'AdminController@viewVendorDetails');
         // Admin Logout 
         Route::get('logout', 'AdminController@logout');
     });
