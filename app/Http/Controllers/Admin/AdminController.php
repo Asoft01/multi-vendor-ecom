@@ -300,9 +300,10 @@ class AdminController extends Controller
         $admins = $admins->get()->toArray(); 
         // echo "<pre>"; print_r($admin); die;
         // dd($admins); die;
+        
         return view('admin.admins.admins')->with(compact('admins', 'title'));
-    }
-
+    }   
+     
     public function logout(){
         Auth::guard('admin')->logout();
         return redirect('admin/login');
