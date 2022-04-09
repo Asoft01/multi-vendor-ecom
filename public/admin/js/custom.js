@@ -23,4 +23,11 @@ $(document).ready(function(){
             }
         })
     });
+
+    // Update Admin Status 
+    $(document).on('click', ".updateAdminStatus", function(){
+        // alert("test");
+        var status = $(this).children("i").attr("status");
+        alert(status);
+    });
 })

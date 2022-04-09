@@ -312,7 +312,6 @@ class AdminController extends Controller
         return view('admin.admins.view_vendor_details')->with(compact('vendorDetails'));
     }
 
-
     public function logout(){
         Auth::guard('admin')->logout();
         return redirect('admin/login');

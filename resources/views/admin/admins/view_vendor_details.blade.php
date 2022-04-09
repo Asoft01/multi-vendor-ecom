@@ -114,11 +114,11 @@
                             <label> Shop Website </label>
                             <input type="text" class="form-control" value="{{ $vendorDetails['vendor_business']['shop_website'] }}" readonly>
                         </div>
+
                         <div class="form-group">
                             <label for="admin_email">Shop Email</label>
                             <input type="text" class="form-control" value="{{ $vendorDetails['vendor_business']['shop_email'] }}" readonly>
                         </div>
-
                         
                         <div class="form-group">
                             <label for="admin_email"> Business License Number</label>
