@@ -50,6 +50,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         // View Vendor Details 
         Route::get('view-vendor-details/{id}', 'AdminController@viewVendorDetails');
 
+        // Update Admin Status 
+        Route::post('update-admin-status', 'AdminController@updateAdminStatus');
+
         // Admin Logout 
         Route::get('logout', 'AdminController@logout');
     });

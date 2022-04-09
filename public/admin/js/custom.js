@@ -28,6 +28,22 @@ $(document).ready(function(){
     $(document).on('click', ".updateAdminStatus", function(){
         // alert("test");
         var status = $(this).children("i").attr("status");
-        alert(status);
+        // alert(status);
+        var admin_id = $(this).attr("admin_id");
+        // alert(admin_id);
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'post',
+            url: '/admin/update-admin-status',
+            data : { status : status, admin_id : admin_id }, 
+            success: function(resp){
+                alert(resp);
+            }, error: function(){
+                alert("Error");
+            }
+        })
+
     });
 })

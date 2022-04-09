@@ -312,6 +312,21 @@ class AdminController extends Controller
         return view('admin.admins.view_vendor_details')->with(compact('vendorDetails'));
     }
 
+    public function updateAdminStatus(Request $request){
+        if($request->ajax()){
+            $data= $request->all();
+            // echo "<pre>"; print_r($data); die;
+            if($data['status'] == "Active"){
+                $status = 0;
+            }else{
+                $status = 1;
+            }
+
+            Admin::where('id', $data['admin_id'])->update(['status'=> $status]);
+            return response()->json(['status' =>$status, 'admin_id ']);
+        }
+    }
+
     public function logout(){
         Auth::guard('admin')->logout();
         return redirect('admin/login');
