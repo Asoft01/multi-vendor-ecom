@@ -63,3 +63,4 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
 // Admin Dashboard Route with Admin Group
 // Route::get('admin/dashboard', 'App\Http\Controllers\Admin\AdminController@dashboard');
+

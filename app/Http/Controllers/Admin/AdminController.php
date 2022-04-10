@@ -323,7 +323,7 @@ class AdminController extends Controller
             }
 
             Admin::where('id', $data['admin_id'])->update(['status'=> $status]);
-            return response()->json(['status' =>$status, 'admin_id ']);
+            return response()->json(['status' =>$status, 'admin_id' => $data['admin_id']]);
         }
     }
 

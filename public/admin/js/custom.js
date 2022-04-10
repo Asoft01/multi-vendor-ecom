@@ -39,8 +39,14 @@ $(document).ready(function(){
             url: '/admin/update-admin-status',
             data : { status : status, admin_id : admin_id }, 
             success: function(resp){
-                alert(resp);
-            }, error: function(){
+                // alert(resp);
+                if(resp['status'] == 0){
+                    $("#admin-"+admin_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-outline' status='Inactive'></i>");
+                }else if(resp['status'] == 1){
+                    $("#admin-"+admin_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-check' status='Active'></i>");
+                }
+            }, 
+            error: function(){
                 alert("Error");
             }
         })
