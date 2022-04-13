@@ -5,3 +5,5 @@ php artisan make:controller Admin/AdminController
 C:\xampp81\htdocs\ecom9\routes\web.php
 php -i | grep -i gd
 php.ini and uncomment ;extension=gd
+
+

@@ -243,7 +243,9 @@ class AdminController extends Controller
             }
             $vendorDetails = VendorsBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         }
-        return view('admin.settings.update_vendor_details')->with(compact('slug', 'vendorDetails'));
+        
+        $countries = Country::where('status', 1)->get();
+        return view('admin.settings.update_vendor_details')->with(compact('slug', 'vendorDetails', 'countries'));
     }
 
     public function login(Request $request){
