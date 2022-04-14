@@ -10,6 +10,7 @@ use App\Models\Admin;
 use App\Models\Vendor;
 use App\Models\VendorsBusinessDetail;
 use App\Models\VendorsBankDetail;
+use App\Models\Country;
 use Image;
 use Session;
 
@@ -244,7 +245,8 @@ class AdminController extends Controller
             $vendorDetails = VendorsBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         }
         
-        $countries = Country::where('status', 1)->get();
+        $countries = Country::where('status', 1)->get()->toArray();
+        // echo "<pre>"; print_r($countries); die;
         return view('admin.settings.update_vendor_details')->with(compact('slug', 'vendorDetails', 'countries'));
     }
 
