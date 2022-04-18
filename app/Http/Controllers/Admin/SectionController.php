@@ -10,6 +10,7 @@ class SectionController extends Controller
 {
     public function sections(){
         $sections = Section::get()->toArray();
-        dd($sections); die;
+        // dd($sections); die;
+        return view('admin.sections.sections')->with(compact('sections'));
     }
 }
