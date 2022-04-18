@@ -30,27 +30,25 @@
                     @foreach($sections as $section)
                       <tr>
                         <td>
-                          {{ $admin['id'] }}
+                          {{ $section['id'] }}
                         </td>
                         <td>
-                          {{ $admin['name'] }}
+                          {{ $section['name'] }}
                         </td>
                         <td>
                           @if($section['status'] == 1)
                             {{-- Active --}}
-                            <a class="updateAdminStatus" id="admin-{{ $section['id'] }}" admin_id="{{ $section['id'] }}" href="javascript:void(0)"><i style="font-size:25px" class="mdi mdi-bookmark-check" status="Active"></i>
+                            <a class="updateSectionStatus" id="section-{{ $section['id'] }}" section_id="{{ $section['id'] }}" href="javascript:void(0)"><i style="font-size:25px" class="mdi mdi-bookmark-check" status="Active"></i>
                             </a>
                           @else 
                             {{-- Inactive --}}
-                            <a class="updateAdminStatus" id="admin-{{ $section['id'] }}" admin_id="{{ $section['id'] }}" href="javascript:void(0)">
+                            <a class="updateSectionStatus" id="section-{{ $section['id'] }}" section_id="{{ $section['id'] }}" href="javascript:void(0)">
                               <i style="font-size:25px" class="mdi mdi-bookmark-outline" status="Inactive"></i>
                             </a>
                           @endif
                         </td>
                         <td>
-                          @if($section['type'] == "vendor")
                             <a href="{{ url('admin/view-vendor-details/'.$section['id']) }}"><i style="font-size:25px" class="mdi mdi-file-document"></i></a>
-                          @endif 
                         </td>                     
                       </tr>
                     @endforeach
