@@ -1,4 +1,6 @@
 $(document).ready(function(){
+    // datatable class
+    $('#sections').DataTable();
     $(".nav-item").removeClass("active");
     $(".nav-link").removeClass("active");
     // Check Admin Password is correct or not
