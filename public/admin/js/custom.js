@@ -55,11 +55,11 @@ $(document).ready(function(){
     });
 
     $(document).on('click', ".updateSectionStatus", function(){
-        // alert("test");
+        // alert("test"); return true;
         var status = $(this).children("i").attr("status");
-        // alert(status);
+        // alert(status); return true;
         var section_id = $(this).attr("section_id");
-        // alert(section_id);
+        // alert(section_id); return true;
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -68,7 +68,7 @@ $(document).ready(function(){
             url: '/admin/update-section-status',
             data : { status : status, section_id : section_id }, 
             success: function(resp){
-                // alert(resp);
+                // alert(url); return true;
                 if(resp['status'] == 0){
                     $("#section-"+section_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-outline' status='Inactive'></i>");
                 }else if(resp['status'] == 1){
