@@ -71,6 +71,9 @@
 
   </script>
   {{-- End Custom Admin JS --}}
+
+  <!-- Confirm Deletion -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>
