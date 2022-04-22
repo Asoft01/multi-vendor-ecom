@@ -35,4 +35,8 @@ class SectionController extends Controller
         $message = "Section deleted Successfully";
         return redirect()->back()->with('success_message', $message);
     }
+
+    public function addEditSection(Request $request, $id = null){
+        // Session::
+    }
 }
