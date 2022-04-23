@@ -9,6 +9,7 @@ use App\Models\Section;
 class SectionController extends Controller
 {
     public function sections(){
+        Session::put('page', 'sections'); 
         $sections = Section::get()->toArray();
         // dd($sections); die;
         return view('admin.sections.sections')->with(compact('sections'));
@@ -37,6 +38,11 @@ class SectionController extends Controller
     }
 
     public function addEditSection(Request $request, $id = null){
-        // Session::
+        Session::put('page', 'sections'); 
+        if($id == ""){
+            $title = "Add Section";
+            $section = new Section;
+            $message = "Section added succesfully";
+        }
     }
 }
