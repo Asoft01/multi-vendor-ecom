@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Section;
+use Session;
 
 class SectionController extends Controller
 {
@@ -43,6 +44,16 @@ class SectionController extends Controller
             $title = "Add Section";
             $section = new Section;
             $message = "Section added succesfully";
+        }else{
+            $title = "Edit Section";
+            $section = Section::find($id);
+            $message = "Sectiion updated successfully";
         }
+
+        if($request->isMethod('post')){
+            $data = $request->all();
+            echo "<pre>"; print_r($data); die;
+        }
+        return view('admins.sections.add_edit_section')->with(compact('title', 'section'));
     }
 }
