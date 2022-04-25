@@ -52,8 +52,25 @@ class SectionController extends Controller
 
         if($request->isMethod('post')){
             $data = $request->all();
-            echo "<pre>"; print_r($data); die;
+            // echo "<pre>"; print_r($data); die;
+
+            $rules = [
+                'section_name'=> 'required|regex:/^[\pL\s\-]+$/u',
+            ];
+
+            $customMessages= [
+                'section_name.required' => 'Section Name is required',
+                'section_name.regex' => 'Valid Section Name is required',
+            ];
+
+            $this->validate($request, $rules, $customMessages);
+
+            $section->name = $data['section_name'];
+            $section->status = 1;
+            $section->save();
+
+            return redirect('admin/sections')->with('success_message', $message);
         }
-        return view('admins.sections.add_edit_section')->with(compact('title', 'section'));
+        return view('admin.sections.add_edit_section')->with(compact('title', 'section'));
     }
 }

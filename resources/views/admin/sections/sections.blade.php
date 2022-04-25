@@ -8,6 +8,7 @@
               <div class="card-body">
                 <h4 class="card-title"> Sections </h4>
                 
+                <a style="max-width: 150px; float: right; display: inline-block" href="{{ url('admin/add-edit-section') }}" class="btn btn-block btn-primary">Add Section</a>
                 @if(Session::has('success_message')) 
                   <div class="alert alert-success alert-dismissbible fade show" role="alert">
                       <strong>Success: </strong> {{ Session::get('success_message') }}  

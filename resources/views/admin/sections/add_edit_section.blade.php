@@ -66,10 +66,11 @@
                     @endif 
                     
                     <form class="forms-sample" @if(empty($section['id'])) action="{{ url('admin/add-edit-section') }}" @else action="{{ url('admin/add-edit-section/'.$section['id']) }}" @endif method="post" id="updateAdminPasswordForm" enctype="multipart/form-data">
-                        @csrf
+                    @csrf
+                        
                     <div class="form-group">
                         <label for="section_name"> Section Name </label>
-                        <input type="text" class="form-control" value="{{ Auth::guard('admin')->user()->name }}" id="section_name" name="section_name" placeholder="Enter Section Name" required>
+                        <input type="text" class="form-control" @if(!empty($section['name'])) value="{{ $section['name'] }}" @else value="{{ old('section_name') }}" @endif id="section_name" name="section_name" placeholder="Enter Section Name" required>
                     </div>
                    
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
