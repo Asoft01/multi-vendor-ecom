@@ -46,7 +46,7 @@ class CategoryController extends Controller
             $category = Category::find($id);
             $message = "Category updated Successfully!";
         }
-        
+
         if($request->isMethod('post')){
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
