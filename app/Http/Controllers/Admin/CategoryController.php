@@ -39,11 +39,16 @@ class CategoryController extends Controller
             // Add Category Functionality
             $title = "Add Category";
             $category = new Category;
+            $getCategories = array();
             $message = "Category added Successfully!";
         }else{
             // Edit Category Functionality
             $title = "Edit Category";
             $category = Category::find($id);
+            // dd($category); die;
+            // echo "<pre>"; print_r($category); die;
+            // echo "<pre>"; print_r($category['category_name']); die;
+            $getCategories = Category::with('subcategories')->where(['parent_id' => 0, 'section_id' => $category['section_id']])->get();
             $message = "Category updated Successfully!";
         }
 
@@ -85,7 +90,17 @@ class CategoryController extends Controller
 
         // Get All Sections 
         $getSections = Section::get()->toArray();
-        return view('admin.categories.add_edit_category')->with(compact('title', 'category', 'getSections'));
+        return view('admin.categories.add_edit_category')->with(compact('title', 'category', 'getSections', 'getCategories'));
     }
 
+    public function appendCategoryLevel(Request $request){
+        if($request->ajax()){
+            $data = $request->all();
+            // echo $data['section_id']; die;
+            $getCategories = Category::with('subcategories')->where(['parent_id' => 0, 'section_id' => $data['section_id']])->get();
+            // dd($getCategories); die;
+            return view('admin.categories.append_categories_level')->with(compact('getCategories'));
+
+        }
+    }
 }
