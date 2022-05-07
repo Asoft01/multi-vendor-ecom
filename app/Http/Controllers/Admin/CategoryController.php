@@ -48,7 +48,9 @@ class CategoryController extends Controller
             // dd($category); die;
             // echo "<pre>"; print_r($category); die;
             // echo "<pre>"; print_r($category['category_name']); die;
+            // $getCategory = Categories::where(['parent_id' => 0, 'section_id' => $category['section_id']])->get();
             $getCategories = Category::with('subcategories')->where(['parent_id' => 0, 'section_id' => $category['section_id']])->get();
+            // dd($getCategories); die; 
             $message = "Category updated Successfully!";
         }
 
@@ -56,6 +58,9 @@ class CategoryController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
             
+            if($data['category_discount'] == ""){
+                $data['category_discount'] = 0;
+            }
             // Upload Category Image
             if($request->hasFile('category_image')){
                 // echo $image_tmp = $request->file('category_image'); die;
@@ -102,5 +107,5 @@ class CategoryController extends Controller
             return view('admin.categories.append_categories_level')->with(compact('getCategories'));
 
         }
-    }
+    } 
 }

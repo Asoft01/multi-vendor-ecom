@@ -83,7 +83,7 @@
                         </select>
                     </div>
 
-                    <div id="appendCategories">
+                    <div id="appendCategoriesLevel">
                         @include('admin.categories.append_categories_level')
                     </div>
 
@@ -99,7 +99,7 @@
                     
                     <div class="form-group">
                         <label for="category_description"> Category Description </label>
-                        <textarea name="description" id ="description" class="form-control" rows="3"></textarea>
+                        <textarea name="description" id ="description" class="form-control" rows="3">{{ $category['description'] }}</textarea>
                     </div>
 
                     <div class="form-group">
