@@ -88,7 +88,7 @@ class CategoryController extends Controller
                     // Generate new image name 
                     $imageName = rand(111, 999999).'.'.$extension; 
                     // echo $imagePath = 'admin/images/photos/'.$imageName; die;
-                    $imagePath = 'admin/images/category_images/'.$imageName;
+                    $imagePath = 'front/images/category_images/'.$imageName;
                     // Upload the Image
                     Image::make($image_tmp)->save($imagePath);
                     $category->category_image = $imageName;
@@ -126,4 +126,29 @@ class CategoryController extends Controller
 
         }
     } 
+
+    public function deleteCategory($id){
+        // Delete Category
+        Category::where('id', $id)->delete();
+        $message = "Category has been deleted successfully";
+        return redirect()->back()->with('success_message', $message);
+    }
+
+    public function deleteCategoryImage($id){
+        // Get Category Image
+        $categoryImage = Category::select('category_image')->where('id', $id)->first();
+        //Get Category Image Path 
+        $category_image_path = 'front/images/category_images/';
+
+        // Delete Category Image from category_images folder if exists
+        if(file_exists($category_image_path.$categoryImage->category_image)){
+            unlink($category_image_path.$categoryImage->category_image);
+        }
+
+        // Delete Category Image from Categories Folder
+        Category::where('id', $id)->update(['category_image'=> '']);
+        
+        $message = "Category has been updated successfully!";
+        return redirect()->back()->with('success_message', $message);
+    }
 }

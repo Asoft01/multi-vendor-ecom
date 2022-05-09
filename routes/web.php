@@ -70,6 +70,8 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::match(['get', 'post'], 'add-edit-category/{id?}', 'CategoryController@addEditCategory');
 
         Route::get('append-categories-level', 'CategoryController@appendCategoryLevel');
+        Route::get('delete-category/{id}', 'CategoryController@deleteCategory');
+        Route::get('delete-category-image/{id}', 'CategoryController@deleteCategoryImage');
     });
 });
 

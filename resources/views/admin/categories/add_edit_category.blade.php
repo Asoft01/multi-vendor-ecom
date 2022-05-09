@@ -92,6 +92,11 @@
                         <input type="file" class="form-control" id="category_image"  name="category_image">
                     </div>
 
+                    @if(!empty($category['category_image']))
+                        <a target="_blank" href="{{ url('front/images/category_images/'.$category['category_image']) }}">View Image</a>&nbsp; | &nbsp; 
+                        <a href="javascript:void(0)" class="confirmDelete" module="category-image" moduleid="{{ $category['id'] }}">Delete Image</a>
+                    @endif
+
                     <div class="form-group">
                         <label for="category_discount"> Category Discount </label>
                         <input type="text" class="form-control" @if(!empty($category['category_discount'])) value="{{ $category['category_discount'] }}" @else value="{{ old('category_discount') }}" @endif id="category_discount" name="category_discount" placeholder="Enter Category Discount">
