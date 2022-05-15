@@ -134,7 +134,7 @@ class CategoryController extends Controller
         return redirect()->back()->with('success_message', $message);
     }
 
-// delete category image
+    // delete category image
     public function deleteCategoryImage($id){
         // Get Category Image
         $categoryImage = Category::select('category_image')->where('id', $id)->first();

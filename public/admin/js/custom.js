@@ -2,6 +2,7 @@ $(document).ready(function(){
     // datatable class
     $('#sections').DataTable();
     $('#categories').DataTable();
+    $('#brands').DataTable();
 
     $(".nav-item").removeClass("active");
     $(".nav-link").removeClass("active");
@@ -113,6 +114,35 @@ $(document).ready(function(){
             }
         })
     });
+
+     // Update Brand Status 
+     $(document).on('click', ".updateBrandStatus", function(){
+        // alert("test"); return true;
+        var status = $(this).children("i").attr("status");
+        // alert(status); return true;
+        var brand_id = $(this).attr("brand_id");
+        // alert(brand_id); return true;
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'post',
+            url: '/admin/update-brand-status',
+            data : { status : status, brand_id : brand_id }, 
+            success: function(resp){
+                // alert(url); return true;
+                if(resp['status'] == 0){
+                    $("#brand-"+brand_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-outline' status='Inactive'></i>");
+                }else if(resp['status'] == 1){
+                    $("#brand-"+brand_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-check' status='Active'></i>");
+                }
+            }, 
+            error: function(){
+                alert("Error");
+            }
+        })
+    });
+
 
 
     // Confirm Deletion (Simple Javascript)
