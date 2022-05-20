@@ -14,7 +14,7 @@ class ProductsController extends Controller
         }, 'category' => function($query){
             $query->select('id', 'category_name');
         }])->get()->toArray();
-        // dd($products);
+        dd($products);
         return view('admin.products.products')->with(compact('products'));
     }
 
