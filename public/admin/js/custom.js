@@ -1,3 +1,5 @@
+const { default: Swal } = require("sweetalert2");
+
 $(document).ready(function(){
     // datatable class
     $('#sections').DataTable();
@@ -211,7 +213,7 @@ $(document).ready(function(){
             }
           })
     });
-    
+
     // Append Categories level
     $("#section_id").change(function(){
         var section_id = $(this).val();

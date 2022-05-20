@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('category_id');
             $table->integer('brand_id');
             $table->integer('vendor_id');
+            $table->integer('admin_id');
             $table->string('admin_type');
             $table->string('product_name');
             $table->string('product_code');
