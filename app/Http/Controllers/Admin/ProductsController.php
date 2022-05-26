@@ -51,7 +51,7 @@ class ProductsController extends Controller
 
         // Get Sections with Categories and Sub Categories
         $categories = Section::with('categories')->get()->toArray();
-        dd($categories);die;
-        return view('admin.products.add_edit_product')->with(compact('title'));
+        // dd($categories);die;
+        return view('admin.products.add_edit_product')->with(compact('title', 'categories'));
     }
 }

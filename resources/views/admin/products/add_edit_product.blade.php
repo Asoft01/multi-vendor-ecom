@@ -72,7 +72,9 @@
                         <label for="category_id">Select Category</label>
                         <select name="category_id" id="category_id" class="form-control" style="color: #000">
                             <option value="">Select</option>
-                            
+                            @foreach($categories as $section)
+                                <optgroup label="{{ $section['name'] }}"></optgroup>
+                            @endforeach
                         </select>
                     </div>
 
