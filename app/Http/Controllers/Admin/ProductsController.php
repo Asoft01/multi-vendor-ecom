@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Section;
+use App\Models\Brand;
 
 class ProductsController extends Controller
 {
@@ -52,6 +53,10 @@ class ProductsController extends Controller
         // Get Sections with Categories and Sub Categories
         $categories = Section::with('categories')->get()->toArray();
         // dd($categories);die;
-        return view('admin.products.add_edit_product')->with(compact('title', 'categories'));
+        // Get All Brands
+
+        $brands = Brand::where('status', 1)->get()->toArray();
+
+        return view('admin.products.add_edit_product')->with(compact('title', 'categories', 'brands'));
     }
 }
