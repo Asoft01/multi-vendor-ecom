@@ -7,3 +7,4 @@ php -i | grep -i gd
 php.ini and uncomment ;extension=gd
 
 
+# One Section has many categories

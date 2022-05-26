@@ -96,10 +96,10 @@
                         <input type="text" class="form-control" @if(!empty($product['product_discount'])) value="{{ $product['product_discount'] }}" @else value="{{ old('product_discount') }}" @endif id="product_discount" name="product_discount" placeholder="Enter product Discount">
                     </div>
                     
-                    {{-- <div class="form-group">
+                    <div class="form-group">
                         <label for="product_description"> Product Description </label>
-                        <textarea name="description" id ="description" class="form-control" rows="3">{{ $product['description'] }}</textarea>
-                    </div> --}}
+                        <textarea name="description" id ="description" class="form-control" rows="3"></textarea>
+                    </div>
 
                     <div class="form-group">
                         <label for="url"> Product URL </label>

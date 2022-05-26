@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Section;
 
 class ProductsController extends Controller
 {
@@ -48,6 +49,9 @@ class ProductsController extends Controller
             $title = "Edit Product";
         }
 
+        // Get Sections with Categories and Sub Categories
+        $categories = Section::with('categories')->get()->toArray();
+        dd($categories);die;
         return view('admin.products.add_edit_product')->with(compact('title'));
     }
 }
