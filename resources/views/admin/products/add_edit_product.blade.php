@@ -75,9 +75,9 @@
                             @foreach($categories as $section)
                                 <optgroup label="{{ $section['name'] }}"></optgroup>
                                     @foreach ($section['categories'] as $category)
-                                        <option value="{{ $category['category_name'] }}">&nbsp;&nbsp;&nbsp;---&nbsp;{{ $category['category_name'] }}</option>
+                                        <option value="{{ $category['id'] }}">&nbsp;&nbsp;&nbsp;---&nbsp;{{ $category['category_name'] }}</option>
                                             @foreach ($category['subcategories'] as $subcategory)
-                                                <option value="{{ $subcategory['category_name'] }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---&nbsp;{{ $subcategory['category_name'] }}</option>
+                                                <option value="{{ $subcategory['id'] }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---&nbsp;{{ $subcategory['category_name'] }}</option>
                                             @endforeach
                                     @endforeach
                             @endforeach
@@ -116,7 +116,7 @@
 
                     <div class="form-group">
                         <label for="product_discount"> Product Discount (%) </label>
-                        <input type="text" class="form-control" @if(!empty($product['product_discount'])) value="{{ $product['product_discount'] }}" @else value="{{ old('product_discount') }}" @endif id="product_discount" name="product_discount" placeholder="Enter product Name" required>
+                        <input type="text" class="form-control" @if(!empty($product['product_discount'])) value="{{ $product['product_discount'] }}" @else value="{{ old('product_discount') }}" @endif id="product_discount" name="product_discount" placeholder="Enter Product Discount" required>
                     </div>
 
                     <div class="form-group">
@@ -145,11 +145,6 @@
                     @endif
 
                     <div class="form-group">
-                        <label for="product_discount"> Product Discount </label>
-                        <input type="text" class="form-control" @if(!empty($product['product_discount'])) value="{{ $product['product_discount'] }}" @else value="{{ old('product_discount') }}" @endif id="product_discount" name="product_discount" placeholder="Enter product Discount">
-                    </div>
-                    
-                    <div class="form-group">
                         <label for="product_description"> Product Description </label>
                         <textarea name="description" id ="description" class="form-control" rows="3"></textarea>
                     </div>
@@ -166,7 +161,7 @@
 
                     <div class="form-group">
                         <label for="meta_keywords"> Meta Keywords </label>
-                        <input type="text" class="form-control" @if(!empty($product['meta_keywords'])) value="{{ $product['meta_keywords'] }}" @else value="{{ old('meta_keywords') }}" @endif id="meta_keywords" name="meta_keywords" placeholder="Enter product Discount">
+                        <input type="text" class="form-control" @if(!empty($product['meta_keywords'])) value="{{ $product['meta_keywords'] }}" @else value="{{ old('meta_keywords') }}" @endif id="meta_keywords" name="meta_keywords" placeholder="Enter Product Keywords">
                     </div>
 
                     <div class="form-group">
