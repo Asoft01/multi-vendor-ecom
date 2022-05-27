@@ -125,7 +125,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="product_image"> Product Image</label>
+                        <label for="product_image"> Product Image (Recommended Size: 1000 x 1000)</label>
                         <input type="file" class="form-control" id="product_image"  name="product_image">
                     </div>
 
@@ -135,7 +135,7 @@
                     @endif
 
                     <div class="form-group">
-                        <label for="product_image"> Product Video</label>
+                        <label for="product_image"> Product Video (Recommended Size: Less than 2MB)</label>
                         <input type="file" class="form-control" id="product_video"  name="product_video">
                     </div>
 

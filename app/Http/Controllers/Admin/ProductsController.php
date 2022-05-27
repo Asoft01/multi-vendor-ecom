@@ -9,6 +9,7 @@ use App\Models\Section;
 use App\Models\Brand;
 use App\Models\Category;
 use Auth;
+use Image;
 
 class ProductsController extends Controller
 {
@@ -83,6 +84,29 @@ class ProductsController extends Controller
             ];
             
             $this->validate($request, $rules, $customMessages);
+
+            // Upload Product Image After Resize
+            // Small : 250 x 250  // Medium : 500 x 500 // Large : 1000 x 1000
+            if($request->hasFile('main_image')){
+                $image_tmp = $request->file('main_image');
+                if($image_tmp->isValid()){
+                    // Get Image Extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    // Generate new image name 
+                    $imageName = rand(111, 999999).'.'.$extension; 
+                    // echo $imagePath = 'admin/images/photos/'.$imageName; die;
+                    $largeImagePath = 'admin/images/product_images/large/'.$imageName;
+                    $mediumImagePath = 'admin/images/product_images/medium/'.$imageName;
+                    $smallImagePath = 'admin/images/product_images/small/'.$imageName;
+                    // Upload the Large Image, Medium and Small Images and Resize
+                    Image::make($image_tmp)->resize(1000, 1000)->save($imagePath);
+                    Image::make($image_tmp)->resize(500, 500)->save($imagePath);
+                    Image::make($image_tmp)->resize(250, 250)->save($imagePath);
+                    
+                    // Insert Image Name in products table
+                    $product->main_image = $imageName;
+                }
+            }
 
             // Save Product details in products table 
             $categoryDetails =       Category::find($data['category_id']);

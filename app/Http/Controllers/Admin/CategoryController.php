@@ -123,7 +123,6 @@ class CategoryController extends Controller
             $getCategories = Category::with('subcategories')->where(['parent_id' => 0, 'section_id' => $data['section_id']])->get();
             // dd($getCategories); die;
             return view('admin.categories.append_categories_level')->with(compact('getCategories'));
-
         }
     } 
 
