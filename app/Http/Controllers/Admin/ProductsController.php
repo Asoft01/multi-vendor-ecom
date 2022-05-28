@@ -85,7 +85,7 @@ class ProductsController extends Controller
             
             $this->validate($request, $rules, $customMessages);
 
-            // Upload Product Image After Resize
+            // Upload Product Image After Resize online 
             // Small : 250 x 250  // Medium : 500 x 500 // Large : 1000 x 1000
             if($request->hasFile('main_image')){
                 $image_tmp = $request->file('main_image');
