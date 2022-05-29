@@ -35,6 +35,9 @@
                           Product Color
                         </th>
                         <th>
+                          Product Image
+                        </th>
+                        <th>
                           Category
                         </th>
                         <th>
@@ -65,6 +68,13 @@
                           </td>
                           <td>
                             {{ $product['product_color'] }}
+                          </td>
+                          <td>
+                            @if(!empty($product['product_image']))
+                              <img style="width: 80px; height: 80px;" src="{{ asset('admin/images/product_images/small/'.$product['product_image']) }}" alt="">
+                            @else 
+                              <img style="width: 80px; height: 80px;" src="{{ asset('admin/images/product_images/small/dummy-image.png') }}" alt="">
+                            @endif
                           </td>
                           <td>
                             {{ $product['category']['category_name'] }}

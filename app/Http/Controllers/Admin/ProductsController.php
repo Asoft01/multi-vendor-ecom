@@ -58,6 +58,7 @@ class ProductsController extends Controller
         if($request->isMethod('post')){
             $data = $request->all();
             // dd($data); die;
+            // echo "<pre>"; print_r($data); die;
 
             // echo "<pre>"; print_r(Auth::guard('admin')->user()); die;
 
@@ -87,8 +88,8 @@ class ProductsController extends Controller
 
             // Upload Product Image After Resize online 
             // Small : 250 x 250  // Medium : 500 x 500 // Large : 1000 x 1000
-            if($request->hasFile('main_image')){
-                $image_tmp = $request->file('main_image');
+            if($request->hasFile('product_image')){
+                $image_tmp = $request->file('product_image');
                 if($image_tmp->isValid()){
                     // Get Image Extension
                     $extension = $image_tmp->getClientOriginalExtension();
@@ -99,15 +100,28 @@ class ProductsController extends Controller
                     $mediumImagePath = 'admin/images/product_images/medium/'.$imageName;
                     $smallImagePath = 'admin/images/product_images/small/'.$imageName;
                     // Upload the Large Image, Medium and Small Images and Resize
-                    Image::make($image_tmp)->resize(1000, 1000)->save($imagePath);
-                    Image::make($image_tmp)->resize(500, 500)->save($imagePath);
-                    Image::make($image_tmp)->resize(250, 250)->save($imagePath);
+                    Image::make($image_tmp)->resize(1000, 1000)->save($largeImagePath);
+                    Image::make($image_tmp)->resize(500, 500)->save($mediumImagePath);
+                    Image::make($image_tmp)->resize(250, 250)->save($smallImagePath);
                     
                     // Insert Image Name in products table
-                    $product->main_image = $imageName;
+                    $product->product_image = $imageName;
                 }
             }
 
+            // Upload Product Video 
+            if($request->hasFile('product_video')){
+                $video_tmp = $request->file('product_video');
+                if($video_tmp->isValid()){
+                    // Upload Video in Video Folder
+                    $extension = $video_tmp->getClientOriginalExtension();
+                    $videoName= rand(111, 99999).'.'.$extension;
+                    $videoPath = 'admin/videos/product_videos/';
+                    $video_tmp->move($videoPath,$videoName);
+                    // Insert Video Name in Products Table;
+                    $product->product_video = $videoName;
+                }
+            }
             // Save Product details in products table 
             $categoryDetails =       Category::find($data['category_id']);
             $product->section_id  =  $categoryDetails['section_id'];
@@ -129,7 +143,7 @@ class ProductsController extends Controller
 
             $product->product_name =       $data['product_name'];
             $product->product_code =       $data['product_code'];
-            $product->product_color =       $data['product_color'];
+            $product->product_color =      $data['product_color'];
             $product->product_price =      $data['product_price'];
             $product->product_discount =   $data['product_discount'];
             $product->product_weight =     $data['product_name'];
