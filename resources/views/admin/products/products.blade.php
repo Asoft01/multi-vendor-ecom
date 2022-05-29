@@ -73,7 +73,7 @@
                             @if(!empty($product['product_image']))
                               <img style="width: 80px; height: 80px;" src="{{ asset('admin/images/product_images/small/'.$product['product_image']) }}" alt="">
                             @else 
-                              <img style="width: 80px; height: 80px;" src="{{ asset('admin/images/product_images/small/dummy-image.png') }}" alt="">
+                              <img style="width: 80px; height: 80px;" src="{{ asset('admin/images/product_images/small/dummy-image.jpg') }}" alt="">
                             @endif
                           </td>
                           <td>
