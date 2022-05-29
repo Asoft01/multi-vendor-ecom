@@ -70,7 +70,7 @@
                         
                     <div class="form-group">
                         <label for="category_id">Select Category</label>
-                        <select name="category_id" id="category_id" class="form-control">
+                        <select name="category_id" id="category_id" class="form-control text-dark">
                             <option value="">Select</option>
                             @foreach($categories as $section)
                                 <optgroup label="{{ $section['name'] }}"></optgroup>
@@ -86,7 +86,7 @@
 
                     <div class="form-group">
                         <label for="brand_id">Select Brand</label>
-                        <select name="brand_id" id="brand_id" class="form-control" style="color: #000">
+                        <select name="brand_id" id="brand_id" class="form-control text-dark">
                             <option value="">Select</option>
                             @foreach($brands as $brand)
                                 <option value="{{ $brand['id'] }}">{{ $brand['name'] }}</option>

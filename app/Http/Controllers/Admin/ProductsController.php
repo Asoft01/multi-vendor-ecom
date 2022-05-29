@@ -53,6 +53,9 @@ class ProductsController extends Controller
             $message = "Product added successfully";
         }else{
             $title = "Edit Product";
+            $product = Product::find($id);
+            // dd($product); die;
+            $message = "Product updated successfully";
         }
 
         if($request->isMethod('post')){
@@ -162,6 +165,7 @@ class ProductsController extends Controller
             return redirect('admin/products')->with('success_message', $message);
         }
         
+
         // Get Sections with Categories and Sub Categories
         $categories = Section::with('categories')->get()->toArray();
         // dd($categories);die;
@@ -169,6 +173,6 @@ class ProductsController extends Controller
 
         $brands = Brand::where('status', 1)->get()->toArray();
 
-        return view('admin.products.add_edit_product')->with(compact('title', 'categories', 'brands'));
+        return view('admin.products.add_edit_product')->with(compact('title', 'categories', 'brands', 'product'));
     }
 }
