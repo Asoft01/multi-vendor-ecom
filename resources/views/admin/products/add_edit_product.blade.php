@@ -75,9 +75,9 @@
                             @foreach($categories as $section)
                                 <optgroup label="{{ $section['name'] }}"></optgroup>
                                     @foreach ($section['categories'] as $category)
-                                        <option value="{{ $category['id'] }}">&nbsp;&nbsp;&nbsp;---&nbsp;{{ $category['category_name'] }}</option>
+                                        <option @if(!empty($product['catrgory_id']== $category['id'])) selected="" @endif value="{{ $category['id'] }}">&nbsp;&nbsp;&nbsp;---&nbsp;{{ $category['category_name'] }}</option>
                                             @foreach ($category['subcategories'] as $subcategory)
-                                                <option value="{{ $subcategory['id'] }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---&nbsp;{{ $subcategory['category_name'] }}</option>
+                                                <option @if(!empty($product['category_id']== $subcategory['id'])) selected="" @endif value="{{ $subcategory['id'] }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---&nbsp;{{ $subcategory['category_name'] }}</option>
                                             @endforeach
                                     @endforeach
                             @endforeach
@@ -89,7 +89,7 @@
                         <select name="brand_id" id="brand_id" class="form-control text-dark">
                             <option value="">Select</option>
                             @foreach($brands as $brand)
-                                <option value="{{ $brand['id'] }}">{{ $brand['name'] }}</option>
+                                <option value="{{ $brand['id'] }}" @if(!empty($product['brand_id'] == $brand['id'])) selected="" @endif>{{ $brand['name'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -130,7 +130,7 @@
                     </div>
 
                     @if(!empty($product['product_image']))
-                        <a target="_blank" href="{{ url('front/images/product_images/'.$product['product_image']) }}">View Image</a>&nbsp; | &nbsp; 
+                        <a target="_blank" href="{{ url('admin/images/product_images/large/'.$product['product_image']) }}">View Image</a>&nbsp; | &nbsp; 
                         <a href="javascript:void(0)" class="confirmDelete" module="product-image" moduleid="{{ $product['id'] }}">Delete Image</a>
                     @endif
 
@@ -140,13 +140,13 @@
                     </div>
 
                     @if(!empty($product['product_video']))
-                        <a target="_blank" href="{{ url('front/videos/product_videos/'.$product['product_video']) }}">View Video</a>&nbsp; | &nbsp; 
+                        <a target="_blank" href="{{ url('admin/videos/product_videos/'.$product['product_video']) }}">View Video</a>&nbsp; | &nbsp; 
                         <a href="javascript:void(0)" class="confirmDelete" module="product-video" moduleid="{{ $product['id'] }}">Delete Video</a>
                     @endif
 
                     <div class="form-group">
                         <label for="product_description"> Product Description </label>
-                        <textarea name="description" id ="description" class="form-control" rows="3"></textarea>
+                        <textarea name="description" id ="description" class="form-control" rows="3">{{ $product['description'] }}</textarea>
                     </div>
                     
                     <div class="form-group">

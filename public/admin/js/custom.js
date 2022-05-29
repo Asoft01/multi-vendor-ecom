@@ -1,5 +1,4 @@
-const { default: Swal } = require("sweetalert2");
-
+// const { default: Swal } = require("sweetalert2");
 $(document).ready(function(){
     // datatable class
     $('#sections').DataTable();
