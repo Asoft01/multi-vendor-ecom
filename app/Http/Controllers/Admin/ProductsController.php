@@ -231,6 +231,7 @@ class ProductsController extends Controller
         $product = Product::select('id','product_name', 'product_code', 'product_color', 'product_price', 'product_image')->with('attributes')->find($id);
         // dd($product);
         $product = json_decode(json_encode($product), true);
+
         // dd($product); die;
         if($request->isMethod('post')){
             $data = $request->all();
@@ -247,7 +248,7 @@ class ProductsController extends Controller
                     if($sizeCount > 0){
                         return redirect()->back()->with('error_message', 'Size already exists! Please add another Size'); 
                     }
-                    
+
                     $attribute = new ProductsAttribute;
                     $attribute->product_id = $id;
                     $attribute->sku = $value;
@@ -264,4 +265,32 @@ class ProductsController extends Controller
         return view('admin.attributes.add_edit_attributes')->with(compact('product'));
     }
 
+    public function updateAttributeStatus(Request $request){
+        if($request->ajax()){
+            $data= $request->all();
+            // echo "<pre>"; print_r($data); die;
+            if($data['status'] == "Active"){
+                $status = 0;
+            }else{
+                $status = 1;
+            }
+
+            ProductsAttribute::where('id', $data['attribute_id'])->update(['status'=> $status]);
+            return response()->json(['status' =>$status, 'attribute_id' => $data['attribute_id']]);
+        }
+    }
+    
+    public function editAttributes(Request $request){
+        // echo "<pre>"; print_r($data); die;
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
+            foreach ($data['attributeId'] as $key => $attribute) {
+                if(!empty($attribute)){
+                    ProductAttribute::where(['id' => $data['attribute'][$key]])->update(['price' => $data['[price'][$key], 'stock' => $data['stock'][$key]]);
+                    return response()->back()->with('success_message', "Product Attributes has been updated successfully!");
+                }
+            }
+        }
+    }
 }
