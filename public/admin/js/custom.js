@@ -256,4 +256,5 @@ $(document).ready(function(){
         $(this).parent('div').remove(); //Remove field html
         x--; //Decrement field counter
     });
+    
 })
