@@ -117,7 +117,7 @@
 
             <div class="table-responsive pt-3">
                 <h4 class="card-title">Products Attributes</h4>
-                <form action="{{ url('admin/add-edit-attributes/'.$product['id']) }}" method="POST">
+                <form action="{{ url('admin/edit-attributes/'.$product['id']) }}" method="POST">
                     @csrf
                     <table id="products" class="table table-bordered">
                         <thead>
@@ -144,7 +144,7 @@
                         </thead>
                         <tbody>
                             @foreach($product['attributes'] as $attribute)
-                                <input type="hidden" name="attributeId" value="{{ $attribute['id'] }}">
+                                <input style="display:none" type="text" name="attributeId[]" value="{{ $attribute['id'] }}">
                                 <tr>
                                     <td>
                                     {{ $attribute['id'] }}
@@ -157,11 +157,11 @@
                                     </td>
                                     <td> 
                                         {{-- {{ $attribute['price'] }} --}}
-                                        <input type="number" name="price" value="{{ $attribute['price'] }}" required="" style="width: 70px">
+                                        <input type="number" name="price[]" value="{{ $attribute['price'] }}" required="" style="width: 70px">
                                     </td>
                                     <td>
                                         {{-- {{ $attribute['stock'] }} --}}
-                                        <input type="number" name="stock" value="{{ $attribute['stock'] }}" required="" style="width: 70px">
+                                        <input type="number" name="stock[]" value="{{ $attribute['stock'] }}" required="" style="width: 70px">
                                     </td>
                                 
                                     <td>

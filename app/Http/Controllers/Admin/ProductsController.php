@@ -10,11 +10,13 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ProductsAttribute;
 use Auth;
+use Session;
 use Image;
 
 class ProductsController extends Controller
 {
     public function products(){
+        Session::put('page', 'products');
         $products = Product::with(['section' => function($query){
             $query->select('id', 'name');
         }, 'category' => function($query){
@@ -48,6 +50,7 @@ class ProductsController extends Controller
     }
 
     public function addEditProduct(Request $request, $id = null){
+        Session::put('page', 'products');
         if($id== ""){
             $title = "Add Product";
             $product = new Product;
@@ -228,6 +231,7 @@ class ProductsController extends Controller
     }
 
     public function addAttributes(Request $request,  $id){
+        Session::put('page', 'products');
         $product = Product::select('id','product_name', 'product_code', 'product_color', 'product_price', 'product_image')->with('attributes')->find($id);
         // dd($product);
         $product = json_decode(json_encode($product), true);
@@ -279,18 +283,20 @@ class ProductsController extends Controller
             return response()->json(['status' =>$status, 'attribute_id' => $data['attribute_id']]);
         }
     }
-    
+
     public function editAttributes(Request $request){
+        // Session::put('page', 'products');
         // echo "<pre>"; print_r($data); die;
         if($request->isMethod('post')){
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
             foreach ($data['attributeId'] as $key => $attribute) {
                 if(!empty($attribute)){
-                    ProductAttribute::where(['id' => $data['attribute'][$key]])->update(['price' => $data['[price'][$key], 'stock' => $data['stock'][$key]]);
-                    return response()->back()->with('success_message', "Product Attributes has been updated successfully!");
+                    ProductsAttribute::where(['id' => $data['attributeId'][$key]])->update(['price' => $data['price'][$key], 'stock' => $data['stock'][$key]]);
                 }
             }
+            return redirect()->back()->with('success_message', "Product Attributes has been updated successfully!");
         }
     }
 }
+ 
