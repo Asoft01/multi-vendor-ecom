@@ -286,7 +286,6 @@ class ProductsController extends Controller
 
     public function editAttributes(Request $request){
         // Session::put('page', 'products');
-        // echo "<pre>"; print_r($data); die;
         if($request->isMethod('post')){
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
