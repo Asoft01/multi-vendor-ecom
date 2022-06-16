@@ -65,7 +65,7 @@
                         </div>
                     @endif 
                     
-                    <form class="forms-sample" action="{{ url('admin/add-images/'.$product['id']) }}" method="post" enctype="form-data">
+                    <form class="forms-sample" action="{{ url('admin/add-images/'.$product['id']) }}" method="post" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group">

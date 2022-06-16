@@ -9,6 +9,7 @@ use App\Models\Section;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ProductsAttribute;
+use App\Models\ProductsImage;
 use Auth;
 use Session;
 use Image;
@@ -304,11 +305,38 @@ class ProductsController extends Controller
 
         if($request->isMethod('post')){
             $data = $request->all();
-            echo "<pre>"; print_r($data); die;
+            // echo "<pre>"; print_r($data); die;
             if($request->hasFile('images')){
                 $images = $request->file('images');
                 // echo "<pre>"; print_r($images); die;
+                foreach ($images as $key => $image) {
+                    // Generate Temp Image Name 
+                    $image_tmp = Image::make($image);
+                    // echo $image_tmp = $image->getClientOriginalName(); die;
+                    $image_name = $image->getClientOriginalName();
+                    // Get Image Extension
+                    $extension = $image_name->getClientOriginalExtension();
+                    // Generate new image name 
+                    $imageName = rand(111, 999999).'.'.$extension; 
+                    // echo $imagePath = 'admin/images/photos/'.$imageName; die;
+                    $largeImagePath = 'admin/images/product_images/large/'.$imageName;
+                    $mediumImagePath = 'admin/images/product_images/medium/'.$imageName;
+                    $smallImagePath = 'admin/images/product_images/small/'.$imageName;
+                    // Upload the Large Image, Medium and Small Images and Resize
+                    Image::make($image_tmp)->resize(1000, 1000)->save($largeImagePath);
+                    Image::make($image_tmp)->resize(500, 500)->save($mediumImagePath);
+                    Image::make($image_tmp)->resize(250, 250)->save($smallImagePath);
+                    // Insert Image Name in products table
+
+                    $image = new ProductsImage;
+                    $image->image = $imageName;
+                    $image->product_id = $id;
+                    $image->status = 1;
+                    $image->save();
+                }
             }
+
+            return redirect()->back()->with('success_message', 'Product Images has been updated successfully!');
         }
         return view('admin.images.add_images')->with(compact('product'));
 
