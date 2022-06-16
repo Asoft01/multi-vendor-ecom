@@ -133,7 +133,7 @@
                                         {{ $image['id'] }}
                                     </td>
                                     <td>
-                                        <img src="{{ url('front/images/product_images/small/'.$image['image']) }}" alt="">
+                                        <img src="{{ url('admin/images/product_images/small/'.$image['image']) }}" alt="">
                                     </td>
                                     
                                     <td>

@@ -302,22 +302,24 @@ class ProductsController extends Controller
     public function addImages($id, Request $request){
         Session::put('page', 'products');
         $product = Product::select('id','product_name', 'product_code', 'product_color', 'product_price', 'product_image')->with('images')->find($id);
-
+        // echo "<pre>"; print_r($product); die;
+        // dd($product);die;
         if($request->isMethod('post')){
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
+            // dd($data); die;
             if($request->hasFile('images')){
                 $images = $request->file('images');
                 // echo "<pre>"; print_r($images); die;
                 foreach ($images as $key => $image) {
-                    // Generate Temp Image Name 
-                    $image_tmp = Image::make($image);
+                    // Generate Temp Image
+                    $image_tmp = Image::make($image); 
                     // echo $image_tmp = $image->getClientOriginalName(); die;
                     $image_name = $image->getClientOriginalName();
                     // Get Image Extension
-                    $extension = $image_name->getClientOriginalExtension();
+                    $extension = $image->getClientOriginalExtension();
                     // Generate new image name 
-                    $imageName = rand(111, 999999).'.'.$extension; 
+                    $imageName = $image_name.rand(111, 999999).'.'.$extension; 
                     // echo $imagePath = 'admin/images/photos/'.$imageName; die;
                     $largeImagePath = 'admin/images/product_images/large/'.$imageName;
                     $mediumImagePath = 'admin/images/product_images/medium/'.$imageName;
