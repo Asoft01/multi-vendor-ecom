@@ -297,5 +297,16 @@ class ProductsController extends Controller
             return redirect()->back()->with('success_message', "Product Attributes has been updated successfully!");
         }
     }
+
+    public function addImages($id, Request $request){
+        Session::put('page', 'products');
+        $product = Product::select('id','product_name', 'product_code', 'product_color', 'product_price', 'product_image')->with('images')->find($id);
+
+        if($request->isMethod('post')){
+            
+        }
+        return view('admin.images.add_images')->with(compact('product'));
+
+    }
 }
  
