@@ -147,6 +147,9 @@
                                             <i style="font-size:25px" class="mdi mdi-bookmark-outline" status="Inactive"></i>
                                             </a>
                                         @endif
+                                        &nbsp;
+                                        <a href="javascript:void(0)" class="confirmDelete" module="image" moduleid="{{ $image['id'] }}"><i style="font-size:25px" class="mdi mdi-file-excel-box"></i></a>
+
                                     </td>                
                                 </tr>
                             @endforeach
