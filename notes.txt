@@ -8,3 +8,7 @@ php.ini and uncomment ;extension=gd
 
 
 # One Section has many categories
+
+https://www.sitemakers.in/secure.php
+Username : stackdevelopers
+Password: laravel9withamit
