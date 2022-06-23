@@ -101,6 +101,10 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
     });
 });
 
+Route::namespace('App\Http\Controllers\Front')->group(function(){
+    Route::get('/','IndexController@index');
+});
+
 // Admin Login Routes without the admin group
 // Route::get('admin/login', 'App\Http\Controllers\Admin\AdminController@login');
 
