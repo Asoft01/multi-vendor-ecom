@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Laravel Multi Vendor E-commerce Template - By Stack Developers Youtube Channel</title>
+    <title>Laravel Multi Vendor E-commerce By A-Soft</title>
     <!-- Standard Favicon -->
     <link href="favicon.ico" rel="shortcut icon">
     <!-- Base Google Font for Web-app -->

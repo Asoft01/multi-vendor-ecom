@@ -1,3 +1,8 @@
+<?php
+    use App\Models\Section;
+    $sections = Section::sections();
+    echo "<pre>"; print_r($sections); die;
+?>
 <header>
     <!-- Top-Header -->
     <div class="full-layer-outer-header">
