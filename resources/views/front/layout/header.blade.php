@@ -109,7 +109,9 @@
                                         All
                                     </option>
                                     @foreach($sections as $section)
-                                        <option value="">{{ $section['name'] }}</option>
+                                        @if(count($section['categories']) > 0)
+                                            <option value="">{{ $section['name'] }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
