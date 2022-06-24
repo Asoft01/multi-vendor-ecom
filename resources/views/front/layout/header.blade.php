@@ -1,7 +1,7 @@
 <?php
     use App\Models\Section;
     $sections = Section::sections();
-    // echo "<pre>"; print_r($sections); die;
+    echo "<pre>"; print_r($sections); die;
 ?>
 <header>
     <!-- Top-Header -->
