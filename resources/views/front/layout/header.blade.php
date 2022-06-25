@@ -1,7 +1,7 @@
 <?php
     use App\Models\Section;
     $sections = Section::sections();
-    echo "<pre>"; print_r($sections); die;
+    // echo "<pre>"; print_r($sections); die;
 ?>
 <header>
     <!-- Top-Header -->
@@ -228,7 +228,7 @@
                                     @foreach($sections as $section)
                                         @if(count($section['categories']) > 0)
                                             <li class="js-backdrop">
-                                                <a href="shop-v1-root-category.html">
+                                                <a href="javascript:;">
                                                     <i class="ion-ios-add-circle"></i>
                                                     {{ $section['name'] }}
                                                     <i class="ion ion-ios-arrow-forward"></i>
@@ -236,55 +236,22 @@
                                                 <button class="v-button ion ion-md-add"></button>
                                                 <div class="v-drop-right" style="width: 700px;">
                                                     <div class="row">
-                                                        <div class="col-lg-4">
-                                                            <ul class="v-level-2">
-                                                                <li>
-                                                                    <a href="listing.html">Men</a>
-                                                                    <ul>
-                                                                        <li>
-                                                                            <a href="shop-v3-sub-sub-category.html">T-Shirts</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="shop-v3-sub-sub-category.html">Shirts</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <ul class="v-level-2">
-                                                                <li>
-                                                                    <a href="listing.html">Women</a>
-                                                                    <ul>
-                                                                        <li>
-                                                                            <a href="shop-v3-sub-sub-category.html">Tops</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="shop-v3-sub-sub-category.html">Denims</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <ul class="v-level-2">
-                                                                <li>
-                                                                    <a href="listing.html">Kids</a>
-                                                                    <ul>
-                                                                        <li>
-                                                                            <a href="shop-v3-sub-sub-category.html">T-Shirts
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="shop-v3-sub-sub-category.html">Shirts</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="shop-v3-sub-sub-category.html">Shorts</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+                                                        @foreach($section['categories'] as $category)
+                                                            <div class="col-lg-4">
+                                                                <ul class="v-level-2">
+                                                                    <li>
+                                                                        <a href="{{ url($category['url']) }}">{{ $category['category_name'] }}</a>
+                                                                        <ul>
+                                                                            @foreach($category['subcategories'] as $subcategory)
+                                                                                <li>
+                                                                                    <a href="{{ url($subcategory['url']) }}">{{ $subcategory['category_name'] }}</a>
+                                                                                </li>
+                                                                            @endforeach 
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        @endforeach
                                                     </div>
                                                 </div>
                                             </li>
