@@ -53,7 +53,7 @@
                             {{ $banner['id'] }}
                           </td>
                           <td>
-                            <img src="{{ asset('front/images/banner_images/'.$banner['image']) }}" alt="">
+                            <img style="width: 180px;" src="{{ asset('front/images/banner_images/'.$banner['image']) }}" alt="">
                           </td>
                           <td>
                               {{ $banner['link'] }}

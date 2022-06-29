@@ -98,7 +98,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::post('update-image-status', 'ProductsController@updateImageStatus');
         Route::get('delete-image/{id}', 'ProductsController@deleteImage');
         Route::get('banners', 'BannersController@banners');
-
+        Route::post('update-banner-status', 'BannersController@updateBannerStatus');
     });
 });
 
