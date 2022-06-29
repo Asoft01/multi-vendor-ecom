@@ -6,9 +6,9 @@
           <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
-                <h4 class="card-title"> Categories </h4>
+                <h4 class="card-title"> Banners </h4>
                 
-                <a style="max-width: 150px; float: right; display: inline-block" href="{{ url('admin/add-edit-category') }}" class="btn btn-block btn-primary">Add Categories</a>
+                <a style="max-width: 150px; float: right; display: inline-block" href="{{ url('admin/add-edit-banner') }}" class="btn btn-block btn-primary">Add Banners</a>
                 @if(Session::has('success_message')) 
                   <div class="alert alert-success alert-dismissbible fade show" role="alert">
                       <strong>Success: </strong> {{ Session::get('success_message') }}  
@@ -20,23 +20,23 @@
                 @endif  
 
                 <div class="table-responsive pt-3">
-                  <table id="categories" class="table table-bordered">
+                  <table id="banners" class="table table-bordered">
                     <thead>
                       <tr>
                         <th>
                           ID
                         </th>
                         <th>
-                          Category
+                          Image
                         </th>
                         <th>
-                          Parent Category
+                          Link
                         </th>
                         <th>
-                          Section
+                          Title
                         </th>
                         <th>
-                          URL
+                          Alt
                         </th>
                         <th>
                           Status
@@ -47,49 +47,44 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach($categories as $category)
-                        @if(isset($category['parentcategory']['category_name']) && !empty($category['parentcategory']['category_name']))
-                          <?php $parent_category = $category['parentcategory']['category_name']; ?>
-                        @else 
-                          <?php $parent_category = "Root"; ?>
-                        @endif
+                      @foreach($banners as $banner)
                         <tr>
                           <td>
-                            {{ $category['id'] }}
+                            {{ $banner['id'] }}
                           </td>
                           <td>
-                            {{ $category['category_name'] }}
+                            {{ $banner['image'] }}
                           </td>
                           <td>
-                              {{ $parent_category }}
+                              {{ $banner['link'] }}
                           </td>
                           <td>
-                            {{ $category['section']['name'] }}
+                            {{ $banner['title'] }}
                           </td>
                           <td>
-                            {{ $category['url'] }}
+                            {{ $banner['alt'] }}
                           </td>
                           
                           <td>
-                            @if($category['status'] == 1)
+                            @if($banner['status'] == 1)
                               {{-- Active --}}
-                              <a class="updateCategoryStatus" id="category-{{ $category['id'] }}" category_id="{{ $category['id'] }}" href="javascript:void(0)"><i style="font-size:25px" class="mdi mdi-bookmark-check" status="Active"></i>
+                              <a class="updateBannerStatus" id="banner-{{ $banner['id'] }}" banner_id="{{ $banner['id'] }}" href="javascript:void(0)"><i style="font-size:25px" class="mdi mdi-bookmark-check" status="Active"></i>
                               </a>
                             @else 
                               {{-- Inactive --}}
-                              <a class="updateCategoryStatus" id="category-{{ $category['id'] }}" category_id="{{ $category['id'] }}" href="javascript:void(0)">
+                              <a class="updateBannerStatus" id="banner-{{ $banner['id'] }}" banner_id="{{ $banner['id'] }}" href="javascript:void(0)">
                                 <i style="font-size:25px" class="mdi mdi-bookmark-outline" status="Inactive"></i>
                               </a>
                             @endif
                           </td>
                           <td>
                               <?php /*
-                              <a title="category" class="confirmDelete" href="{{ url('admin/delete-category/'.$category['id']) }}"><i style="font-size:25px" class="mdi mdi-file-excel-box"></i></a>
+                              <a title="banner" class="confirmDelete" href="{{ url('admin/delete-banner/'.$banner['id']) }}"><i style="font-size:25px" class="mdi mdi-file-excel-box"></i></a>
                               */ 
                               ?>
-                              <a href="{{ url('admin/add-edit-category/'.$category['id']) }}"><i style="font-size:25px" class="mdi mdi-pencil-box"></i></a>
+                              <a href="{{ url('admin/add-edit-banner/'.$banner['id']) }}"><i style="font-size:25px" class="mdi mdi-pencil-box"></i></a>
 
-                              <a href="javascript:void(0)" class="confirmDelete" module="category" moduleid="{{ $category['id'] }}"><i style="font-size:25px" class="mdi mdi-file-excel-box"></i></a>
+                              <a href="javascript:void(0)" class="confirmDelete" module="banner" moduleid="{{ $banner['id'] }}"><i style="font-size:25px" class="mdi mdi-file-excel-box"></i></a>
                           </td>                     
                         </tr>
                       @endforeach
@@ -106,7 +101,7 @@
     <!-- partial:../../partials/_footer.html -->
     <footer class="footer">
       <div class="d-sm-flex justify-content-center justify-content-sm-between">
-        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.asoft.com/" target="_blank"> Asoft </a> multivendor e-commerce.</span>
         <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
       </div>
     </footer>
