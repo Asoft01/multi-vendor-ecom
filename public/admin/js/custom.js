@@ -107,9 +107,9 @@ $(document).ready(function(){
             success: function(resp){
                 // alert(url); return true;
                 if(resp['status'] == 0){
-                    $("#section-"+banner_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-outline' status='Inactive'></i>");
+                    $("#banner-"+banner_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-outline' status='Inactive'></i>");
                 }else if(resp['status'] == 1){
-                    $("#section-"+banner_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-check' status='Active'></i>");
+                    $("#banner-"+banner_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-check' status='Active'></i>");
                 }
             }, 
             error: function(){
