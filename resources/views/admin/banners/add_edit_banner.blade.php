@@ -70,7 +70,7 @@
                 
                     <div class="form-group">
                         <label for="image"> banner Image</label>
-                        <input type="file" class="form-control" id="image"  name="image">
+                        <input type="file" class="form-control" id="image"  name="image" >
                     </div>
 
                     @if(!empty($banner['image']))
