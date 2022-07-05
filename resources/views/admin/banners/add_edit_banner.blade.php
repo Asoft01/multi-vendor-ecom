@@ -75,7 +75,6 @@
 
                     @if(!empty($banner['image']))
                         <a target="_blank" href="{{ url('front/images/banner-image/'.$banner['image']) }}">View Image</a>&nbsp; | &nbsp; 
-                        <a href="javascript:void(0)" class="confirmDelete" module="banner-image" moduleid="{{ $banner['id'] }}">Delete Image</a>
                     @endif
                     
                     <div class="form-group">
