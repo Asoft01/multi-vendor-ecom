@@ -6,7 +6,7 @@
             <div class="col-md-12 grid-margin">
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">Banners</h3>
+                    <h3 class="font-weight-bold">Home Page Banners</h3>
                     </div>
                     <div class="col-12 col-xl-4">
                         <div class="justify-content-end d-flex">
@@ -78,9 +78,19 @@
                     @endif
                     
                     <div class="form-group">
+                        <label for="link"> Banner Type </label>
+                        <select class="form-control" id="type" name="type" required>
+                            <option value="">Select</option>
+                            <option @if(!empty($banner['type']) && $banner['type'] == "Slider") selected="" @endif value="Slider">Slider</option>
+                            <option @if(!empty($banner['type']) && $banner['type'] == "Fix") selected="" @endif value="Fix">Fix</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label for="link"> Banner Link </label>
                         <input type="text" class="form-control" @if(!empty($banner['link'])) value="{{ $banner['link'] }}" @else value="{{ old('link') }}" @endif id="link" name="link" placeholder="Enter Banner Link" required>
                     </div>
+
 
                     <div class="form-group">
                         <label for="title"> Banner Title </label>

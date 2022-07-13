@@ -68,10 +68,19 @@ class BannersController extends Controller
             // echo "<pre>"; print_r($data); die;
               // Upload Banner Image
 
+              $banner->type = $data['type'];
               $banner->link = $data['link'];
               $banner->title = $data['title'];
               $banner->alt = $data['alt'];
               $banner->status = 1;
+
+              if($data['type'] == "Slider"){
+                    $width = "1920";
+                    $height  = "720";
+              }else if($data['type'] == "Fix"){
+                    $width = "1920";
+                    $height = "450";
+              }
 
               if($request->hasFile('image')){
                 // echo $image_tmp = $request->file('image'); die;
@@ -83,7 +92,7 @@ class BannersController extends Controller
                     // echo $imagePath = 'admin/images/photos/'.$imageName; die;
                     $imagePath = 'front/images/banner_images/'.$imageName;
                     // Upload the Image
-                    Image::make($image_tmp)->resize(1920, 720)->save($imagePath);
+                    Image::make($image_tmp)->resize($width, $height)->save($imagePath);
                     $banner->image = $imageName;
                 }
             }
