@@ -60,7 +60,7 @@
                             <div class="slider-fouc">
                                 <div class="products-slider owl-carousel" data-item="4">
                                     @foreach($newProducts as $product)
-                                        <?php //echo "<pre>"; print_r($product); die; ?>
+                                        <?php echo "<pre>"; print_r($product); die; ?>
                                         <?php $product_image_path = 'admin/images/product_images/small/'.$product['product_image']; ?>    
                                             <div class="item">
                                                 <div class="image-container">
