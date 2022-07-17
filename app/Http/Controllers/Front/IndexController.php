@@ -15,7 +15,9 @@ class IndexController extends Controller
         $newProducts = Product::orderBy('id', 'Desc')->where('status', 1)->limit(8)->get()->toArray();
         // dd($fixBanners);
         // dd($newProducts);
-        return view('front.index')->with(compact('sliderBanners', 'fixBanners', 'newProducts'));
+        $bestSellers = Product::where(['is_bestseller' => 'Yes', 'status' => 1])->get()->toArray();
+        // dd($bestSellers); die;
+        return view('front.index')->with(compact('sliderBanners', 'fixBanners', 'newProducts', 'bestSellers'));
     }
 
 }
