@@ -1,3 +1,4 @@
+ <?php use App\Models\Product; ?>
  @extends('front.layout.layout')
  @section('content')
     <!-- Main-Slider -->
@@ -96,14 +97,23 @@
                                                             <span>(0)</span>
                                                         </div>
                                                     </div>
-                                                    <div class="price-template">
-                                                        <div class="item-new-price">
-                                                            $100.00
+                                                    <?php $getDiscountPrice = Product::getDiscountPrice($product['id']); ?>
+                                                    @if($getDiscountPrice > 0 )
+                                                        <div class="price-template">
+                                                            <div class="item-new-price">
+                                                                Rs. {{ $getDiscountPrice }}
+                                                            </div>
+                                                            <div class="item-old-price">
+                                                                Rs. {{ $product['product_price'] }}
+                                                            </div>
                                                         </div>
-                                                        <div class="item-old-price">
-                                                            $120.00
+                                                    @else 
+                                                        <div class="price-template">
+                                                            <div class="item-new-price">
+                                                                Rs. {{ $product['product_price'] }}
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    @endif 
                                                 </div>
                                                 <div class="tag new">
                                                     <span>NEW</span>
