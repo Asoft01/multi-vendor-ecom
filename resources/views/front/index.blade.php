@@ -60,12 +60,12 @@
                             <div class="slider-fouc">
                                 <div class="products-slider owl-carousel" data-item="4">
                                     @foreach($newProducts as $product)
-                                        <?php echo "<pre>"; print_r($product); die; ?>
-                                        <?php $product_image_path = 'admin/images/product_images/small/'.$product['product_image']; ?>    
+                                        <?php //echo "<pre>"; print_r($product); die; ?>
+                                        <?php $product_image_path = 'admin/images/product_images/small/'.$product['product_image']; ?>   
                                             <div class="item">
                                                 <div class="image-container">
                                                     <a class="item-img-wrapper-link" href="single-product.html">
-                                                        @if(!empty($product['image_name']) && file_exists($product_image_path))
+                                                        @if(!empty($product['product_image']) && file_exists($product_image_path))
                                                             <img class="img-fluid" src="{{ asset($product_image_path) }}" alt="Product">
                                                         @else 
                                                             <img class="img-fluid" src="{{ asset('admin/images/product_images/small/dummy-image.jpg') }}" alt="Product">
