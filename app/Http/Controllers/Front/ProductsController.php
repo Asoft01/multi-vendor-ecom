@@ -16,6 +16,7 @@ class ProductsController extends Controller
         $categoryCount = Category::where(['url' => $url, 'status' => 1])->count();
         if($categoryCount > 0){
             // Get Category Details 
+            $categoryDetails = Category::categoryDetails($url);
             echo "Category Exists"; die;
         }else{
             abort(404);

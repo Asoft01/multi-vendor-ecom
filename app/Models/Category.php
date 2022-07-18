@@ -20,4 +20,10 @@ class Category extends Model
     public function subcategories(){
         return $this->hasMany('App\Models\Category', 'parent_id')->where('status', 1);
     }
+
+    public static function categoryDetails($url){
+        $categoryDetails = Category::select('id', 'category_name', 'url')->with('subcategories')
+            ->where('url', $url)->first()->toArray();
+        dd($categoryDetails); die;
+    }
 }
