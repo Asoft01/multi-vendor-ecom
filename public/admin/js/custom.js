@@ -274,7 +274,7 @@ $(document).ready(function(){
     // });
 
     // Confirm Deletion (SweetAlert Library)
-    $(".confirmDelete").click(function(){
+    $(document).on("click", ".confirmDelete", function(){
         var module = $(this).attr("module");
         var moduleid = $(this).attr("moduleid");
         // alert(moduleid);

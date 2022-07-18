@@ -16,8 +16,9 @@ class IndexController extends Controller
         // dd($fixBanners);
         // dd($newProducts);
         $bestSellers = Product::where(['is_bestseller' => 'Yes', 'status' => 1])->inRandomOrder()->get()->toArray();
+        $discountedProducts = Product::where('product_discount', '>', 0)->where('status', 1)->limit(6)->inRandomOrder()->get()->toArray();
         // dd($bestSellers); die;
-        return view('front.index')->with(compact('sliderBanners', 'fixBanners', 'newProducts', 'bestSellers'));
+        return view('front.index')->with(compact('sliderBanners', 'fixBanners', 'newProducts', 'bestSellers', 'discountedProducts'));
     }
 
 }
