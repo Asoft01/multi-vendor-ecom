@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Product;
 
 class ProductsController extends Controller
 {
@@ -17,7 +18,11 @@ class ProductsController extends Controller
         if($categoryCount > 0){
             // Get Category Details 
             $categoryDetails = Category::categoryDetails($url);
-            echo "Category Exists"; die;
+            // dd($categoryDetails); die;
+            $categoryProducts = Product::whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->get()->toArray();
+            // dd($categoryProducts); die;
+            // echo "Category Exists"; die;
+            return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts'));
         }else{
             abort(404);
         }

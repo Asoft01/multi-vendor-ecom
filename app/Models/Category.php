@@ -24,6 +24,15 @@ class Category extends Model
     public static function categoryDetails($url){
         $categoryDetails = Category::select('id', 'category_name', 'url')->with('subcategories')
             ->where('url', $url)->first()->toArray();
-        dd($categoryDetails); die;
+        // dd($categoryDetails); die;
+        $catIds = array();
+        $catIds[] = $categoryDetails['id'];
+        foreach ($categoryDetails['subcategories'] as $key => $subcat) {
+            $catIds[] = $subcat['id'];
+        }
+        // dd($catIds); die;
+        $resp = array('catIds' => $catIds, 'categoryDetails' => $categoryDetails);
+        // dd($resp); die;
+        return $resp;
     }
 }

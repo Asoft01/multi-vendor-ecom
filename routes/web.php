@@ -114,7 +114,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     // dd($catUrls); die;
     foreach($catUrls as $key => $url){
         Route::get('/'. $url, 'ProductsController@listing');
-    } 
+    }
 });
 
 // Admin Login Routes without the admin group
