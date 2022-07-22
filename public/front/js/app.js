@@ -691,6 +691,8 @@ $(function () {
     /**
      * Attach Click event to Grid & List
      */
+     $shopProductContainer.addClass('grid-style');
+     $shopProductContainer.removeClass('list-style');
     const attachClickGridAndList = function () {
         $('#list-anchor').on('click',function () {
             $(this).addClass('active');
