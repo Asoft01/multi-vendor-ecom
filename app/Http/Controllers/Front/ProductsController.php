@@ -22,6 +22,7 @@ class ProductsController extends Controller
             $categoryProducts = Product::whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->get()->toArray();
             // dd($categoryProducts); die;
             // echo "Category Exists"; die;
+            // 
             return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts'));
         }else{
             abort(404);
