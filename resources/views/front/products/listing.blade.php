@@ -108,8 +108,11 @@
                                                 <li class="has-separator">
                                                     <a href="shop-v1-root-category.html">{{ $product['product_code'] }}</a>
                                                 </li>
-                                                <li>
+                                                <li class="has-separator">
                                                     <a href="listing.html">{{ $product['product_color'] }}</a>
+                                                </li>
+                                                <li>
+                                                    <a href="listing.html">{{ $product['brand']['name'] }}</a>
                                                 </li>
                                             </ul>
                                             <h6 class="item-title">
