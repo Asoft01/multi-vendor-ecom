@@ -22,17 +22,33 @@ class Category extends Model
     }
 
     public static function categoryDetails($url){
-        $categoryDetails = Category::select('id', 'category_name', 'url')->with(['subcategories'=> function($query){
-            $query->select('id', 'parent_id', 'category_name', 'url');
+        $categoryDetails = Category::select('id', 'parent_id', 'category_name', 'url', 'description')->with(['subcategories'=> function($query){
+            $query->select('id', 'parent_id', 'category_name', 'url', 'description');
         }])->where('url', $url)->first()->toArray();
         // dd($categoryDetails); die;
         $catIds = array();
         $catIds[] = $categoryDetails['id'];
+
+        if($categoryDetails['parent_id'] == 0){
+            // Only Show Main Category in Breadcrumb
+            $breadcrumbs = '<li class="is-marked">
+                <a href="'.url($categoryDetails['url']).'">'.$categoryDetails['category_name'].' </a>
+            </li>';
+        }else{
+            // Show Main and SubCategory in Breadcrumb
+            $parentCategory = Category::select('category_name', 'url')->where('id', $categoryDetails['parent_id'])->first()->toArray();
+            $breadcrumbs = '<li class="has-separator">
+                <a href="'.url($parentCategory['url']).'">'.$parentCategory['category_name'].' </a>
+            </li><li class="is-marked">
+            <a href="'.url($categoryDetails['url']).'">'.$categoryDetails['category_name'].' </a>
+            </li>';
+        }
+
         foreach ($categoryDetails['subcategories'] as $key => $subcat) {
             $catIds[] = $subcat['id'];
         }
         // dd($catIds); die;
-        $resp = array('catIds' => $catIds, 'categoryDetails' => $categoryDetails);
+        $resp = array('catIds' => $catIds, 'categoryDetails' => $categoryDetails, 'breadcrumbs' => $breadcrumbs);
         // dd($resp); die;
         return $resp;
     }

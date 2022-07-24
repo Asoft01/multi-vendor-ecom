@@ -26,14 +26,15 @@
             <div class="shop-intro">
                 <ul class="bread-crumb">
                     <li class="has-separator">
-                        <a href="index.html">Home</a>
+                        <a href="{{ url('/') }}">Home</a>
                     </li>
-                    <li class="has-separator">
+                    {{-- <li class="has-separator">
                         <a href="shop-v1-root-category.html">Men Clothing </a>
                     </li>
                     <li class="is-marked">
                         <a href="listing.html">T-Shirts</a>
-                    </li>
+                    </li> --}}
+                    <?php echo $categoryDetails['breadcrumbs']; ?>
                 </ul>
             </div>
             <!-- Shop-Intro /- -->
@@ -154,6 +155,7 @@
                         @endforeach
                     </div>
                     <!-- Row-of-Product-Container /- -->
+                    <div>{{ $categoryDetails['categoryDetails']['description'] }}</div>
                 </div>
                 <!-- Shop-Right-Wrapper /- -->
                 <!-- Shop-Pagination -->
