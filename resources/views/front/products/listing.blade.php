@@ -167,11 +167,14 @@
                         @endforeach
                     </div>
                     <!-- Row-of-Product-Container /- -->
+                    <div class="mt-3 mb-3">
+                        {{ $categoryProducts->links() }}
+                    </div>
                     <div>{{ $categoryDetails['categoryDetails']['description'] }}</div>
                 </div>
                 <!-- Shop-Right-Wrapper /- -->
                 <!-- Shop-Pagination -->
-                <div class="pagination-area">
+                <!--<div class="pagination-area">
                     <div class="pagination-number">
                         <ul>
                             <li style="display: none">
@@ -202,6 +205,8 @@
                         </ul>
                     </div>
                 </div>
+                -->
+
                 <!-- Shop-Pagination /- -->
             </div>
         </div>
