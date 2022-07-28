@@ -26,6 +26,7 @@ class Category extends Model
             $query->select('id', 'parent_id', 'category_name', 'url', 'description');
         }])->where('url', $url)->first()->toArray();
         // dd($categoryDetails); die;
+
         $catIds = array();
         $catIds[] = $categoryDetails['id'];
 
@@ -47,6 +48,7 @@ class Category extends Model
         foreach ($categoryDetails['subcategories'] as $key => $subcat) {
             $catIds[] = $subcat['id'];
         }
+
         // dd($catIds); die;
         $resp = array('catIds' => $catIds, 'categoryDetails' => $categoryDetails, 'breadcrumbs' => $breadcrumbs);
         // dd($resp); die;

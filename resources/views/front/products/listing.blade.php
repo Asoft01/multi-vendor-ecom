@@ -69,13 +69,22 @@
                         </div>
                         <!-- //end Toolbar Sorter 1  -->
                         <!-- Toolbar Sorter 2  -->
-                        <div class="toolbar-sorter-2">
+                        {{-- <div class="toolbar-sorter-2">
                             <div class="select-box-wrapper">
                                 <label class="sr-only" for="show-records">Show Records Per Page</label>
                                 <select class="select-box" id="show-records">
                                     <option selected="selected" value="">Show: 8</option>
                                     <option value="">Show: 16</option>
                                     <option value="">Show: 28</option>
+                                </select>
+                            </div>
+                        </div> --}}
+                        <div class="toolbar-sorter-2">
+                            <div class="select-box-wrapper">
+                                <label class="sr-only" for="show-records">Show Records Per Page</label>
+                                <select class="select-box" id="show-records">
+                                    <option selected="selected" value="">Showing: {{ count($categoryProducts) }}</option>
+                                    <option value="">Showing: All </option>
                                 </select>
                             </div>
                         </div>
@@ -147,9 +156,12 @@
                                                 </div>
                                             @endif 
                                     </div>
-                                    <div class="tag new">
-                                        <span>NEW</span>
-                                    </div>
+                                    <?php $isProductNew = Product::isProductNew($product['id']); ?>
+                                    @if($isProductNew == "Yes")
+                                        <div class="tag new">
+                                            <span>NEW</span>
+                                        </div>
+                                    @endif 
                                 </div>
                             </div>
                         @endforeach

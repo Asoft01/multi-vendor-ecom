@@ -20,7 +20,7 @@ class Product extends Model
     public function brand(){
         return $this->belongsTo('App\Models\Brand', 'brand_id');
     }
-    
+
     public function attributes(){
         return $this->hasMany('App\Models\ProductsAttribute');
     }
@@ -46,5 +46,18 @@ class Product extends Model
             $discounted_price = 0;
         }
         return $discounted_price;
+    }
+
+    public static function isProductNew($product_id){
+        // Get Last 3 Prroducts 
+        $productIds = Product::select('id')->where('status', 1)->orderBy('id', 'Desc')->limit(3)->pluck('id');
+        $productIds = json_decode(json_encode($productIds), true);
+        // dd($productIds); die;
+        if(in_array($product_id, $productIds)){
+            $isProductNew = "Yes";
+        }else{
+            $isProductNew = "No";
+        }
+        return $isProductNew;
     }
 }
