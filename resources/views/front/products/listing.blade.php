@@ -55,18 +55,23 @@
                             </a>
                         </div>
                         <!-- Toolbar Sorter 1  -->
-                        <div class="toolbar-sorter">
-                            <div class="select-box-wrapper">
-                                <label class="sr-only" for="sort-by">Sort By</label>
-                                <select class="select-box" id="sort-by">
-                                    <option selected="selected" value="">Sort By: Best Selling</option>
-                                    <option value="">Sort By: Latest</option>
-                                    <option value="">Sort By: Lowest Price</option>
-                                    <option value="">Sort By: Highest Price</option>
-                                    <option value="">Sort By: Best Rating</option>
-                                </select>
+                        <form name="sortProducts" id="sortProducts">
+                            <div class="toolbar-sorter">
+                                <div class="select-box-wrapper">
+                                    <label class="sr-only" for="sort-by">Sort By</label>
+                                    <select class="select-box" id="sort-by" name="sort">
+                                        {{-- <option selected="selected" value="">Sort By: Best Selling</option> --}}
+                                        <option selected="">Select</option>
+                                        <option value="product_latest">Sort By: Latest</option>
+                                        <option value="price_lowest">Sort By: Lowest Price</option>
+                                        <option value="price_highest">Sort By: Highest Price</option>
+                                        <option value="name_z_a">Sort By: Name A - Z</option>
+                                        <option value="name_a_z">Sort By: Name Z - A</option>
+                                        {{-- <option value="">Sort By: Best Rating</option> --}}
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                         <!-- //end Toolbar Sorter 1  -->
                         <!-- Toolbar Sorter 2  -->
                         {{-- <div class="toolbar-sorter-2">
