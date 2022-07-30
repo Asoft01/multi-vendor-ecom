@@ -59,7 +59,7 @@
                             <div class="toolbar-sorter">
                                 <div class="select-box-wrapper">
                                     <label class="sr-only" for="sort-by">Sort By</label>
-                                    <select class="select-box" id="sort-by" name="sort">
+                                    <select class="select-box" id="sort" name="sort">
                                         {{-- <option selected="selected" value="">Sort By: Best Selling</option> --}}
                                         <option selected="">Select</option>
                                         <option value="product_latest">Sort By: Latest</option>

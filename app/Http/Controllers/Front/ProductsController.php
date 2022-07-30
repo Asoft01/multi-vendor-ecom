@@ -20,7 +20,20 @@ class ProductsController extends Controller
             $categoryDetails = Category::categoryDetails($url);
             // dd($categoryDetails); die;
             // $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->get()->toArray();
-            $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->Paginate(3);
+            $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1);
+
+            // checking for Sort
+            if(isset($_GET['sort']) && !empty($_GET['sort'])){
+                if($_GET['sort'] == "product_latest"){
+                    $categoryProducts->orderBy('products.id', 'Desc');
+                }else if($_GET['sort'] == "price_lowest"){
+                    $categoryProducts->orderBy('products.product_price', 'Asc');
+                }else if($_GET['sort'] == "price_highest"){
+                    $categoryProducts->orderBy('products.product_price', 'Desc');
+                }
+            }
+
+            $categoryProducts = $categoryProducts->Paginate(30);
             // $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->simplePaginate(3);
             // $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->cursorPaginate(3);
             // dd($categoryProducts); die;
