@@ -30,6 +30,10 @@ class ProductsController extends Controller
                     $categoryProducts->orderBy('products.product_price', 'Asc');
                 }else if($_GET['sort'] == "price_highest"){
                     $categoryProducts->orderBy('products.product_price', 'Desc');
+                }else if($_GET['sort'] == "name_z_a"){
+                    $categoryProducts->orderBy('products.product_name', 'Desc');
+                }else if($_GET['sort'] == "name_a_z"){
+                    $categoryProducts->orderBy('products.product_name', 'Asc');
                 }
             }
 
