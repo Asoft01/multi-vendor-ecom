@@ -22,7 +22,7 @@ class ProductsController extends Controller
             // $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->get()->toArray();
             $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1);
 
-            // checking for sort
+            // checking for sort s
             if(isset($_GET['sort']) && !empty($_GET['sort'])){
                 if($_GET['sort'] == "product_latest"){
                     $categoryProducts->orderBy('products.id', 'Desc');
@@ -37,7 +37,7 @@ class ProductsController extends Controller
                 }
             }
 
-            $categoryProducts = $categoryProducts->Paginate(30);
+            $categoryProducts = $categoryProducts->Paginate(3);
             // $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->simplePaginate(3);
             // $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->cursorPaginate(3);
             // dd($categoryProducts); die;
