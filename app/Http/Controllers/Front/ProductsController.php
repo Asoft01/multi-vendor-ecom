@@ -10,7 +10,11 @@ use App\Models\Product;
 
 class ProductsController extends Controller
 {
-    public function listing(){
+    public function listing(Request $request){
+        if($request->ajax()){
+            $data = $request->all();
+            echo "<pre>"; print_r($data); die;
+        }
         // echo "test"; die;
         // echo $url = Route::getFacadeRoot()->current()->uri(); die;
         $url = Route::getFacadeRoot()->current()->uri();
