@@ -43,7 +43,7 @@ class ProductsController extends Controller
             // dd($categoryProducts); die;
             // dd($categoryDetails); die;
             // echo "Category Exists"; die;
-            return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts'));
+            return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts', 'url'));
         }else{
             abort(404);
         }
