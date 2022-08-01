@@ -1,5 +1,5 @@
 <?php use App\Models\Product; ?>
-<div class="row product-container list-style">
+<div class="row product-container grid-style">
     @foreach($categoryProducts as $product)
         <div class="product-item col-lg-4 col-md-6 col-sm-6">
             <div class="item">

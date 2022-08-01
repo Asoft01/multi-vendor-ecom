@@ -13,7 +13,7 @@ class ProductsController extends Controller
     public function listing(Request $request){
         if($request->ajax()){
             $data = $request->all();
-            echo "<pre>"; print_r($data); die;
+            // echo "<pre>"; print_r($data); die;
               // echo "test"; die;
                 // echo $url = Route::getFacadeRoot()->current()->uri(); die;
                 // $url = Route::getFacadeRoot()->current()->uri();
@@ -48,7 +48,7 @@ class ProductsController extends Controller
                     // dd($categoryProducts); die;
                     // dd($categoryDetails); die;
                     // echo "Category Exists"; die;
-                    return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts', 'url'));
+                    return view('front.products.ajax_products_listing')->with(compact('categoryDetails', 'categoryProducts', 'url'));
                 }else{
                     abort(404);
                 }

@@ -45,14 +45,14 @@
                 <div class="col-lg-9 col-md-9 col-sm-12">
                     <!-- Page-Bar -->
                     <div class="page-bar clearfix">
-                        <div class="shop-settings">
+                        {{-- <div class="shop-settings">
                             <a id="list-anchor">
                                 <i class="fas fa-th-list"></i>
                             </a>
                             <a id="grid-anchor" class="active">
                                 <i class="fas fa-th"></i>
                             </a>
-                        </div>
+                        </div> --}}
                         <!-- Toolbar Sorter 1  -->
                         <form name="sortProducts" id="sortProducts">
                             <input type="hidden" name="url" id="url" value="{{ $url }}">
