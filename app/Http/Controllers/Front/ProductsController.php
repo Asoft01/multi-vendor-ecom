@@ -90,6 +90,7 @@ class ProductsController extends Controller
                 abort(404);
             }
         }
+        
         // // echo "test"; die;
         // // echo $url = Route::getFacadeRoot()->current()->uri(); die;
         // $url = Route::getFacadeRoot()->current()->uri();
