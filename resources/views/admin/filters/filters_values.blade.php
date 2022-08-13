@@ -27,14 +27,14 @@
                           ID
                         </th>
                         <th>
-                          Filter Name
+                          Filter ID
                         </th>
                         <th>
-                            Filter Column 
-                          </th>
-                          <th>
-                            Categories
-                          </th>    
+                            Filter Name
+                        </th>
+                        <th>
+                            Filter Values 
+                        </th>   
                         <th>
                           Status 
                         </th>
@@ -44,29 +44,29 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach($filters as $filter)
+                      @foreach($filters_values as $filter)
                         <tr>
                           <td>
                             {{ $filter['id'] }}
                           </td>
                           <td>
-                            {{ $filter['filter_name'] }}
+                            {{ $filter['filter_id'] }}
                           </td>
                           <td>
-                            {{ $filter['filter_column'] }}
+                            {{ $filter['filter_id'] }}
                           </td>
                           <td>
-                            {{ $filter['cat_ids'] }}
+                            {{ $filter['filter_value'] }}
                           </td>
                           
                           <td>
                             @if($filter['status'] == 1)
                               {{-- Active --}}
-                              <a class="updateFilterStatus" id="filter-{{ $filter['id'] }}" filter_id="{{ $filter['id'] }}" href="javascript:void(0)"><i style="font-size:25px" class="mdi mdi-bookmark-check" status="Active"></i>
+                              <a class="updateFilterValueStatus" id="filter-{{ $filter['id'] }}" filter_id="{{ $filter['id'] }}" href="javascript:void(0)"><i style="font-size:25px" class="mdi mdi-bookmark-check" status="Active"></i>
                               </a>
                             @else 
                               {{-- Inactive --}}
-                              <a class="updateFilterStatus" id="filter-{{ $filter['id'] }}" filter_id="{{ $filter['id'] }}" href="javascript:void(0)">
+                              <a class="updateFilterValueStatus" id="filter-{{ $filter['id'] }}" filter_id="{{ $filter['id'] }}" href="javascript:void(0)">
                                 <i style="font-size:25px" class="mdi mdi-bookmark-outline" status="Inactive"></i>
                               </a>
                             @endif

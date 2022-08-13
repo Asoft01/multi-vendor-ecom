@@ -6,6 +6,7 @@ $(document).ready(function(){
     $('#brands').DataTable();
     $('#products').DataTable();
     $('#banners').DataTable();
+    $('#filters').DataTable();
 
     $(".nav-item").removeClass("active");
     $(".nav-link").removeClass("active");
@@ -202,7 +203,66 @@ $(document).ready(function(){
             }
         })
     });
+    
+    // Update Filter Status
+    $(document).on('click', ".updateFilterStatus", function(){
+        // alert("test"); return true;
+        var status = $(this).children("i").attr("status");
+        // alert(status); return true;
+        var filter_id = $(this).attr("filter_id");
+        // alert(filter_id); return true;
 
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'post',
+            url: '/admin/update-filter-status', 
+            data: {status: status, filter_id: filter_id},
+            success: function(resp){
+                // alert(url); return true;
+                if(resp['status'] == 0){
+                    $("#filter-"+filter_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-outline' status='Inactive'></i>");
+                }else{ 
+                    $("#filter-"+filter_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-check' status='Active'></i>");
+                }
+            }, 
+            error: function(){
+                alert("Error");
+            }
+        })
+    });
+
+    
+    // Update Filter Status
+    $(document).on('click', ".updateFilterValueStatus", function(){
+        // alert("test"); return true;
+        var status = $(this).children("i").attr("status");
+        // alert(status); return true;
+        var filter_id = $(this).attr("filter_id");
+        // alert(filter_id); return true;
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'post',
+            url: '/admin/update-filter-status', 
+            data: {status: status, filter_id: filter_id},
+            success: function(resp){
+                // alert(url); return true;
+                if(resp['status'] == 0){
+                    $("#filter-"+filter_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-outline' status='Inactive'></i>");
+                }else{ 
+                    $("#filter-"+filter_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-check' status='Active'></i>");
+                }
+            }, 
+            error: function(){
+                alert("Error");
+            }
+        })
+    });
+    
      // Update Attribute Status
      $(document).on('click', ".updateAttributeStatus", function(){
         // alert("test"); return true;
