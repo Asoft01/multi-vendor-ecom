@@ -12,3 +12,6 @@ php.ini and uncomment ;extension=gd
 https://www.sitemakers.in/secure.php
 Username : stackdevelopers
 Password: laravel9withamit
+
+php artisan make:migration create_products_filter
+php artisan make:migration create_products_filters_value
