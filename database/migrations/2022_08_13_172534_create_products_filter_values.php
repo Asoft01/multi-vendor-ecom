@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('products_filters_values', function (Blueprint $table) {
+        Schema::create('products_filter_values', function (Blueprint $table) {
             $table->id();
             $table->integer('filter_id');
             $table->string('filter_value');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products_filters_values');
+        Schema::dropIfExists('products_filter_values');
     }
 };
