@@ -247,7 +247,7 @@ $(document).ready(function(){
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: 'post',
-            url: '/admin/update-filter-status', 
+            url: '/admin/update-filter-value-status', 
             data: {status: status, filter_id: filter_id},
             success: function(resp){
                 // alert(url); return true;

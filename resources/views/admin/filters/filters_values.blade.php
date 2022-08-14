@@ -52,6 +52,10 @@
                           </td>
                           <td>
                             {{ $filter['filter_id'] }}
+                            <?php
+                                echo $getFilterName = ProductsFilter::getFilterName($filter['filter_id']); 
+                                
+                            ?>
                           </td>
                           <td>
                             {{ $filter['filter_id'] }}

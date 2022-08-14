@@ -1,3 +1,4 @@
+<?php use App\Models\Category; ?>
 @extends('admin.layout.layout')
 @section('content')
     <div class="main-panel">
@@ -9,7 +10,7 @@
                 <h4 class="card-title"> Filters </h4>
                 
                 <a style="max-width: 163px; float: right; display: inline-block" href="{{ url('admin/filters-values') }}" class="btn btn-block btn-primary">View Filter Values</a>
-                <a style="max-width: 150px; float: left; display: inline-block" href="{{ url('admin/add-edit-filter') }}" class="btn btn-block btn-primary">Add Filter Columns</a>
+                <a style="max-width: 169px; float: left; display: inline-block" href="{{ url('admin/add-edit-filter') }}" class="btn btn-block btn-primary">Add Filter Columns</a>
                 @if(Session::has('success_message')) 
                   <div class="alert alert-success alert-dismissbible fade show" role="alert">
                       <strong>Success: </strong> {{ Session::get('success_message') }}  
@@ -57,7 +58,14 @@
                             {{ $filter['filter_column'] }}
                           </td>
                           <td>
-                            {{ $filter['cat_ids'] }}
+                            {{-- {{ $filter['cat_ids'] }} --}}
+                            <?php 
+                              $catIds = explode(",", $filter['cat_ids']); 
+                              foreach($catIds as $key => $catId){
+                                $category_name = Category::getCategoryName($catId); 
+                                echo $category_name. " ";
+                              }
+                            ?>
                           </td>
                           
                           <td>
