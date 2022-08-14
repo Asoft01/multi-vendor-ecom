@@ -8,7 +8,8 @@
               <div class="card-body">
                 <h4 class="card-title"> Filters </h4>
                 
-                <a style="max-width: 150px; float: right; display: inline-block" href="{{ url('admin/add-edit-filter') }}" class="btn btn-block btn-primary">Add Filter</a>
+                <a style="max-width: 163px; float: right; display: inline-block" href="{{ url('admin/filters') }}" class="btn btn-block btn-primary">View Filters</a>
+                <a style="max-width: 157px; float: left; display: inline-block" href="{{ url('admin/add-edit-filter-value') }}" class="btn btn-block btn-primary">Add Filters Values</a>
                 @if(Session::has('success_message')) 
                   <div class="alert alert-success alert-dismissbible fade show" role="alert">
                       <strong>Success: </strong> {{ Session::get('success_message') }}  
