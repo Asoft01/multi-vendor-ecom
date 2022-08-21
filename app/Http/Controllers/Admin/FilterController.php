@@ -52,4 +52,19 @@ class FilterController extends Controller
             return response()->json(['status' =>$status, 'filter_id' => $data['filter_id']]);
         }
     }
+
+    public function addEditFilter($id = null){
+        Session::put('page', 'filters');
+        if($id == ""){
+            $title = "Add Filter";
+            $filter = new ProductsFilter();
+            $message = "Filter added Successfully";
+        }else{
+            $title = "Edit Filter"; 
+            $filter = ProductsFilter::find($id);
+            $message = "Filter updated successfully";
+        }
+
+        
+    }
 }
