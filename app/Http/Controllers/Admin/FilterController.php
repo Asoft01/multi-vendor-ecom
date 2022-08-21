@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ProductsFilter;
 use App\Models\ProductsFilterValue;
+use App\Models\Section;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class FilterController extends Controller
@@ -53,18 +55,39 @@ class FilterController extends Controller
         }
     }
 
-    public function addEditFilter($id = null){
+    public function addEditFilter(Request $request, $id = null){
         Session::put('page', 'filters');
         if($id == ""){
-            $title = "Add Filter";
+            $title = "Add Filter Columns";
             $filter = new ProductsFilter();
             $message = "Filter added Successfully";
         }else{
-            $title = "Edit Filter"; 
+            $title = "Edit Filter Columns"; 
             $filter = ProductsFilter::find($id);
             $message = "Filter updated successfully";
         }
 
+        if($request->isMethod('post')){
+            $data= $request->all();
+            // echo "<pre>"; print_r($data); die;
+
+            $cat_ids = implode(',',$data['cat_ids']);
+
+            // Save Filter column details in products_filters table 
+            $filter->cat_ids = $cat_ids;
+            $filter->filter_name = $data['filter_name'];
+            $filter->filter_column = $data['filter_column'];
+            $filter->status = 1;
+            $filter->save();
+
+            // Add Filter column in products table 
+            DB::statement('Alter table products add '.$data['filter_column'].' varchar(255) after description');
+
+            return redirect('admin/filters')->with('success_message', $message);
+        }
         
+        // Get Sections with Categories and Sub Categories 
+        $categories = Section::with('categories')->get()->toArray();
+        return view('admin.filters.add_edit_filter')->with(compact('title', 'categories', 'filter'));
     }
 }
