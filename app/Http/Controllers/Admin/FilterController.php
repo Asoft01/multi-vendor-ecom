@@ -127,4 +127,6 @@ class FilterController extends Controller
         $filters = ProductsFilter::where('status', 1)->get()->toArray();
         return view('admin.filters.add_edit_filter_value')->with(compact('title', 'filter', 'filters'));
     }
+
+    // public function 
 }
