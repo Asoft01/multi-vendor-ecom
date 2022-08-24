@@ -22,7 +22,7 @@ class ProductsFilter extends Model
         // dd($productFilters);
         return $productFilters; 
     }
-
+    
     public static function filterAvailable($filter_id, $category_id){
         $filterAvailable = ProductsFilter::select('cat_ids')->where(['id' => $filter_id, 'status' => 1])->first()->toArray();
         $catidsArr = explode(",", $filterAvailable['cat_ids']);
@@ -32,7 +32,8 @@ class ProductsFilter extends Model
             $available = "No"; 
         }
 
-        return $available;
+        return $available;   
     }
+
 }
 

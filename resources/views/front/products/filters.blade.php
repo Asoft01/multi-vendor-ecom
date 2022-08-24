@@ -1,7 +1,7 @@
 <?php 
     use App\Models\ProductsFilter; 
     $productFilters = ProductsFilter::productFilters();
-    // dd($productFilters);
+    // dd($productFilters); die;
 ?>
 <div class="col-lg-3 col-md-3 col-sm-12">
     <!-- Fetch-Categories-from-Root-Category  -->
@@ -184,7 +184,7 @@
                         <div class="associate-wrapper">
                             @foreach($filter['filter_values'] as $value)
                                 <input type="checkbox" class="check-box" id="{{ $value['filter_value'] }}">
-                                <label class="label-text" for="{{ $value['filter_value'] }}">{{ $value['filter_value'] }}
+                                <label class="label-text" for="{{ $value['filter_value'] }}">{{ ucwords($value['filter_value']) }}
                                     {{-- <span class="total-fetch-items">(0)</span> --}}
                                 </label>
                             @endforeach
