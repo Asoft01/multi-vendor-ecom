@@ -9,6 +9,7 @@ use App\Models\Section;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ProductsAttribute;
+use App\Models\ProductsFilter;
 use App\Models\ProductsImage;
 use Auth;
 use Session;
@@ -136,7 +137,18 @@ class ProductsController extends Controller
             $product->section_id  =  $categoryDetails['section_id'];
             $product->category_id  = $data['category_id'];
             $product->brand_id  =    $data['brand_id'];
-    
+
+            $productsFilters = ProductsFilter::productFilters();
+            foreach($productsFilters as $filter){
+                // echo $data[$filter['filter_column']]; die;
+                $filterAvailable = ProductsFilter::filterAvailable($filter['id'], $data['category_id']);
+                if($filterAvailable == "Yes"){
+                    if(isset($filter['filter_column']) && $data[$filter['filter_column']]){
+                        $product->{$filter['filter_column']} = $data[$filter['filter_column']];
+                    }
+                }
+            }
+
             $adminType = Auth::guard('admin')->user()->type;
             $vendor_id = Auth::guard('admin')->user()->vendor_id;
             $admin_id =  Auth::guard('admin')->user()->id;
