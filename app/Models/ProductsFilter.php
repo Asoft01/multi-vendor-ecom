@@ -32,7 +32,7 @@ class ProductsFilter extends Model
             $available = "No"; 
         }
 
-        return $available;   
+        return $available; 
     }
 
 }
