@@ -136,7 +136,7 @@ class FilterController extends Controller
             // echo "<pre>"; print_r($data); die; 
             $category_id = $data['category_id'];
             return response()->json([
-                'view' => (string)View::make('admin.filters.category_filters')->with(compact('category_id'))
+                'view' => (String)View::make('admin.filters.category_filters')->with(compact('category_id'))
             ]);
         }
     }

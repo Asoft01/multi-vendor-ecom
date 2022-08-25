@@ -172,7 +172,7 @@
     </div>
     <!-- Filter-Brand /- -->
      <!-- Filter -->
-     @foreach ($productFilters as $filter)
+    @foreach ($productFilters as $filter)
         <?php 
             $filterAvailable = ProductsFilter::filterAvailable($filter['id'], $categoryDetails['categoryDetails']['id']);
         ?>

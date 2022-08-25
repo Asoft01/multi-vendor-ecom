@@ -34,6 +34,5 @@ class ProductsFilter extends Model
 
         return $available; 
     }
-
 }
 
