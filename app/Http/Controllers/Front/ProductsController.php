@@ -27,6 +27,10 @@ class ProductsController extends Controller
                     // $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->get()->toArray();
                     $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1);
 
+                    // Checking for Fabric
+                    if(isset($data['fabric']) && !empty($data['fabric'])){
+                        $categoryProducts->whereIn('products.fabric', $data['fabric']);
+                    }
                     // checking for sort s
                     if(isset($_GET['sort']) && !empty($_GET['sort'])){
                         if($_GET['sort'] == "product_latest"){
