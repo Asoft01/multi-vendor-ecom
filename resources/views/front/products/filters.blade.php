@@ -183,7 +183,7 @@
                     <form class="facet-form" action="#" method="post">
                         <div class="associate-wrapper">
                             @foreach($filter['filter_values'] as $value)
-                                <input type="checkbox" class="check-box" id="{{ $value['filter_value'] }}">
+                                <input type="checkbox" class="check-box {{ $filter['filter_column'] }}" id="{{ $value['filter_value'] }}" name="{{ $filter['filter_column'] }}[]" value="{{ $value['filter_value'] }}">
                                 <label class="label-text" for="{{ $value['filter_value'] }}">{{ ucwords($value['filter_value']) }}
                                     {{-- <span class="total-fetch-items">(0)</span> --}}
                                 </label>
