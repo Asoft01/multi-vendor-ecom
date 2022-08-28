@@ -19,9 +19,10 @@ class ProductsFilter extends Model
 
     public static function productFilters(){
         $productFilters = ProductsFilter::with('filter_values')->where('status', 1)->get()->toArray();
-        // dd($productFilters);
+        // dd($productFilters); die;
         return $productFilters; 
     }
+
     
     public static function filterAvailable($filter_id, $category_id){
         $filterAvailable = ProductsFilter::select('cat_ids')->where(['id' => $filter_id, 'status' => 1])->first()->toArray();
