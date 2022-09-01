@@ -55,13 +55,15 @@ $(document).ready(function(){
                     @foreach($productFilters as $filters)
                         {{ $filters['filter_column'] }} : {{ $filters['filter_column'] }}, 
                     @endforeach
-                    url: url, sort: sort}, 
+                    url: url, sort: sort
+                }, 
                 success : function(data){
                     // console.log(data);
                     $('.filter_products').html(data); 
-                }, error: function(){
+                }, 
+                error: function(){
                     alert("Error"); 
-                }
+                } 
             });
         });
     @endforeach
