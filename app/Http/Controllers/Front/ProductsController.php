@@ -63,6 +63,12 @@ class ProductsController extends Controller
                         $categoryProducts->whereIn('products.id', $productIds); 
                     }
 
+                    // Checking for Color 
+                    if(isset($data['color']) && !empty($data['color'])){
+                        $productIds = Product::select('id')->whereIn('product_color', $data['color'])->pluck('id')->toArray();
+                        $categoryProducts->whereIn('products.id', $productIds); 
+                    }
+                    
                     $categoryProducts = $categoryProducts->Paginate(3);
                     // $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->simplePaginate(3);
                     // $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->cursorPaginate(3);

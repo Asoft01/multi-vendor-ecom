@@ -58,9 +58,9 @@
                     <input type="checkbox" class="check-box size" name="size[]" id="size{{ $key }}" value="{{ $size }}">
                     <label class="label-text" for="size{{ $key }}">{{ $size }}
                         {{-- <span class="total-fetch-items">(2)</span> --}}
-
                     </label>
                 @endforeach
+
                 {{-- <input type="checkbox" class="check-box" id="cbs-02">
                 <label class="label-text" for="cbs-02">Male 3XL
                     <span class="total-fetch-items">(2)</span>
@@ -122,30 +122,17 @@
     </div>
     <!-- Filter-Size -->
     <!-- Filter-Color -->
+    <?php $getColors = ProductsFilter::getColors($url); ?>
     <div class="facet-filter-associates">
         <h3 class="title-name">Color</h3>
         <form class="facet-form" action="#" method="post">
             <div class="associate-wrapper">
-                <input type="checkbox" class="check-box" id="cbs-16">
-                <label class="label-text" for="cbs-16">Heather Grey
-                    <span class="total-fetch-items">(1)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-17">
-                <label class="label-text" for="cbs-17">Black
-                    <span class="total-fetch-items">(1)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-18">
-                <label class="label-text" for="cbs-18">White
-                    <span class="total-fetch-items">(3)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-19">
-                <label class="label-text" for="cbs-19">Mischka Plain
-                    <span class="total-fetch-items">(1)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-20">
-                <label class="label-text" for="cbs-20">Black Bean
-                    <span class="total-fetch-items">(1)</span>
-                </label>
+                @foreach($getColors as $key => $color)
+                    <input type="checkbox" class="check-box color" name="color[]" id="color{{ $key }}" value="{{ $color }}">
+                    <label class="label-text" for="color{{ $key }}">{{ $color }}
+                        {{-- <span class="total-fetch-items">(1)</span> --}}
+                    </label>
+                @endforeach
             </div>
         </form>
     </div>
