@@ -10,6 +10,8 @@ $(document).ready(function(){
         // this.form.submit(); 
         var sort = $("#sort").val();
         var url = $("#url").val();
+        var size = get_filter('size'); 
+        var color = get_filter('color'); 
         // var fabric = get_filter('filter');
         // alert(url); return false;
 
@@ -28,7 +30,7 @@ $(document).ready(function(){
             @foreach($productFilters as $filters)
                 {{ $filters['filter_column'] }} : {{ $filters['filter_column'] }}, 
             @endforeach
-            url: url, sort: sort}, 
+            url: url, sort: sort, size: size, color: color}, 
            success: function(data){
             $('.filter_products').html(data);
            }, 
@@ -42,6 +44,7 @@ $(document).ready(function(){
     $(".size").on("change", function(){
         // this.form.submit(); 
         var size = get_filter('size'); 
+        var color = get_filter('color'); 
         var sort = $("#sort").val();
         var url = $("#url").val();
         // var fabric = get_filter('filter');
@@ -63,7 +66,7 @@ $(document).ready(function(){
             @foreach($productFilters as $filters)
                 {{ $filters['filter_column'] }} : {{ $filters['filter_column'] }}, 
             @endforeach
-            url: url, sort: sort, size: size}, 
+            url: url, sort: sort, size: size, color: color}, 
            success: function(data){
             $('.filter_products').html(data);
            }, 
@@ -114,6 +117,8 @@ $(document).ready(function(){
         $('.{{ $filter['filter_column'] }}').on('click', function(){
             var url = $("#url").val();
             var sort = $("#sort option:selected").val();
+            var color = get_filter('color'); 
+            var size = get_filter('size'); 
             @foreach ($productFilters as $filters)              
                 var {{ $filters['filter_column'] }} = get_filter('{{ $filters['filter_column'] }}');
             @endforeach
@@ -128,7 +133,7 @@ $(document).ready(function(){
                     @foreach($productFilters as $filters)
                         {{ $filters['filter_column'] }} : {{ $filters['filter_column'] }}, 
                     @endforeach
-                    url: url, sort: sort
+                    url: url, sort: sort, size: size, color: color
                 }, 
                 success : function(data){
                     // console.log(data);
