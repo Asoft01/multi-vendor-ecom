@@ -49,15 +49,19 @@
     <!-- Fetch-Categories-from-Root-Category  /- -->
     <!-- Filters -->
     <!-- Filter-Size -->
+    <?php $getSizes = ProductsFilter::getSizes($url); ?>
     <div class="facet-filter-associates">
         <h3 class="title-name">Size</h3>
         <form class="facet-form" action="#" method="post">
             <div class="associate-wrapper">
-                <input type="checkbox" class="check-box" id="cbs-01">
-                <label class="label-text" for="cbs-01">Male 2XL
-                    <span class="total-fetch-items">(2)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-02">
+                @foreach ($getSizes as $key => $size)
+                    <input type="checkbox" class="check-box size" name="size[]" id="size{{ $key }}" value="{{ $size }}">
+                    <label class="label-text" for="size{{ $key }}">{{ $size }}
+                        {{-- <span class="total-fetch-items">(2)</span> --}}
+
+                    </label>
+                @endforeach
+                {{-- <input type="checkbox" class="check-box" id="cbs-02">
                 <label class="label-text" for="cbs-02">Male 3XL
                     <span class="total-fetch-items">(2)</span>
                 </label>
@@ -112,7 +116,7 @@
                 <input type="checkbox" class="check-box" id="cbs-15">
                 <label class="label-text" for="cbs-15">Male XL
                     <span class="total-fetch-items">(0)</span>
-                </label>
+                </label> --}}
             </div>
         </form>
     </div>

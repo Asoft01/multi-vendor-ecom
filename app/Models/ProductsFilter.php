@@ -35,5 +35,16 @@ class ProductsFilter extends Model
 
         return $available; 
     }
+
+    public static function getSizes($url){
+        $categoryDetails = Category::categoryDetails($url); 
+        // echo "<pre>"; print_r($categoryDetails); die;
+        $getProductIds = Product::select('id')->whereIn('category_id', $categoryDetails['catIds'])->pluck('id')->toArray();
+        // echo "<pre>"; print_r($getProductIds); die;
+        // $getProductSizes = ProductsAttribute::select('size')->whereIn('product_id', $getProductIds)->pluck('size')->toArray();
+        $getProductSizes = ProductsAttribute::select('size')->whereIn('product_id', $getProductIds)->groupBy('size')->pluck('size')->toArray();
+        // echo "<pre>"; print_r($getProductSizes); die;
+        return $getProductSizes; 
+    }
 }
 
