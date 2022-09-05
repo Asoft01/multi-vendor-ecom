@@ -80,7 +80,7 @@ class ProductsController extends Controller
                         $productIds = Product::select('id')->whereBetween('product_price', [$min, $max])->pluck('id')->toArray(); 
                         $categoryProducts->whereIn('products.id', $productIds);
                     }
-                    
+
                     $categoryProducts = $categoryProducts->Paginate(30);
                     // $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->simplePaginate(3);
                     // $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->cursorPaginate(3);
