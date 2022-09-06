@@ -69,16 +69,34 @@ class ProductsController extends Controller
                         $categoryProducts->whereIn('products.id', $productIds); 
                     }
 
+                    // Checking for size 
+                    if(isset($data['brand']) && !empty($data['brand'])){
+                        $productIds = Product::select('id')->whereIn('brand_id', $data['brand'])->pluck('id')->toArray();
+                        $categoryProducts->whereIn('products.id', $productIds); 
+                    }
+
                     // checking for Price 
                     if(isset($data['price']) && !empty($data['price'])){
+
+                        //////////////////////// First Method  But it is displaying other products outside range of the price  ///////////////
+                        // echo "<pre>"; print_r($data['price']); die;
                         // echo $implodePrices = implode('-', $data['price']); 
-                        $implodePrices = implode('-', $data['price']); 
-                        $explodePrices = explode('-', $implodePrices); 
-                        // echo "<pre>"; print_r($explodePrices); die;
-                        $min = reset($explodePrices); 
-                        $max = end($explodePrices); 
-                        $productIds = Product::select('id')->whereBetween('product_price', [$min, $max])->pluck('id')->toArray(); 
-                        $categoryProducts->whereIn('products.id', $productIds);
+                                // $implodePrices = implode('-', $data['price']); 
+                                // $explodePrices = explode('-', $implodePrices); 
+                                // // echo "<pre>"; print_r($explodePrices); die;
+                                // $min = reset($explodePrices); 
+                                // $max = end($explodePrices); 
+                                // $productIds = Product::select('id')->whereBetween('product_price', [$min, $max])->pluck('id')->toArray(); 
+                                // $categoryProducts->whereIn('products.id', $productIds);
+                        ////////////////////// End of First Method ////////////////////////////////
+                        foreach ($data['price'] as $key => $price){
+                            $priceArr = explode("-", $price);
+                            $productIds[] = Product::select('id')->whereBetween('product_price', [$priceArr[0], $priceArr[1]])->pluck('id')->toArray(); 
+                        }
+                        // echo "<pre>"; print_r($productIds); die;
+                        $productIds = call_user_func_array('array_merge', $productIds); 
+                        // echo "<pre>"; print_r($productIds); die;
+                        $categoryProducts->whereIn('products.id', $productIds); 
                     }
 
                     $categoryProducts = $categoryProducts->Paginate(30);
