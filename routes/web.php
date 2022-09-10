@@ -125,6 +125,10 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
         // Route::get('/'. $url, 'ProductsController@listing');
         Route::match(['get', 'post'], '/'. $url, 'ProductsController@listing');
     }
+
+    // Vendor Login/Register 
+    Route::get('vendor/login-register', 'VendorController@loginRegister'); 
+    
 });
 
 // Admin Login Routes without the admin group
