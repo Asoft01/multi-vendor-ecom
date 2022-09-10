@@ -128,7 +128,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
     // Vendor Login/Register 
     Route::get('vendor/login-register', 'VendorController@loginRegister'); 
-    
+
+    // Vendor Register 
+    Route::post('vendor/register', 'VendorController@vendorRegister');
 });
 
 // Admin Login Routes without the admin group
