@@ -111,7 +111,7 @@
                                 <label for="vendorpassword">Password
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="password" id="vendorpassword" class="text-field" placeholder="Vendor Password">
+                                <input type="password" id="vendorpassword" name="password" class="text-field" placeholder="Vendor Password">
                             </div>
                             <div class="u-s-m-b-30">
                                 <input type="checkbox" class="check-box" id="accept" name="accept">
