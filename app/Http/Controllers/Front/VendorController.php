@@ -7,6 +7,7 @@ use App\Models\Admin;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Validator;
 class VendorController extends Controller
@@ -76,14 +77,30 @@ class VendorController extends Controller
             $admin->created_at = date("Y-m-d H:i:s"); 
             $admin->updated_at = date("Y-m-d H:i:s"); 
             $admin->save();
-
-            DB::commit();
             
             // Send Confirmation Email 
+            $email = $data['email']; 
+            $messageData = [
+                'email' => $data['email'], 
+                'name' => $data['name'], 
+                'code' => base64_encode($data['email']),                 
+            ];
+
+            Mail::send('emails.vendor_confirmation', $messageData, function($message) use($email){
+                $message->to($email)->subject('Confirm your vendor Account');
+            });
+            
+            DB::commit();
 
             // Redirect back Vendor with Success Message 
             $message = "Thanks for registering as Vendor. We will confirm by email once your account is approved"; 
             return redirect()->back()->with('success_message', $message);
         }
+    }
+
+    public function confirmVendor($email){
+        // Decode Vendor Email 
+        echo $email = base64_decode($email); die;  
+
     }
 }
