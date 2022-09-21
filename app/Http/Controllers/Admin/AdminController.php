@@ -280,11 +280,25 @@ class AdminController extends Controller
             $this->validate($request, $rules, $customMessages);
 
 
-            if(Auth::guard('admin')->attempt(['email'=> $data['email'], 'password' => $data['password'], 'status' => 1])){
-                return redirect('admin/dashboard');
+            // if(Auth::guard('admin')->attempt(['email'=> $data['email'], 'password' => $data['password'], 'status' => 1])){
+            //     return redirect('admin/dashboard');
+            // }else{
+            //     return redirect()->back()->with('error_message', 'Invalid Email or Password');
+            // }
+
+            if(Auth::guard('admin')->attempt(['email'=> $data['email'], 'password' => $data['password']])){
+                // echo "You want to login"; die;
+                if(Auth::guard('admin')->user()->type == "vendor" && Auth::guard('admin')->user()->confirm == "No"){
+                    return redirect()->back()->with('error_message', 'Please confirm your email to activate your Vendor Account');
+                }else if(Auth::guard('admin')->user()->type != "vendor" && Auth::guard('admin')->user()->status == "0"){
+                    return redirect()->back()->with('error_message', 'Your admin account is not active');
+                }else{ 
+                    return redirect('admin/dashboard');
+                }
             }else{
                 return redirect()->back()->with('error_message', 'Invalid Email or Password');
             }
+
         }
         return view('admin.login');
     }

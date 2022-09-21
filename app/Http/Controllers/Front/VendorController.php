@@ -64,6 +64,7 @@ class VendorController extends Controller
 
             // Insert the Vendor details in admins table 
             $admin = new Admin(); 
+            $admin->type = "vendor";
             $admin->vendor_id = $vendor_id; 
             $admin->name = $data['name'];
             $admin->mobile = $data['mobile']; 
@@ -93,14 +94,45 @@ class VendorController extends Controller
             DB::commit();
 
             // Redirect back Vendor with Success Message 
-            $message = "Thanks for registering as Vendor. We will confirm by email once your account is approved"; 
+            $message = "Thanks for registering as Vendor. Please confirm your email to activate your account."; 
             return redirect()->back()->with('success_message', $message);
         }
     }
 
     public function confirmVendor($email){
         // Decode Vendor Email 
-        echo $email = base64_decode($email); die;  
+        // echo $email = base64_decode($email); die;  
+        $email = base64_decode($email);  
+        // Check Vendor Email exists 
+        $vendorCount = Vendor::where('email', $email)->count(); 
+        if($vendorCount > 0){
+            // Vendor Email is already activated or not 
+            $vendorDetails  = Vendor::where('email', $email)->first(); 
+            if($vendorDetails->confirm == "Yes"){
+                $message = "Your Vendor Account is already confirmed. You can login"; 
+            }else{
+                // Update confirm column to Yes in both admins / vendors tables to activate account 
+                Admin::where('email', $email)->update(['confirm' => 'Yes']);
+                Vendor::where('email', $email)->update(['confirm' => 'Yes']);
 
+                // Send Register Email 
+                $messageData = [
+                    'email' => $email, 
+                    'name' => $vendorDetails->name, 
+                    'mobile' => $vendorDetails->mobile,                 
+                ];
+    
+                Mail::send('emails.vendor_confirmed', $messageData, function($message) use($email){
+                    $message->to($email)->subject('Your Vendor Account Confirmed');
+                });
+
+                // Redirect to Vendor Login/Register page with Success message 
+                $message = "Your Vendor Email account is confirmed. You can login and add your personal, business and bank details to activate your Vendor Account to add products"; 
+                return redirect('vendor/login-register')->with('success_message', $message); 
+            }
+
+        }else{
+            abort(404); 
+        }
     }
 }
