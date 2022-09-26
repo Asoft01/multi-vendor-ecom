@@ -11,6 +11,7 @@ use App\Models\Vendor;
 use App\Models\VendorsBusinessDetail;
 use App\Models\VendorsBankDetail;
 use App\Models\Country;
+use Illuminate\Support\Facades\Mail;
 use Image;
 use Session;
 
@@ -351,6 +352,20 @@ class AdminController extends Controller
             }
 
             Admin::where('id', $data['admin_id'])->update(['status'=> $status]);
+            $adminDetails = Admin::where('id', $data['admin_id'])->first()->toArray(); 
+            if($adminDetails['type'] == "vendor" && $status == 1){
+                  // Send Approval Email 
+                  $email = $adminDetails['email'];
+                  $messageData = [
+                    'email' => $adminDetails['email'], 
+                    'name' => $adminDetails['name'], 
+                    'mobile' => $adminDetails['mobile']                
+                ];
+    
+                Mail::send('emails.vendor_approved', $messageData, function($message) use($email){
+                    $message->to($email)->subject('Vendor Account is Approved');
+                });
+            }
             return response()->json(['status' =>$status, 'admin_id' => $data['admin_id']]);
         }
     }
