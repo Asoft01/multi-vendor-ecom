@@ -259,7 +259,7 @@ class AdminController extends Controller
                 // Admin::where('id', Auth::guard('admin')->user()->id)->update(['name' => $data['vendor_name'], 'mobile' => $data['vendor_mobile'], 'image' => $imageName]);
 
                 // $vendorCount = VendorsBusinessDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->count();
-                 $vendorCount = VendorsBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->count();
+                $vendorCount = VendorsBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->count();
                 if($vendorCount > 0){
                    
                     // Updates in Vendors Business Details Table
@@ -278,7 +278,6 @@ class AdminController extends Controller
             }else{
                 $vendorDetails = array(); 
             }
-
         }
         
         $countries = Country::where('status', 1)->get()->toArray();
