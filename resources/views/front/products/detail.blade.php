@@ -182,6 +182,7 @@
                                     <input type="text" class="quantity-text-field" value="1">
                                     <a class="plus-a" data-max="1000">&#43;</a>
                                     <a class="minus-a" data-min="1">&#45;</a>
+                                    {{-- <input type="number" name="quantity-text-field" name="quantity"> --}}
                                 </div>
                             </div>
                             <div>
@@ -203,7 +204,7 @@
                     <div class="detail-nav-wrapper u-s-m-b-30">
                         <ul class="nav single-product-nav justify-content-center">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#description">Description</a>
+                                <a class="nav-link active" data-toggle="tab" href="#video">Product Video</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#specification">Specifications</a>
@@ -215,10 +216,15 @@
                     </div>
                     <div class="tab-content">
                         <!-- Description-Tab -->
-                        <div class="tab-pane fade active show" id="description">
+                        <div class="tab-pane fade active show" id="video">
                             <div class="description-whole-container">
-                                <p class="desc-p u-s-m-b-26">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                </p>
+                                @if($productDetails['product_video'])
+                                    <video width="320" height="240" controls>
+                                        <source src="{{ url('admin/videos/product_videos/'.$productDetails['product_video']) }}" type="video/mp4">
+                                    </video>
+                                @else 
+                                     <p>Product Video does not exist</p>
+                                @endif
                             </div>
                         </div>
                         <!-- Description-Tab /- -->
