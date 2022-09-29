@@ -192,6 +192,9 @@ class ProductsController extends Controller
         // Displaying the breadcrumb
         $categoryDetails = Category::categoryDetails($productDetails['category']['url']);
         // dd($categoryDetails); die;
-        return view('front.products.detail')->with(compact('productDetails', 'categoryDetails'));
+        // echo $totalStock = ProductsAttribute::where('product_id', $id)->sum('stock'); die;
+        $totalStock = ProductsAttribute::where('product_id', $id)->sum('stock');
+        return view('front.products.detail')->with(compact('productDetails', 'categoryDetails', 'totalStock'));
     }
+
 }

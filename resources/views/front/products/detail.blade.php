@@ -107,16 +107,22 @@
                         </div>
                         <div class="availability">
                             <span>Availability:</span>
-                            <span>In Stock</span>
+                            @if($totalStock > 0)
+                                <span>In Stock</span>
+                                @else 
+                                <span style="color: red;">Out of Stock</span>
+                            @endif
                         </div>
-                        <div class="left">
-                            <span>Only:</span>
-                            <span>50 left</span>
-                        </div>
+                        @if($totalStock > 0)
+                            <div class="left">
+                                <span>Only:</span>
+                                <span>{{ $totalStock }} left</span>
+                            </div>
+                        @endif
                     </div>
                     <div class="section-5-product-variants u-s-p-y-14">
-                        <h6 class="information-heading u-s-m-b-8">Product Variants:</h6>
-                        <div class="color u-s-m-b-11">
+                        {{-- <h6 class="information-heading u-s-m-b-8">Product Variants:</h6> --}}
+                        {{-- <div class="color u-s-m-b-11">
                             <span>Available Color:</span>
                             <div class="color-variant select-box-wrapper">
                                 <select class="select-box product-color">
@@ -125,26 +131,15 @@
                                     <option value="5">White</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="sizes u-s-m-b-11">
                             <span>Available Size:</span>
                             <div class="size-variant select-box-wrapper">
                                 <select class="select-box product-size">
-                                    <option value="">Male 2XL</option>
-                                    <option value="">Male 3XL</option>
-                                    <option value="">Kids 4</option>
-                                    <option value="">Kids 6</option>
-                                    <option value="">Kids 8</option>
-                                    <option value="">Kids 10</option>
-                                    <option value="">Kids 12</option>
-                                    <option value="">Female Small</option>
-                                    <option value="">Male Small</option>
-                                    <option value="">Female Medium</option>
-                                    <option value="">Male Medium</option>
-                                    <option value="">Female Large</option>
-                                    <option value="">Male Large</option>
-                                    <option value="">Female XL</option>
-                                    <option value="">Male XL</option>
+                                    <option value="">Select size</option>
+                                    @foreach ($productDetails['attributes'] as $attribute)
+                                       <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
