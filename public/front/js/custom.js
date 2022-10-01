@@ -28,16 +28,19 @@ $(document).ready(function(){
         // alert(size);
         // alert(product_id); die;
         $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             url: '/get-product-price', 
             data: {size: size, product_id : product_id},
-            type: post, 
+            type: 'post', 
             success: function(resp){
                 alert(resp);
             }, error: function(){
                 alert("Error");
             }
         });
-    }); 
+    });
 }); 
 
 // $('.fabric').on('click', function(){
