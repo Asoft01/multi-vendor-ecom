@@ -135,7 +135,7 @@
                         <div class="sizes u-s-m-b-11">
                             <span>Available Size:</span>
                             <div class="size-variant select-box-wrapper">
-                                <select class="select-box product-size">
+                                <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}" class="select-box product-size">
                                     <option value="">Select size</option>
                                     @foreach ($productDetails['attributes'] as $attribute)
                                        <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>

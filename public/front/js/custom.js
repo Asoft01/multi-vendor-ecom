@@ -1,4 +1,5 @@
-// $(document).ready(function(){
+$(document).ready(function(){
+    // alert("test"); die;
 //     $("#sort").on("change", function(){
 //         // this.form.submit(); 
 //         var sort = $("#sort").val();
@@ -20,7 +21,24 @@
 //            }
 //         });
 //     });
-// }); 
+
+    $("#getPrice").change(function(){
+        var size = $(this).val(); 
+        var product_id = $(this).attr("product-id"); 
+        // alert(size);
+        // alert(product_id); die;
+        $.ajax({
+            url: '/get-product-price', 
+            data: {size: size, product_id : product_id},
+            type: post, 
+            success: function(resp){
+                alert(resp);
+            }, error: function(){
+                alert("Error");
+            }
+        });
+    }); 
+}); 
 
 // $('.fabric').on('click', function(){
 //     var url = $("#url").val();
@@ -49,3 +67,4 @@ function get_filter(class_name){
     });
     return filter;
 }
+

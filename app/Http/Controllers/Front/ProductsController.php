@@ -199,4 +199,11 @@ class ProductsController extends Controller
         return view('front.products.detail')->with(compact('productDetails', 'categoryDetails', 'totalStock'));
     }
 
+    public function getProductPrice(Request $request){
+        if($request->ajax()){
+            $data = $request->all();
+            echo "<pre>"; print_r($data); die;
+
+        }
+    }
 }
