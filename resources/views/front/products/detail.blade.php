@@ -73,19 +73,21 @@
                     </div>
                     <div class="section-3-price-original-discount u-s-p-y-14">
                         <?php $getDiscountPrice = Product::getDiscountPrice($productDetails['id']); ?>
-                        @if($getDiscountPrice > 0)
-                            <div class="price">
-                                <h4>Rs. {{ $getDiscountPrice }}</h4>
-                            </div>
-                            <div class="original-price">
-                                <span>Original Price:</span>
-                                <span>{{ $productDetails['product_price']; }}</span>
-                            </div>
-                        @else 
-                            <div class="price">
-                                <h4>Rs. {{ $productDetails['product_price']; }}</h4>
-                            </div>
-                        @endif
+                        <span class="getAttributePrice">
+                            @if($getDiscountPrice > 0)
+                                <div class="price">
+                                    <h4>Rs. {{ $getDiscountPrice }}</h4>
+                                </div>
+                                <div class="original-price">
+                                    <span>Original Price:</span>
+                                    <span>{{ $productDetails['product_price']; }}</span>
+                                </div>
+                            @else 
+                                <div class="price">
+                                    <h4>Rs. {{ $productDetails['product_price']; }}</h4>
+                                </div>
+                            @endif
+                        </span>
                             {{-- <div class="discount-price">
                                 <span>Discount:</span>
                                 <span>15%</span>
