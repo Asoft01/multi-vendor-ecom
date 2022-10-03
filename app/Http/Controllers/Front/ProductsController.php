@@ -205,7 +205,6 @@ class ProductsController extends Controller
             // echo "<pre>"; print_r($data); die;
             $getDiscountAttributePrice = Product::getDiscountAttributePrice($data['product_id'], $data['size']);
             return $getDiscountAttributePrice;
-            
         }
     }
 }
