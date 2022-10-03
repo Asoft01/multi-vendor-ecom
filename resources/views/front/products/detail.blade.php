@@ -31,18 +31,27 @@ $productFilters = ProductsFilter::productFilters();
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12">
                 <!-- Product-zoom-area -->
-                <div class="zoom-area">
-                    <img id="zoom-pro" class="img-fluid" src="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}" data-zoom-image="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}" alt="Zoom Image">
-                    <div id="gallery" class="u-s-m-t-10">
-                        <a class="active" data-image="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}" data-zoom-image="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}">
-                            <img src="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}" alt="Product">
+                <div class="easyzoom easyzoom--overlay easyzoom--with-thumbnails">
+                    <a href="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}">
+                        <img src="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}" alt="" width="500" height="500" />
+                    </a>
+                    {{-- <img id="zoom-pro" class="img-fluid" src="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}" data-zoom-image="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}" alt="Zoom Image"> --}}
+                </div>
+                <div class="thumbnails">
+                    <a href="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}" data-standard="{{ asset('admin/images/product_images/small/'.$productDetails['product_image']) }}">
+                        <img width="150" height="150" src="{{ asset('admin/images/product_images/small/'.$productDetails['product_image']) }}" alt="" width="640" height="360" />
+                    </a>
+                    {{-- <a class="active" data-image="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}" data-zoom-image="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}">
+                        <img src="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}" alt="Product">
+                    </a> --}}
+                    @foreach($productDetails['images'] as $image)
+                        <a href="{{ asset('admin/images/product_images/large/'.$image['image']) }}" data-standard="{{ asset('admin/images/product_images/small/'.$image['image']) }}">
+                            <img width="150" height="150" src="{{ asset('admin/images/product_images/small/'.$image['image']) }}" alt="" />
                         </a>
-                        @foreach($productDetails['images'] as $image)
-                            <a data-image="{{ asset('admin/images/product_images/large/'.$image['image']) }}" data-zoom-image="{{ asset('admin/images/product_images/large/'.$image['image']) }}">
-                                <img src="{{ asset('admin/images/product_images/large/'.$image['image']) }}" alt="Product">
-                            </a>
-                        @endforeach
-                    </div>
+                        {{-- <a data-image="{{ asset('admin/images/product_images/large/'.$image['image']) }}" data-zoom-image="{{ asset('admin/images/product_images/large/'.$image['image']) }}">
+                            <img width="150" height="150" src="{{ asset('admin/images/product_images/large/'.$image['image']) }}" alt="Product">
+                        </a> --}}
+                    @endforeach
                 </div>
                 <!-- Product-zoom-area /- -->
             </div>
