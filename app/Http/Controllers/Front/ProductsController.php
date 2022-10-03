@@ -189,7 +189,7 @@ class ProductsController extends Controller
     public function detail($id){
         $productDetails = Product::with(['section','category', 'brand', 'attributes' => function($query){
             $query->where('stock', '>', 0)->where('status', 1);
-        }, 'images'])->find($id)->toArray();
+        }, 'images', 'vendor'])->find($id)->toArray();
         // dd($productDetails); die;
         // Displaying the breadcrumb
         $categoryDetails = Category::categoryDetails($productDetails['category']['url']);

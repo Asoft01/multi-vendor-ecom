@@ -37,16 +37,16 @@ $productFilters = ProductsFilter::productFilters();
                     </a>
                     {{-- <img id="zoom-pro" class="img-fluid" src="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}" data-zoom-image="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}" alt="Zoom Image"> --}}
                 </div>
-                <div class="thumbnails">
+                <div class="thumbnails" style="margin-top: 30px">
                     <a href="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}" data-standard="{{ asset('admin/images/product_images/small/'.$productDetails['product_image']) }}">
-                        <img width="150" height="150" src="{{ asset('admin/images/product_images/small/'.$productDetails['product_image']) }}" alt="" width="640" height="360" />
+                        <img width="120" height="120" src="{{ asset('admin/images/product_images/small/'.$productDetails['product_image']) }}" alt="" width="640" height="360" />
                     </a>
                     {{-- <a class="active" data-image="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}" data-zoom-image="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}">
                         <img src="{{ asset('admin/images/product_images/large/'.$productDetails['product_image']) }}" alt="Product">
                     </a> --}}
                     @foreach($productDetails['images'] as $image)
                         <a href="{{ asset('admin/images/product_images/large/'.$image['image']) }}" data-standard="{{ asset('admin/images/product_images/small/'.$image['image']) }}">
-                            <img width="150" height="150" src="{{ asset('admin/images/product_images/small/'.$image['image']) }}" alt="" />
+                            <img width="120" height="120" src="{{ asset('admin/images/product_images/small/'.$image['image']) }}" alt="" />
                         </a>
                         {{-- <a data-image="{{ asset('admin/images/product_images/large/'.$image['image']) }}" data-zoom-image="{{ asset('admin/images/product_images/large/'.$image['image']) }}">
                             <img width="150" height="150" src="{{ asset('admin/images/product_images/large/'.$image['image']) }}" alt="Product">
@@ -136,6 +136,9 @@ $productFilters = ProductsFilter::productFilters();
                             </div>
                         @endif
                     </div>
+                    @if(isset($productDetails['vendor']))
+                        <div>Sold By {{ $productDetails['vendor']['vendorbusinessdetails']['shop_name'] }}</div>
+                    @endif
                     <div class="section-5-product-variants u-s-p-y-14">
                         {{-- <h6 class="information-heading u-s-m-b-8">Product Variants:</h6> --}}
                         {{-- <div class="color u-s-m-b-11">
