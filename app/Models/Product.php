@@ -21,6 +21,7 @@ class Product extends Model
         return $this->belongsTo('App\Models\Brand', 'brand_id');
     }
 
+    // attributes
     public function attributes(){
         return $this->hasMany('App\Models\ProductsAttribute');
     }
