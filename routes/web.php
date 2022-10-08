@@ -127,7 +127,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     }
 
     // Vendor Products 
-    Route::get('/product/{vendor_id}', 'ProductsController@vendorListing');
+    Route::get('/products/{vendor_id}', 'ProductsController@vendorListing');
     // Product Detail Page 
     Route::get('/product/{id}', 'ProductsController@detail');
 

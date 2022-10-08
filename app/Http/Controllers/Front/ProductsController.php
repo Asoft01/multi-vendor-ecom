@@ -190,7 +190,13 @@ class ProductsController extends Controller
     public function vendorListing($vendorid){
         // Get Vendor shopname
         // dd("Hello"); die; 
-        echo $getVendorShop = Vendor::getVendorShop($vendorid); die;
+        // echo $getVendorShop = Vendor::getVendorShop($vendorid); die;
+        $getVendorShop = Vendor::getVendorShop($vendorid);
+        // Get Vendor Products 
+        $vendorProducts = Product::with('brand')->where('vendor_id', $vendorid)->where('status', 1);
+        $vendorProducts = $vendorProducts->paginate(30);
+        // dd($vendorProducts); die; 
+        return view('front.products.vendor_listing')->with(compact('getVendorShop', 'vendorProducts'));
     }
     
     public function detail($id){

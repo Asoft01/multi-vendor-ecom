@@ -137,7 +137,7 @@ $productFilters = ProductsFilter::productFilters();
                         @endif
                     </div>
                     @if(isset($productDetails['vendor']))
-                        <div>Sold By {{ $productDetails['vendor']['vendorbusinessdetails']['shop_name'] }}</div>
+                        <div>Sold By <a href="/products/{{ $productDetails['vendor']['id'] }}"> {{ $productDetails['vendor']['vendorbusinessdetails']['shop_name'] }} </a></div>
                     @endif
                     <div class="section-5-product-variants u-s-p-y-14">
                         {{-- <h6 class="information-heading u-s-m-b-8">Product Variants:</h6> --}}
