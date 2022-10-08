@@ -209,7 +209,11 @@ class ProductsController extends Controller
         // dd($categoryDetails); die;
         // echo $totalStock = ProductsAttribute::where('product_id', $id)->sum('stock'); die;
         $totalStock = ProductsAttribute::where('product_id', $id)->sum('stock');
-        return view('front.products.detail')->with(compact('productDetails', 'categoryDetails', 'totalStock'));
+
+        // Get Similar Products 
+        $similarProducts = Product::with('brand')->where('category_id', $productDetails['category']['id'])->where('id', '!=', $id)->limit(4)->inRandomOrder()->get()->toArray();
+        // dd($similarProducts); die;
+        return view('front.products.detail')->with(compact('productDetails', 'categoryDetails', 'totalStock', 'similarProducts'));
     }
 
     public function getProductPrice(Request $request){
