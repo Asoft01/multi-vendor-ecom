@@ -10,6 +10,8 @@ use App\Models\Product;
 use App\Models\ProductsAttribute;
 use App\Models\ProductsFilter;
 use App\Models\Vendor;
+use Session;
+use DB;
 
 class ProductsController extends Controller
 {
@@ -207,13 +209,40 @@ class ProductsController extends Controller
         // Displaying the breadcrumb
         $categoryDetails = Category::categoryDetails($productDetails['category']['url']);
         // dd($categoryDetails); die;
+        
+        // Similar Products 
+        $similarProducts = Product::with('brand')->where('category_id', $productDetails['category']['id'])->where('id', '!=', $id)->limit(4)->inRandomOrder()->get()->toArray();
+        // dd($similarProducts); die;
+        
+        // Set Session for Recently Viewed Products 
+        if(empty(Session::get('session_id'))){
+            // echo $session_id = md5(uniqid(rand(), true)); die;
+            $session_id = md5(uniqid(rand(), true)); 
+        }else{
+            $session_id = Session::get('session_id');
+        }
+
+        Session::put('session_id', $session_id);
+
+        // Insert product in table if not already exists 
+        $countRecentViewedProducts = DB::table('recently_viewed_products')->where(['product_id' => $id, 'session_id'=> $session_id])->count();
+        
+        if($countRecentViewedProducts == 0){
+            DB::table('recently_viewed_products')->insert(['product_id' => $id, 'session_id' => $session_id]);
+        }
+
+        // Get Recently Viewed Products Ids 
+        $recentProductsIds = DB::table('recently_viewed_products')->select('product_id')->where('product_id', '!=', $id)->where('session_id', $session_id)->inRandomOrder()->get()->take(4)->pluck('product_id');
+        // dd($recentProductsIds); die; 
+        
+        // Get Recently Viewed Products 
+        $recentlyViewedProducts = Product::with('brand')->whereIn('id', $recentProductsIds)->get()->toArray();
+        // dd($recentlyViewedProducts); die;
+        
         // echo $totalStock = ProductsAttribute::where('product_id', $id)->sum('stock'); die;
         $totalStock = ProductsAttribute::where('product_id', $id)->sum('stock');
 
-        // Get Similar Products 
-        $similarProducts = Product::with('brand')->where('category_id', $productDetails['category']['id'])->where('id', '!=', $id)->limit(4)->inRandomOrder()->get()->toArray();
-        // dd($similarProducts); die;
-        return view('front.products.detail')->with(compact('productDetails', 'categoryDetails', 'totalStock', 'similarProducts'));
+        return view('front.products.detail')->with(compact('productDetails', 'categoryDetails', 'totalStock', 'similarProducts', 'recentlyViewedProducts'));
     }
 
     public function getProductPrice(Request $request){
