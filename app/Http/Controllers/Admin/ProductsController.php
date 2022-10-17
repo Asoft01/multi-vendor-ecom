@@ -151,6 +151,7 @@ class ProductsController extends Controller
             $product->section_id  =  $categoryDetails['section_id'];
             $product->category_id  = $data['category_id'];
             $product->brand_id  =    $data['brand_id'];
+            $product->group_code  =  $data['group_code'];
 
             $productsFilters = ProductsFilter::productFilters();
             foreach($productsFilters as $filter){

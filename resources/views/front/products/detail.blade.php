@@ -151,7 +151,19 @@ $productFilters = ProductsFilter::productFilters();
                                 </select>
                             </div>
                         </div> --}}
-                        <div class="sizes u-s-m-b-11">
+                        @if(count($groupProducts) > 0)
+                            <div>
+                                <div><strong>Product Colors</strong></div>
+                                <div style="margin-top: 10px">
+                                    @foreach ($groupProducts as $product)
+                                        <a href="{{ url('product/'.$product['id']) }}">
+                                            <img style="width: 80px" src="{{ asset('admin/images/product_images/small/'.$product['product_image']) }}"  alt="Hello">
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                        <div class="sizes u-s-m-b-11" style="margin-top: 20px">
                             <span>Available Size:</span>
                             <div class="size-variant select-box-wrapper">
                                 <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}" class="select-box product-size">
@@ -162,6 +174,7 @@ $productFilters = ProductsFilter::productFilters();
                                 </select>
                             </div>
                         </div>
+
                     </div>
                     <div class="section-6-social-media-quantity-actions u-s-p-y-14">
                         <form action="#" class="post-form">
