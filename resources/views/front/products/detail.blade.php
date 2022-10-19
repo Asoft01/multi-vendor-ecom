@@ -58,6 +58,25 @@ $productFilters = ProductsFilter::productFilters();
             <div class="col-lg-6 col-md-6 col-sm-12">
                 <!-- Product-details -->
                 <div class="all-information-wrapper">
+                    @if(Session::has('error_message')) 
+                        <div class="alert alert-danger alert-dismissbible fade show" role="alert">
+                            <strong>Error: </strong> {{ Session::get('error_message') }}  
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>{!! session('flash_message_error') !!}</strong>
+                        </div>
+                    @endif  
+                    
+                    @if(Session::has('success_message')) 
+                        <div class="alert alert-success alert-dismissbible fade show" role="alert">
+                            <strong>Success: </strong> {{ Session::get('success_message') }}  
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>{!! session('flash_message_success') !!}</strong>
+                        </div>
+                    @endif  
                     <div class="section-1-title-breadcrumb-rating">
                         <div class="product-title">
                             <h1>
@@ -139,45 +158,37 @@ $productFilters = ProductsFilter::productFilters();
                     @if(isset($productDetails['vendor']))
                         <div>Sold By <a href="/products/{{ $productDetails['vendor']['id'] }}"> {{ $productDetails['vendor']['vendorbusinessdetails']['shop_name'] }} </a></div>
                     @endif
-                    <div class="section-5-product-variants u-s-p-y-14">
-                        {{-- <h6 class="information-heading u-s-m-b-8">Product Variants:</h6> --}}
-                        {{-- <div class="color u-s-m-b-11">
-                            <span>Available Color:</span>
-                            <div class="color-variant select-box-wrapper">
-                                <select class="select-box product-color">
-                                    <option value="1">Heather Grey</option>
-                                    <option value="3">Black</option>
-                                    <option value="5">White</option>
-                                </select>
-                            </div>
-                        </div> --}}
-                        @if(count($groupProducts) > 0)
-                            <div>
-                                <div><strong>Product Colors</strong></div>
-                                <div style="margin-top: 10px">
-                                    @foreach ($groupProducts as $product)
-                                        <a href="{{ url('product/'.$product['id']) }}">
-                                            <img style="width: 80px" src="{{ asset('admin/images/product_images/small/'.$product['product_image']) }}"  alt="Hello">
-                                        </a>
-                                    @endforeach
+                    <form action="{{ url('cart/add') }}" method="post" class="post-form">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
+                        <div class="section-5-product-variants u-s-p-y-14">
+                            @if(count($groupProducts) > 0)
+                                <div>
+                                    <div><strong>Product Colors</strong></div>
+                                    <div style="margin-top: 10px">
+                                        @foreach ($groupProducts as $product)
+                                            <a href="{{ url('product/'.$product['id']) }}">
+                                                <img style="width: 80px" src="{{ asset('admin/images/product_images/small/'.$product['product_image']) }}"  alt="Hello">
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="sizes u-s-m-b-11" style="margin-top: 20px">
+                                <span>Available Size:</span>
+                                <div class="size-variant select-box-wrapper">
+                                    <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}" class="select-box product-size" required="">
+                                        <option value="">Select size</option>
+                                        @foreach ($productDetails['attributes'] as $attribute)
+                                        <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-                        @endif
-                        <div class="sizes u-s-m-b-11" style="margin-top: 20px">
-                            <span>Available Size:</span>
-                            <div class="size-variant select-box-wrapper">
-                                <select name="size" id="getPrice" product-id="{{ $productDetails['id'] }}" class="select-box product-size">
-                                    <option value="">Select size</option>
-                                    @foreach ($productDetails['attributes'] as $attribute)
-                                       <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
 
-                    </div>
-                    <div class="section-6-social-media-quantity-actions u-s-p-y-14">
-                        <form action="#" class="post-form">
+                        </div>
+                        <div class="section-6-social-media-quantity-actions u-s-p-y-14">
+                            <?php /*
                             <div class="quick-social-media-wrapper u-s-m-b-22">
                                 <span>Share:</span>
                                 <ul class="social-media-list">
@@ -208,10 +219,11 @@ $productFilters = ProductsFilter::productFilters();
                                     </li>
                                 </ul>
                             </div>
+                            */ ?>
                             <div class="quantity-wrapper u-s-m-b-22">
                                 <span>Quantity:</span>
                                 <div class="quantity">
-                                    <input type="text" class="quantity-text-field" value="1">
+                                    <input type="text" name="quantity" class="quantity-text-field" value="1">
                                     <a class="plus-a" data-max="1000">&#43;</a>
                                     <a class="minus-a" data-min="1">&#45;</a>
                                     {{-- <input type="number" name="quantity-text-field" name="quantity"> --}}
@@ -222,8 +234,8 @@ $productFilters = ProductsFilter::productFilters();
                                 <button class="button button-outline-secondary far fa-heart u-s-m-l-6"></button>
                                 <button class="button button-outline-secondary far fa-envelope u-s-m-l-6"></button>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
                 <!-- Product-details /- -->
             </div>

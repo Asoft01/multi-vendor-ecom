@@ -143,6 +143,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     // Confirm Vendor Account 
     Route::get('vendor/confirm/{code}', 'VendorController@confirmVendor');
 
+    // Add to cart route 
+    Route::post('cart/add', 'ProductsController@cartAdd'); 
+
 });
 
 // Admin Login Routes without the admin group
