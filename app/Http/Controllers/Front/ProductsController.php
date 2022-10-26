@@ -291,4 +291,8 @@ class ProductsController extends Controller
             return redirect()->back()->with('success_message', 'Product has been added in Cart!'); 
         }
     }
+
+    public function cart(){
+        return view('front.products.cart');
+    }
 }

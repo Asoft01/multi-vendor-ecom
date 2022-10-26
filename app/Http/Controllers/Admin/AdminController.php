@@ -370,7 +370,7 @@ class AdminController extends Controller
         // $vendorDetails = Admin::where('id', $id)->first();
         $vendorDetails = Admin::with('vendorPersonal', 'vendorBusiness', 'vendorBank')->where('id', $id)->first();
         $vendorDetails = json_decode(json_encode($vendorDetails), true);
-        dd($vendorDetails);
+        // dd($vendorDetails);
         return view('admin.admins.view_vendor_details')->with(compact('vendorDetails'));
     }
 
@@ -387,6 +387,7 @@ class AdminController extends Controller
             Admin::where('id', $data['admin_id'])->update(['status'=> $status]);
             $adminDetails = Admin::where('id', $data['admin_id'])->first()->toArray(); 
             if($adminDetails['type'] == "vendor" && $status == 1){
+                Vendor::where('id', $adminDetails['vendor_id'])->update(['status' => $status]); 
                   // Send Approval Email 
                   $email = $adminDetails['email'];
                   $messageData = [

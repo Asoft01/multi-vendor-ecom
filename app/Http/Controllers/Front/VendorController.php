@@ -65,7 +65,9 @@ class VendorController extends Controller
             // Insert the Vendor details in admins table 
             $admin = new Admin(); 
             $admin->type = "vendor";
-            $admin->vendor_id = $vendor_id; 
+            $admin->vendor_id = $vendor_id;
+            $admin->vendor_bank_id= $vendor_id; 
+            $admin->vendor_business_id = $vendor_id; 
             $admin->name = $data['name'];
             $admin->mobile = $data['mobile']; 
             $admin->email = $data['email'];

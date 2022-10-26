@@ -31,7 +31,7 @@ class Admin extends Authenticable
 
     public function vendorBusiness()
     {
-        return $this->belongsTo('App\Models\VendorsBusinessDetail', 'vendor_id');
+        return $this->belongsTo('App\Models\VendorsBusinessDetail', 'vendor_business_id', 'vendor_id');
     }
 
     // public function vendorBusiness(){
@@ -45,7 +45,7 @@ class Admin extends Authenticable
 
     public function vendorBank()
     {
-        return $this->belongsTo('App\Models\VendorsBankDetail', 'vendor_id');
+        return $this->belongsTo('App\Models\VendorsBankDetail', 'vendor_bank_id', 'vendor_id');
     }
 
     // public function vendorBank(){
