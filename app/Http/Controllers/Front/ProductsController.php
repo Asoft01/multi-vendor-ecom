@@ -13,6 +13,7 @@ use App\Models\ProductsFilter;
 use App\Models\Vendor;
 use Session;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {
@@ -281,9 +282,21 @@ class ProductsController extends Controller
                 Session::put('session_id', $session_id); 
             }
 
+            // Check Products if already exists in the User cart 
+            if(Auth::check()){
+                // User is logged in 
+                $user_id = Auth::user()->id; 
+                $countProducts = Cart::where(['product_id' => $data['product_id'], 'size' => $data['size'], 'user_id' => $user_id])->count(); 
+            }else{
+                // User is not logged in
+                $user_id = 0; 
+                $countProducts = Cart::where(['product_id' => $data['product_id'], 'size'=> $data['size'], 'session_id' => $session_id])->count();
+
+            }
             // Save Products in Carts table 
             $item = new Cart; 
             $item->session_id = $session_id; 
+            $item->user_id = $user_id; 
             $item->product_id = $data['product_id']; 
             $item->size = $data['size']; 
             $item->quantity = $data['quantity']; 
