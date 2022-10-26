@@ -17,4 +17,8 @@ class Vendor extends Model
         $getVendorShop = VendorsBusinessDetail::select('shop_name')->where('vendor_id', $vendorid)->first()->toArray();
         return $getVendorShop['shop_name'];
     }
+
+    public function vendorbusinessdetail(){
+        return $this->hasMany(VendorsBusinessDetail::class, 'vendor_id');
+    }
 }
