@@ -48,6 +48,33 @@ $(document).ready(function(){
             }
         });
     });
+
+    // Update Cart Items Qty
+    $(document).on('click', '.updateCartItem', function(){
+        // alert("test");
+        if($(this).hasClass('plus-a')){
+            // Get Qty
+            var quantity = $(this).data('qty');
+            // alert(quantity);  
+            // increase the qty by 1
+            new_qty = parseInt(quantity) + 1;
+            // alert(new_qty);  
+        }
+
+        if($(this).hasClass('minus-a')){
+            // Get Qty
+            var quantity = $(this).data('qty');
+            // alert(quantity);  
+            // Check Qty is atleast 1
+            if(quantity <= 1){
+                alert("Item quantity must be 1 or greater!");
+                return false;
+            }
+            // increase the qty by 1
+            new_qty = parseInt(quantity) - 1;
+            alert(new_qty);  
+        }
+    });
 }); 
 
 // $('.fabric').on('click', function(){

@@ -301,7 +301,7 @@ class ProductsController extends Controller
             $item->size = $data['size']; 
             $item->quantity = $data['quantity']; 
             $item->save(); 
-            return redirect()->back()->with('success_message', 'Product has been added in Cart!'); 
+            return redirect()->back()->with('success_message', 'Product has been added in Cart! <a href="/cart" style="text-decoration: underline !importance"> View Cart </a>'); 
         }
     }
 

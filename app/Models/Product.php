@@ -61,7 +61,7 @@ class Product extends Model
         
         $catDetails = Category::select('category_discount')->where('id', $proDetails['category_id'])->first();
         $catDetails = json_decode(json_encode($catDetails), true);
-
+        
         if($proDetails['product_discount'] > 0){
             // If Product Discount is added from the admin panel
             $final_price  = $proAttrPrice['price'] - ($proAttrPrice['price'] * $proDetails['product_discount'] / 100);
