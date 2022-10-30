@@ -72,8 +72,25 @@ $(document).ready(function(){
             }
             // increase the qty by 1
             new_qty = parseInt(quantity) - 1;
-            alert(new_qty);  
+            // alert(new_qty);  
         }
+        var cartid = $(this).data('cartid');
+        // alert(cartid); 
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {cartid: cartid, qty : new_qty}, 
+            url: '/cart/update', 
+            type: 'post', 
+            success: function(resp){
+                // alert(resp); 
+                // alert(resp.status); 
+                $("#appendCartItems").html(resp.view);
+            }, error: function(){
+                alert('error');
+            }   
+        });
     });
 }); 
 

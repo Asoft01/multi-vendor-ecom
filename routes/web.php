@@ -149,6 +149,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     // Cart Route
     Route::get('/cart', 'ProductsController@cart');
 
+    // Update Cart Item Quantity
+    Route::post('cart/update', 'ProductsController@cartUpdate');
+
 });
 
 // Admin Login Routes without the admin group

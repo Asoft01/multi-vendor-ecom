@@ -14,6 +14,7 @@ use App\Models\Vendor;
 use Session;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
 class ProductsController extends Controller
 {
@@ -309,5 +310,18 @@ class ProductsController extends Controller
         $getCartItems = Cart::getCartItems(); 
         // dd($getCartItems); die;
         return view('front.products.cart')->with(compact('getCartItems'));
+    }
+
+    public function cartUpdate(Request $request){
+        if($request->ajax()){
+            $data = $request->all(); 
+            // echo "<pre>"; print_r($data); die;
+            Cart::where('id', $data['cartid'])->update(['quantity' => $data['qty']]); 
+            $getCartItems = Cart::getCartItems(); 
+            return response()->json([
+                'status' => true, 
+                'view' => (String)View::make('front.products.cart_items')->with(compact('getCartItems'))
+            ]);      
+        }
     }
 }
