@@ -151,6 +151,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
     // Update Cart Item Quantity
     Route::post('cart/update', 'ProductsController@cartUpdate');
+    
+    // Delete Cart Item
+    Route::post('cart/delete', 'ProductsController@cartDelete');
 
 });
 

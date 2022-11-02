@@ -84,13 +84,39 @@ $(document).ready(function(){
             url: '/cart/update', 
             type: 'post', 
             success: function(resp){
-                // alert(resp); 
+                // alert(resp); return false
                 // alert(resp.status); 
+                if(resp.status == false){
+                    alert(resp.message);
+                }
                 $("#appendCartItems").html(resp.view);
             }, error: function(){
                 alert('error');
             }   
         });
+    });
+
+      // Delete Cart Items 
+      $(document).on('click', '.deleteCartItem', function(){
+        var cartid = $(this).data('cartid');
+        var result = confirm("Are you sure to delete this Cart Item?");
+        if(result){
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data:{cartid : cartid}, 
+                url: '/cart/delete', 
+                type: 'post', 
+                success: function(resp){
+                    $("#appendCartItems").html(resp.view);
+                }, error: function(){
+                    alert('error');
+                }   
+            }) 
+        } 
+        // alert(cartid);
+      
     });
 }); 
 
