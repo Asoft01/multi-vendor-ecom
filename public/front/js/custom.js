@@ -118,6 +118,25 @@ $(document).ready(function(){
         // alert(cartid);
       
     });
+
+    // Register Form Validation 
+    $("#registerForm").submit(function(){
+        var formdata = $(this).serialize(); 
+        // alert(formdata); 
+        // return false;
+        $.ajax({
+            url: "/user/register", 
+            type: "POST", 
+            data: formdata, 
+            success: function(resp){
+                alert(resp.url);
+                window.location.href = resp.url;
+                alert(resp);
+            }, error: function(){
+                alert("Error");
+            }
+        });
+    });
 }); 
 
 // $('.fabric').on('click', function(){
