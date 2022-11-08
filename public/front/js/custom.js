@@ -127,11 +127,18 @@ $(document).ready(function(){
         $.ajax({
             url: "/user/register", 
             type: "POST", 
-            data: formdata, 
+            data:formdata, 
             success: function(resp){
                 alert(resp.url);
-                window.location.href = resp.url;
-                alert(resp);
+                if(data.type == "error"){
+                    $.each(resp.errors, function(i, error){
+                        $("register-"+i).html(error);
+                    });
+                }else if(data.type == "success"){
+                    window.location.href = resp.url
+                }
+                // window.location.href = resp.url;
+                // alert(resp);
             }, error: function(){
                 alert("Error");
             }
