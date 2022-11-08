@@ -45,12 +45,12 @@
                                     Checkout</a>
                             </li>
                             <li>
-                                <a href="account.html">
+                                <a href="{{ url('user/login-register') }}">
                                     <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
                                     Customer Login</a>
                             </li>
                             <li>
-                                <a href="account.html">
+                                <a href="{{ url('vendor/login-register') }}">
                                     <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
                                     Vendor Login</a>
                             </li>
