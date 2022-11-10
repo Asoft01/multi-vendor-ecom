@@ -55,6 +55,7 @@ class UserController extends Controller
         }
     }
 
+    // Logout 
     public function userLogout(){
         Auth::logout();
         return redirect('/'); 
