@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Sms;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,7 +52,13 @@ class UserController extends Controller
                 ]; 
                 Mail::send('emails.register', $messageData, function($message) use($email){
                     $message->to($email)->subject('Welcome to E-Commerce Email Subscription'); 
-                }); 
+                });
+                
+                // Send Register SMS
+                $message = "Dear Customer, you have been successfully registered with Ecommerce Developers. Login into your account to access orders, addresses & available offers";
+                $mobile = $data['mobile']; 
+                Sms::sendSms($message, $mobile); 
+                
                 if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
                     $redirectTo = url('cart'); 
                     // return response()->json([
