@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+// use Illuminate\Support\Facades\Validator;
 use PDO;
+use Validator;
 
 class UserController extends Controller
 {
@@ -20,17 +22,17 @@ class UserController extends Controller
             $data = $request->all(); 
             // echo "<pre>"; print_r($data); die;
             
-            $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:100', 
-                'mobile' => 'required|numeric|digits:10', 
-                'email' => 'required|email|max:150|unique:users', 
-                'password' => 'required|min:6', 
-                'accept' => 'required'
-            ], 
-            [
-                'accept.required' => 'Please accept our Terms and Conditions' 
-            ]
-        );
+                $validator = Validator::make($request->all(), [
+                    'name' => 'required|string|max:100', 
+                    'mobile' => 'required|numeric|digits:10', 
+                    'email' => 'required|email|max:150|unique:users', 
+                    'password' => 'required|min:6', 
+                    'accept' => 'required'
+                ], 
+                [
+                    'accept.required' => 'Please accept our Terms and Conditions' 
+                ]
+            );
 
             if($validator->passes()){
                 // Register the user 
@@ -42,6 +44,14 @@ class UserController extends Controller
                 $user->status = 1;
                 $user->save();
 
+                // Send Register Email 
+                $email = $data['email']; 
+                $messageData = [
+                    'name' => $data['name'], 'mobile' => $data['mobile'], 'email' => $data['email']
+                ]; 
+                Mail::send('emails.register', $messageData, function($message) use($email){
+                    $message->to($email)->subject('Welcome to E-Commerce Email Subscription'); 
+                }); 
                 if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
                     $redirectTo = url('cart'); 
                     // return response()->json([

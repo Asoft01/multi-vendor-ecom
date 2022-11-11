@@ -128,13 +128,21 @@ $(document).ready(function(){
             url: "/user/register", 
             type: "POST", 
             data:formdata, 
-            success: function(resp){
-                alert(resp.url);
-                if(data.type == "error"){
+            success:function(resp){
+                // alert(resp.type);
+                // console.log(resp);
+                if(resp.type == "error"){
                     $.each(resp.errors, function(i, error){
-                        $("register-"+i).html(error);
+                        // console.log(i, error);
+                        $("#register-"+i).attr('style', 'color:red');
+                        $("#register-"+i).html(error);
+                        setTimeout(function(){
+                            $("#register-"+i).css({
+                                'display':'none'
+                            });
+                        }, 3000);
                     });
-                }else if(data.type == "success"){
+                }else if(resp.type == "success"){
                     window.location.href = resp.url
                 }
                 // window.location.href = resp.url;
