@@ -42,7 +42,7 @@ class UserController extends Controller
                 $user->mobile= $data['mobile']; 
                 $user->email=  $data['email']; 
                 $user->password = bcrypt($data['password']); 
-                $user->status = 1;
+                $user->status = 0;
                 $user->save();
 
                 // Send Register Email 
@@ -69,6 +69,32 @@ class UserController extends Controller
             }else{
                 return response()->json(['type' => 'error', 'errors' => $validator->messages()]);
             }  
+        }
+    }
+
+    public function userLogin(Request $request){
+        if($request->ajax()){
+            $data = $request->all(); 
+            // echo "<pre>"; print_r($data); die;
+                $validator = Validator::make($request->all(), [
+                        'email' => 'required|email|max:150|exists:users', 
+                        'password' => 'required|min:6', 
+                    ]
+                );
+            if($validator->passes()){
+                if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
+                    if(Auth::user()->status== 0){
+                        Auth::logout();
+                        return response()->json(['type' => 'inactive', 'message' => 'Your Account is inactive. Please contact Admin']);
+                    }
+                    $redirectTo = url('cart'); 
+                    return response()->json(['type' => 'success', 'url' => $redirectTo]);
+                }else{
+                    return response()->json(['type' => 'incorrect', 'message' => 'Incorrect Email or Password!']);
+                }
+            }else{
+                return response()->json(['type' => 'error', 'errors' => $validator->messages()]);
+            }
         }
     }
 
