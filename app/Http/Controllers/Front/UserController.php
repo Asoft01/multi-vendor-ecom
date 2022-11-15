@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Sms;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 // use Illuminate\Support\Facades\Validator;
+use Session;
 use PDO;
 use Validator;
 
@@ -64,6 +66,13 @@ class UserController extends Controller
                     // return response()->json([
                     //     'url' => $redirectTo
                     // ]);
+                    
+                     // Update User Cart with User ID 
+                     if(!empty(Session::get('session_id'))){
+                        $user_id = Auth::user()->id; 
+                        $session_id = Session::get('session_id'); 
+                        Cart::where('session_id', $session_id)->update(['user_id' => $user_id]);
+                    }
                     return response()->json(['type' => 'success', 'url' => $redirectTo]);
                 }
             }else{
@@ -86,6 +95,12 @@ class UserController extends Controller
                     if(Auth::user()->status== 0){
                         Auth::logout();
                         return response()->json(['type' => 'inactive', 'message' => 'Your Account is inactive. Please contact Admin']);
+                    }
+                    // Update User Cart with User ID 
+                    if(!empty(Session::get('session_id'))){
+                        $user_id = Auth::user()->id; 
+                        $session_id = Session::get('session_id'); 
+                        Cart::where('session_id', $session_id)->update(['user_id' => $user_id]);
                     }
                     $redirectTo = url('cart'); 
                     return response()->json(['type' => 'success', 'url' => $redirectTo]);
