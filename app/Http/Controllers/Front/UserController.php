@@ -47,34 +47,51 @@ class UserController extends Controller
                 $user->status = 0;
                 $user->save();
 
-                // Send Register Email 
+                /* Activate the user only when user confirms his email account */
+
                 $email = $data['email']; 
-                $messageData = [
-                    'name' => $data['name'], 'mobile' => $data['mobile'], 'email' => $data['email']
+                 $messageData = [
+                    'name' => $data['name'], 'email' => $data['email'], 'code' => base64_encode($data['email'])
                 ]; 
-                Mail::send('emails.register', $messageData, function($message) use($email){
-                    $message->to($email)->subject('Welcome to E-Commerce Email Subscription'); 
+                Mail::send('emails.confirmation', $messageData, function($message) use($email){
+                    $message->to($email)->subject('Confirm your E-commerce Account'); 
                 });
+
+                // Redirect back user with success message 
+                $redirectTo = url('user/login-register'); 
+                return response()->json(['type' => 'success', 'url' => $redirectTo, 'message' => 'Please confirm your email to activate your account']); 
+
+                /* Activate the user straight away without sending any confirmation email */ 
+
+                // Send Register Email 
+                // $email = $data['email']; 
+                // $messageData = [
+                //     'name' => $data['name'], 'mobile' => $data['mobile'], 'email' => $data['email']
+                // ]; 
+                // Mail::send('emails.register', $messageData, function($message) use($email){
+                //     $message->to($email)->subject('Welcome to E-Commerce Email Subscription'); 
+                // });
                 
                 // Send Register SMS
-                $message = "Dear Customer, you have been successfully registered with Ecommerce Developers. Login into your account to access orders, addresses & available offers";
-                $mobile = $data['mobile']; 
-                Sms::sendSms($message, $mobile); 
+                // $message = "Dear Customer, you have been successfully registered with Ecommerce Developers. Login into your account to access orders, addresses & available offers";
+                // $mobile = $data['mobile']; 
+                // Sms::sendSms($message, $mobile); 
                 
-                if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
-                    $redirectTo = url('cart'); 
-                    // return response()->json([
-                    //     'url' => $redirectTo
-                    // ]);
+                // if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
+                //     $redirectTo = url('cart'); 
+                //     // return response()->json([
+                //     //     'url' => $redirectTo
+                //     // ]);
                     
-                     // Update User Cart with User ID 
-                     if(!empty(Session::get('session_id'))){
-                        $user_id = Auth::user()->id; 
-                        $session_id = Session::get('session_id'); 
-                        Cart::where('session_id', $session_id)->update(['user_id' => $user_id]);
-                    }
-                    return response()->json(['type' => 'success', 'url' => $redirectTo]);
-                }
+                //      // Update User Cart with User ID 
+                //      if(!empty(Session::get('session_id'))){
+                //         $user_id = Auth::user()->id; 
+                //         $session_id = Session::get('session_id'); 
+                //         Cart::where('session_id', $session_id)->update(['user_id' => $user_id]);
+                //     }
+                //     return response()->json(['type' => 'success', 'url' => $redirectTo]);
+                // }
+
             }else{
                 return response()->json(['type' => 'error', 'errors' => $validator->messages()]);
             }  
@@ -94,7 +111,7 @@ class UserController extends Controller
                 if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
                     if(Auth::user()->status== 0){
                         Auth::logout();
-                        return response()->json(['type' => 'inactive', 'message' => 'Your Account is inactive. Please contact Admin']);
+                        return response()->json(['type' => 'inactive', 'message' => 'Your account is not activated! Please confirm your account to activate your account.']);
                     }
                     // Update User Cart with User ID 
                     if(!empty(Session::get('session_id'))){
@@ -117,5 +134,33 @@ class UserController extends Controller
     public function userLogout(){
         Auth::logout();
         return redirect('/'); 
+    }
+
+    public function confirmAccount($code){
+        $email = base64_decode($code); 
+        // echo $userCount = User::where('email', $email)->count(); die;
+        $userCount = User::where('email', $email)->count();
+        if($userCount > 0){
+            $userDetails = User::where('email', $email)->first(); 
+            if($userDetails->status ==1){
+                // Redirect the user to login/register page with error message
+                return redirect("user/login-register")->with('error_message', 'Your account is already activated. You can login now'); 
+            }else{
+                // echo $userDetails->status; die;
+                User::where('email', $email)->update(['status' => 1]); 
+                // Send Welcome Email 
+                $messageData = [
+                    'name' => $userDetails->name, 'mobile' => $userDetails->mobile, 'email' => $email
+                ]; 
+                Mail::send('emails.register', $messageData, function($message) use($email){
+                    $message->to($email)->subject('Welcome to E-Commerce Email Subscription'); 
+                });
+
+                // Redirect the user to Login/Register Page with Success Message
+                return redirect('user/login-register')->with('success_message', 'Your account is activated. You can login now.');
+            }
+        }else{
+            abort(404);
+        }
     }
 }

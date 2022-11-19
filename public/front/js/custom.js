@@ -143,6 +143,7 @@ $(document).ready(function(){
                         }, 3000);
                     });
                 }else if(resp.type == "success"){
+                    alert(resp.message);
                     window.location.href = resp.url
                 }
                 // window.location.href = resp.url;

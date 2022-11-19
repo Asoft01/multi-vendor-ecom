@@ -167,6 +167,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     // User Logout 
     Route::get('user/logout', 'UserController@userLogout');
 
+    // Confirm User Account 
+    Route::get('user/confirm/{code}', 'UserController@confirmAccount'); 
+
 });
 
 // Admin Login Routes without the admin group
