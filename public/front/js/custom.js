@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    // $(".loader").show();
     // alert("test"); die;
 //     $("#sort").on("change", function(){
 //         // this.form.submit(); 
@@ -121,6 +122,7 @@ $(document).ready(function(){
 
     // Register Form Validation 
     $("#registerForm").submit(function(){
+        $(".loader").show();
         var formdata = $(this).serialize(); 
         // alert(formdata); 
         // return false;
@@ -132,6 +134,7 @@ $(document).ready(function(){
                 // alert(resp.type);
                 // console.log(resp);
                 if(resp.type == "error"){
+                    $(".loader").hide();
                     $.each(resp.errors, function(i, error){
                         // console.log(i, error);
                         $("#register-"+i).attr('style', 'color:red');
@@ -143,8 +146,11 @@ $(document).ready(function(){
                         }, 3000);
                     });
                 }else if(resp.type == "success"){
-                    alert(resp.message);
-                    window.location.href = resp.url
+                    // alert(resp.message);
+                    $(".loader").hide();
+                    $("#register-success").attr('style', 'color: green');
+                    $("#register-success").html(resp.message); 
+                    // window.location.href = resp.url
                 }
                 // window.location.href = resp.url;
                 // alert(resp);

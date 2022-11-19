@@ -92,6 +92,7 @@
                     <div class="reg-wrapper">
                         <h2 class="account-h2 u-s-m-b-20">Register</h2>
                         <h6 class="account-h6 u-s-m-b-30">Registering for this site allows you to access your order status and history.</h6>
+                        <p id="register-success"></p>
                         <form id="registerForm" action="javascript:;" method="post">@csrf
                             <div class="u-s-m-b-30">
                                 <label for="username">Name
