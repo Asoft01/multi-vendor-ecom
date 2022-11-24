@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Sms;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 // use Illuminate\Support\Facades\Validator;
@@ -95,6 +96,49 @@ class UserController extends Controller
             }else{
                 return response()->json(['type' => 'error', 'errors' => $validator->messages()]);
             }  
+        }
+    }
+
+    public function forgotPassword(Request $request){
+        if($request->ajax()){
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
+
+            $validator = Validator::make($request->all(), [
+                    'email' => 'required|email|max:150|exists:users', 
+                ], 
+                [
+                    'email.exists' => 'Email does not exists!' 
+                ]
+            );
+
+            if($validator->passes()){
+                // Generate New Password 
+                // $userDetails = User::where('email', $data['email'])->first(); 
+                // echo $new_password = Str::random(16); die;
+
+                // Generate New Password
+                $new_password = Str::random(16);
+                User::where('email', $data['email'])->update(['password' => bcrypt($new_password)]);
+
+                // Get User Details 
+                $userDetails = User::where('email', $data['email'])->first()->toArray(); 
+
+                // Send Email to User 
+                $email = $data['email']; 
+                $messageData = ['name' => $userDetails['name'], 'email' => $email, 'password' => $new_password];
+                Mail::send('emails.user_forgot_password', $messageData, function($message) use($email){
+                    $message->to($email)->subject('New Password - Ecommerce');
+                });
+
+                // Show Success Message
+                return response()->json(['type' => 'success', 'message' => 'New Password sent to your register email']);
+    
+            }else{
+                return response()->json(['type' => 'error', 'errors' => $validator->messages()]);
+            }
+        }else{
+            return view('front.users.forgot_password');
         }
     }
 

@@ -197,6 +197,46 @@ $(document).ready(function(){
             }
         });
     });
+
+    // Forgot Password Form Validation 
+    $("#forgotForm").submit(function(){
+        $(".loader").show();
+        var formdata = $(this).serialize(); 
+        // alert(formdata); 
+        // return false;
+        $.ajax({
+            url: "/user/forgot-password", 
+            type: "POST", 
+            data:formdata, 
+            success:function(resp){
+                // alert(resp.type);
+                // console.log(resp);
+                if(resp.type == "error"){
+                    $(".loader").hide();
+                    $.each(resp.errors, function(i, error){
+                        // console.log(i, error);
+                        $("#forgot-"+i).attr('style', 'color:red');
+                        $("#forgot-"+i).html(error);
+                        setTimeout(function(){
+                            $("#forgot-"+i).css({
+                                'display':'none'
+                            });
+                        }, 3000);
+                    });
+                }else if(resp.type == "success"){
+                    // alert(resp.message);
+                    $(".loader").hide();
+                    $("#forgot-success").attr('style', 'color: green');
+                    $("#forgot-success").html(resp.message); 
+                    // window.location.href = resp.url
+                }
+                // window.location.href = resp.url;
+                // alert(resp);
+            }, error: function(){
+                alert("Error");
+            }
+        });
+    });
 }); 
 
 // $('.fabric').on('click', function(){
