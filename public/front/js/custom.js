@@ -160,6 +160,46 @@ $(document).ready(function(){
         });
     });
 
+// Account Form Validation 
+    $("#accountForm").submit(function(){
+        $(".loader").show();
+        var formdata = $(this).serialize(); 
+        // alert(formdata); 
+        // return false;
+        $.ajax({
+            url: "/user/account", 
+            type: "POST", 
+            data:formdata, 
+            success:function(resp){
+                // alert(resp.type);
+                // console.log(resp);
+                if(resp.type == "error"){
+                    $(".loader").hide();
+                    $.each(resp.errors, function(i, error){
+                        // console.log(i, error);
+                        $("#account-"+i).attr('style', 'color:red');
+                        $("#account-"+i).html(error);
+                        setTimeout(function(){
+                            $("#account-"+i).css({
+                                'display':'none'
+                            });
+                        }, 3000);
+                    });
+                }else if(resp.type == "success"){
+                    // alert(resp.message);
+                    $(".loader").hide();
+                    $("#account-success").attr('style', 'color: green');
+                    $("#account-success").html(resp.message); 
+                    // window.location.href = resp.url
+                }
+                // window.location.href = resp.url;
+                // alert(resp);
+            }, error: function(){
+                alert("Error");
+            }
+        });
+    });
+    
      // Register Form Validation 
      $("#loginForm").submit(function(){
         var formdata = $(this).serialize(); 

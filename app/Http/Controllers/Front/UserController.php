@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Country;
 use App\Models\Sms;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -96,6 +97,37 @@ class UserController extends Controller
             }else{
                 return response()->json(['type' => 'error', 'errors' => $validator->messages()]);
             }  
+        }
+    }
+
+    public function userAccount(Request $request){
+        if($request->ajax()){
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
+                $validator = Validator::make($request->all(), [
+                    'name' => 'required|string|max:100', 
+                    'city' => 'required|string|max:100', 
+                    'state' => 'required|string|max:100', 
+                    'address' => 'required|string|max:100', 
+                    'country' => 'required|string', 
+                    'mobile' => 'required|numeric|digits:10', 
+                    'pincode' => 'required|digits:6', 
+                ]
+            );
+
+            if($validator->passes()){
+                // Update User Details 
+                User::where('id', Auth::user()->id)->update(['name' => $data['name'], 'mobile' => $data['mobile'], 'city' => $data['city'], 'state' => $data['state'], 'country' => $data['country'], 'pincode' => $data['pincode'], 'address' => $data['address']]);
+
+                // Redirect back user with success message 
+                $redirectTo = url('user/account'); 
+                return response()->json(['type' => 'success', 'message' => 'Your contact/billing details successfully updated!']);
+            }else{
+                return response()->json(['type' => 'error', 'errors' => $validator->messages()]);
+            }
+        }else{
+            $countries = Country::where('status', 1)->get()->toArray();
+            return view('front.users.user_account')->with(compact('countries'));
         }
     }
 
