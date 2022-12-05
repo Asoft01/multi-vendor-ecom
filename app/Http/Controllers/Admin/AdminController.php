@@ -73,7 +73,7 @@ class AdminController extends Controller
             ];
 
             $this->validate($request, $rules, $customMessages);
-
+            // 
             if($request->hasFile('admin_image')){
                 // echo $image_tmp = $request->file('admin_image'); die;
                 $image_tmp = $request->file('admin_image');
