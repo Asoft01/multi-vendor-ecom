@@ -2,6 +2,7 @@
     use App\Models\Section;
     $sections = Section::sections();
     // echo "<pre>"; print_r($sections); die;
+    $totalCartItems = totalCartItems();
 ?>
 <header>
     <!-- Top-Header -->
@@ -148,7 +149,7 @@
                             <li>
                                 <a id="mini-cart-trigger">
                                     <i class="ion ion-md-basket"></i>
-                                    <span class="item-counter">4</span>
+                                    <span class="item-counter totalCartItems">{{ $totalCartItems }}</span>
                                     <span class="item-price">$220.00</span>
                                 </a>
                             </li>

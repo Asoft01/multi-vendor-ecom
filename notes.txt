@@ -17,3 +17,5 @@ php artisan make:migration create_products_filter
 php artisan make:migration create_products_filters_value
 
 https://i-like-robots.github.io/EasyZoom/
+
+composer dump-autoload

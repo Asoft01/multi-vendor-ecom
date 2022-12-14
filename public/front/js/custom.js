@@ -85,6 +85,7 @@ $(document).ready(function(){
             url: '/cart/update', 
             type: 'post', 
             success: function(resp){
+                $(".totalCartItems").html(resp.totalCartItems);
                 // alert(resp); return false
                 // alert(resp.status); 
                 if(resp.status == false){
@@ -110,6 +111,7 @@ $(document).ready(function(){
                 url: '/cart/delete', 
                 type: 'post', 
                 success: function(resp){
+                    $(".totalCartItems").html(resp.totalCartItems);
                     $("#appendCartItems").html(resp.view);
                 }, error: function(){
                     alert('error');
