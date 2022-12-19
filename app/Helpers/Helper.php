@@ -13,5 +13,20 @@ use Illuminate\Support\Facades\Session;
             $totalCartItems = Cart::where('session_id', $session_id)->sum('quantity'); 
         }
         // echo $totalCartItems; die;
-        return $totalCartItems; 
+        return $totalCartItems;
+    }
+
+    function getCartItems(){
+        if(Auth::check()){
+            // If user logged in / pick auth id of the user 
+            $getCartItems = Cart::with(['product' => function($query){
+                $query->select('id', 'category_id', 'product_name', 'product_code', 'product_color', 'product_image');
+            }])->orderby('id', 'Desc')->where('user_id', Auth::user()->id)->get()->toArray(); 
+        }else{
+            // If user not logged in / pick session id of the user 
+            $getCartItems = Cart::with(['product' => function($query){
+                $query->select('id', 'category_id', 'product_name', 'product_code', 'product_color', 'product_image');
+            }])->orderby('id', 'Desc')->where('session_id', Session::get('session_id'))->get()->toArray();
+        }
+        return $getCartItems; 
     }

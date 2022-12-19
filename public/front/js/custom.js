@@ -92,6 +92,7 @@ $(document).ready(function(){
                     alert(resp.message);
                 }
                 $("#appendCartItems").html(resp.view);
+                $("#appendHeaderCartItems").html(resp.headerview);
             }, error: function(){
                 alert('error');
             }   
