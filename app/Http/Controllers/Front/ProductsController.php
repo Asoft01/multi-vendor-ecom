@@ -344,7 +344,9 @@ class ProductsController extends Controller
                 return response()->json([
                     'status' => false,
                     'message' => 'Product Stock is not available',
-                    'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems'))
+                    'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')), 
+                    'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+
                 ]);
             }
 
@@ -355,7 +357,8 @@ class ProductsController extends Controller
                 return response()->json([
                     'status' => false,
                     'message' => 'Product Size is not available. Please remove this Product and choose another one!',
-                    'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems'))
+                    'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')), 
+                    'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
                 ]);
             }
 
@@ -382,7 +385,8 @@ class ProductsController extends Controller
             $totalCartItems = totalCartItems();
             return response()->json([
                 'totalCartItems' => $totalCartItems,
-                'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems'))
+                'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')), 
+                'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
             ]);
         }
     }
