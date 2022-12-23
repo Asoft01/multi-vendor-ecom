@@ -346,7 +346,6 @@ class ProductsController extends Controller
                     'message' => 'Product Stock is not available',
                     'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')), 
                     'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
-
                 ]);
             }
 

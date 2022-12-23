@@ -33,3 +33,8 @@
         </div>
     </div>
 </div>
+<script>
+    $("#mini-cart-close").on('click', function(){
+        $('.mini-cart-wrapper').removeClass('mini-cart-open');
+    });
+</script>
