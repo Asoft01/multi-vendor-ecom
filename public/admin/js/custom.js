@@ -7,6 +7,7 @@ $(document).ready(function(){
     $('#products').DataTable();
     $('#banners').DataTable();
     $('#filters').DataTable();
+    $('#coupons').DataTable();
 
     $(".nav-item").removeClass("active");
     $(".nav-link").removeClass("active");
@@ -204,6 +205,35 @@ $(document).ready(function(){
         })
     });
     
+
+     // Update Coupon Status
+     $(document).on('click', ".updateCouponStatus", function(){
+        // alert("test"); return true;
+        var status = $(this).children("i").attr("status");
+        // alert(status); return true;
+        var coupon_id = $(this).attr("coupon_id");
+        // alert(coupon_id); return true;
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'post',
+            url: '/admin/update-coupon-status', 
+            data: {status: status, coupon_id: coupon_id},
+            success: function(resp){
+                // alert(url); return true;
+                if(resp['status'] == 0){
+                    $("#coupon-"+coupon_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-outline' status='Inactive'></i>");
+                }else{ 
+                    $("#coupon-"+coupon_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-check' status='Active'></i>");
+                }
+            }, 
+            error: function(){
+                alert("Error");
+            }
+        })
+    });
     // Update Filter Status
     $(document).on('click', ".updateFilterStatus", function(){
         // alert("test"); return true;
