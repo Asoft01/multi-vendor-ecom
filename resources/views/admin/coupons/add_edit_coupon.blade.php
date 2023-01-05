@@ -89,15 +89,14 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="category_id">Select Category</label>
-                        <select name="category_id" id="category_id" class="form-control text-dark">
-                            <option value="">Select</option>
+                        <label for="categories">Select Category</label>
+                        <select name="categories[]" class="form-control text-dark" multiple="">
                             @foreach($categories as $section)
                                 <optgroup label="{{ $section['name'] }}"></optgroup>
                                     @foreach ($section['categories'] as $category)
-                                        <option>&nbsp;&nbsp;&nbsp;---&nbsp;{{ $category['category_name'] }}</option>
+                                        <option value="{{ $category['id'] }}">&nbsp;&nbsp;&nbsp;---&nbsp;{{ $category['category_name'] }}</option>
                                             @foreach ($category['subcategories'] as $subcategory)
-                                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---&nbsp;{{ $subcategory['category_name'] }}</option>
+                                                <option value="{{ $subcategory['id'] }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---&nbsp;{{ $subcategory['category_name'] }}</option>
                                             @endforeach
                                     @endforeach
                             @endforeach
@@ -108,13 +107,24 @@
                         <input type="text" class="form-control" id="coupon_name" name="coupon_name" placeholder="Enter coupon Name" required>
                     </div>
                     <div class="form-group">
-                        <label for="brand_id">Select Brand</label>
-                        <select name="brand_id" id="brand_id" class="form-control text-dark">
-                            <option value="">Select</option>
+                        <label for="brands">Select Brand</label>
+                        <select name="brands[]" class="form-control text-dark" multiple="">
                             @foreach($brands as $brand)
                                 <option value="{{ $brand['id'] }}">{{ $brand['name'] }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="users">Select User</label>
+                        <select name="users[]" class="form-control text-dark" multiple="">
+                            @foreach($users as $user)
+                                <option value="{{ $user['email'] }}">{{ $user['email'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="expiry_date"> Expiry Date </label>
+                        <input type="date" class="form-control" id="expiry_date" name="expiry_date" placeholder="Enter Expiry Date" required>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button type="reset" class="btn btn-light">Cancel</button>

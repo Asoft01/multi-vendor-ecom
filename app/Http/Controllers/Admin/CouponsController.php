@@ -55,6 +55,11 @@ class CouponsController extends Controller
             $coupon = Coupon::find($id);
             $message = "Coupon Updated Successfully";
         }
+
+        if($request->isMethod('post')){
+            $data = $request->all(); 
+            echo "<pre>"; print_r($data); die;
+        }
         // Get Sections with Categories and Sub Categories
         $categories = Section::with('categories')->get()->toArray();
         // dd($categories);die;
