@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Coupon;
+use App\Models\Section;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Session;
 class CouponsController extends Controller
@@ -52,6 +55,14 @@ class CouponsController extends Controller
             $coupon = Coupon::find($id);
             $message = "Coupon Updated Successfully";
         }
-        return view('admin.coupons.add_edit_coupon')->with(compact('title', 'coupon'));
+        // Get Sections with Categories and Sub Categories
+        $categories = Section::with('categories')->get()->toArray();
+        // dd($categories);die;
+        // Get All Brands
+
+        $brands = Brand::where('status', 1)->get()->toArray();
+        // Get All Users Emails 
+        $users = User::select('email')->where('status', 1)->get();
+        return view('admin.coupons.add_edit_coupon')->with(compact('title', 'coupon', 'categories', 'brands', 'users'));
     }
 }

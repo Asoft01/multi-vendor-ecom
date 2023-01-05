@@ -67,7 +67,27 @@
                     
                     <form class="forms-sample" @if(empty($coupon['id'])) action="{{ url('admin/add-edit-coupon') }}" @else action="{{ url('admin/add-edit-coupon/'.$coupon['id']) }}" @endif method="post" id="updateAdminPasswordForm" enctype="multipart/form-data">
                     @csrf
-                        
+                    
+                    <div class="form-group">
+                        <label for="coupon_option">Coupon Option</label><br>
+                        <span><input type="radio" id="AutomaticCoupon" name="coupon_option" value="Automatic" checked="">&nbsp;Automatic&nbsp;&nbsp;</span>
+                        <span><input type="radio" id="ManualCoupon" name="coupon_option" value="Manual">&nbsp;Manual&nbsp;&nbsp;</span>
+                    </div>
+                    <div class="form-group" style="display: none" id="couponField">
+                        <label for="coupon_code">Coupon Code</label>
+                        <input type="text" class="form-control" name="coupon_code"  placeholder="Enter coupon Code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="coupon_type">Coupon Type</label><br>
+                        <span><input type="radio" name="coupon_type" value="Multiple Times" checked="">&nbsp;Multiple Times&nbsp;&nbsp;</span>
+                        <span><input type="radio" name="coupon_type" value="Single Times">&nbsp;Single Times&nbsp;&nbsp;</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount_type">Amount Type</label><br>
+                        <span><input type="radio" name="amount_type" value="Percentage" checked="">&nbsp;Percentage&nbsp;(in %)&nbsp;</span>
+                        <span><input type="radio" name="amount_type" value="Fixed">&nbsp;Fixed&nbsp;&nbsp;(in INR or USD)</span>
+                    </div>
+                    
                     <div class="form-group">
                         <label for="category_id">Select Category</label>
                         <select name="category_id" id="category_id" class="form-control text-dark">
@@ -75,113 +95,27 @@
                             @foreach($categories as $section)
                                 <optgroup label="{{ $section['name'] }}"></optgroup>
                                     @foreach ($section['categories'] as $category)
-                                        <option @if(!empty($coupon['catrgory_id']== $category['id'])) selected="" @endif value="{{ $category['id'] }}">&nbsp;&nbsp;&nbsp;---&nbsp;{{ $category['category_name'] }}</option>
+                                        <option>&nbsp;&nbsp;&nbsp;---&nbsp;{{ $category['category_name'] }}</option>
                                             @foreach ($category['subcategories'] as $subcategory)
-                                                <option @if(!empty($coupon['category_id']== $subcategory['id'])) selected="" @endif value="{{ $subcategory['id'] }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---&nbsp;{{ $subcategory['category_name'] }}</option>
+                                                <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---&nbsp;{{ $subcategory['category_name'] }}</option>
                                             @endforeach
                                     @endforeach
                             @endforeach
                         </select>
                     </div>
-
-                    <div class="loadFilters">
-                        @include('admin.filters.category_filters')
+                    <div class="form-group">
+                        <label for="coupon_name"> Amount </label>
+                        <input type="text" class="form-control" id="coupon_name" name="coupon_name" placeholder="Enter coupon Name" required>
                     </div>
                     <div class="form-group">
                         <label for="brand_id">Select Brand</label>
                         <select name="brand_id" id="brand_id" class="form-control text-dark">
                             <option value="">Select</option>
                             @foreach($brands as $brand)
-                                <option value="{{ $brand['id'] }}" @if(!empty($coupon['brand_id'] == $brand['id'])) selected="" @endif>{{ $brand['name'] }}</option>
+                                <option value="{{ $brand['id'] }}">{{ $brand['name'] }}</option>
                             @endforeach
                         </select>
                     </div>
-
-                    <div class="form-group">
-                        <label for="coupon_name"> coupon Name </label>
-                        <input type="text" class="form-control" @if(!empty($coupon['coupon_name'])) value="{{ $coupon['coupon_name'] }}" @else value="{{ old('coupon_name') }}" @endif id="coupon_name" name="coupon_name" placeholder="Enter coupon Name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="coupon_code"> coupon Code </label>
-                        <input type="text" class="form-control" @if(!empty($coupon['coupon_code'])) value="{{ $coupon['coupon_code'] }}" @else value="{{ old('coupon_code') }}" @endif id="coupon_code" name="coupon_code" placeholder="Enter coupon Code" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="coupon_color"> coupon Color </label>
-                        <input type="text" class="form-control" @if(!empty($coupon['coupon_color'])) value="{{ $coupon['coupon_color'] }}" @else value="{{ old('coupon_color') }}" @endif id="coupon_color" name="coupon_color" placeholder="Enter coupon Color" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="coupon_price"> coupon Price </label>
-                        <input type="text" class="form-control" @if(!empty($coupon['coupon_price'])) value="{{ $coupon['coupon_price'] }}" @else value="{{ old('coupon_price') }}" @endif id="coupon_price" name="coupon_price" placeholder="Enter coupon Price" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="coupon_discount"> coupon Discount (%) </label>
-                        <input type="text" class="form-control" @if(!empty($coupon['coupon_discount'])) value="{{ $coupon['coupon_discount'] }}" @else value="{{ old('coupon_discount') }}" @endif id="coupon_discount" name="coupon_discount" placeholder="Enter coupon Discount" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="coupon_weight"> coupon Weight </label>
-                        <input type="text" class="form-control" @if(!empty($coupon['coupon_weight'])) value="{{ $coupon['coupon_weight'] }}" @else value="{{ old('coupon_weight') }}" @endif id="coupon_weight" name="coupon_weight" placeholder="Enter coupon Name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="group_code"> Group Code </label>
-                        <input type="text" class="form-control" @if(!empty($coupon['group_code'])) value="{{ $coupon['group_code'] }}" @else value="{{ old('group_code') }}" @endif id="group_code" name="group_code" placeholder="Enter coupon Name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="coupon_image"> coupon Image (Recommended Size: 1000 x 1000)</label>
-                        <input type="file" class="form-control" id="coupon_image"  name="coupon_image">
-                    </div>
-
-                    @if(!empty($coupon['coupon_image']))
-                        <a target="_blank" href="{{ url('admin/images/coupon_images/large/'.$coupon['coupon_image']) }}">View Image</a>&nbsp; | &nbsp; 
-                        <a href="javascript:void(0)" class="confirmDelete" module="coupon-image" moduleid="{{ $coupon['id'] }}">Delete Image</a>
-                    @endif
-
-                    <div class="form-group">
-                        <label for="coupon_image"> coupon Video (Recommended Size: Less than 2MB)</label>
-                        <input type="file" class="form-control" id="coupon_video"  name="coupon_video">
-                    </div>
-
-                    @if(!empty($coupon['coupon_video']))
-                        <a target="_blank" href="{{ url('admin/videos/coupon_videos/'.$coupon['coupon_video']) }}">View Video</a>&nbsp; | &nbsp; 
-                        <a href="javascript:void(0)" class="confirmDelete" module="coupon-video" moduleid="{{ $coupon['id'] }}">Delete Video</a>
-                    @endif
-
-                    <div class="form-group">
-                        <label for="coupon_description"> coupon Description </label>
-                        <textarea name="description" id ="description" class="form-control" rows="3">{{ $coupon['description'] }}</textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="meta_title"> Meta Title </label>
-                        <input type="text" class="form-control" @if(!empty($coupon['meta_title'])) value="{{ $coupon['meta_title'] }}" @else value="{{ old('meta_title') }}" @endif id="meta_title" name="meta_title" placeholder="Enter Meta Title">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="meta_description"> Meta Description </label>
-                        <input type="text" class="form-control" @if(!empty($coupon['meta_description'])) value="{{ $coupon['meta_description'] }}" @else value="{{ old('meta_description') }}" @endif id="meta_description" name="meta_description" placeholder="Enter Meta Description">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="meta_keywords"> Meta Keywords </label>
-                        <input type="text" class="form-control" @if(!empty($coupon['meta_keywords'])) value="{{ $coupon['meta_keywords'] }}" @else value="{{ old('meta_keywords') }}" @endif id="meta_keywords" name="meta_keywords" placeholder="Enter coupon Keywords">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="is_featured"> Featured Items </label>
-                        <input type="checkbox" name="is_featured" id="is_featured" value="Yes" @if(!empty($coupon['is_featured']) && $coupon['is_featured'] == "Yes") checked="" @endif>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="is_bestseller"> Best Seller Items </label>
-                        <input type="checkbox" name="is_bestseller" id="is_bestseller" value="Yes" @if(!empty($coupon['is_bestseller']) && $coupon['is_bestseller'] == "Yes") checked="" @endif>
-                    </div>
-                    
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button type="reset" class="btn btn-light">Cancel</button>
                     </form>
