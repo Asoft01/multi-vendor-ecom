@@ -67,16 +67,24 @@
                     
                     <form class="forms-sample" @if(empty($coupon['id'])) action="{{ url('admin/add-edit-coupon') }}" @else action="{{ url('admin/add-edit-coupon/'.$coupon['id']) }}" @endif method="post" id="updateAdminPasswordForm" enctype="multipart/form-data">
                     @csrf
-                    
-                    <div class="form-group">
-                        <label for="coupon_option">Coupon Option</label><br>
-                        <span><input type="radio" id="AutomaticCoupon" name="coupon_option" value="Automatic" checked="">&nbsp;Automatic&nbsp;&nbsp;</span>
-                        <span><input type="radio" id="ManualCoupon" name="coupon_option" value="Manual">&nbsp;Manual&nbsp;&nbsp;</span>
-                    </div>
-                    <div class="form-group" style="display: none" id="couponField">
-                        <label for="coupon_code">Coupon Code</label>
-                        <input type="text" class="form-control" name="coupon_code"  placeholder="Enter coupon code">
-                    </div>
+                    @if(empty($coupon['coupon_code']))
+                        <div class="form-group">
+                            <label for="coupon_option">Coupon Option</label><br>
+                            <span><input type="radio" id="AutomaticCoupon" name="coupon_option" value="Automatic" checked="">&nbsp;Automatic&nbsp;&nbsp;</span>
+                            <span><input type="radio" id="ManualCoupon" name="coupon_option" value="Manual">&nbsp;Manual&nbsp;&nbsp;</span>
+                        </div>
+                        <div class="form-group" style="display: none" id="couponField">
+                            <label for="coupon_code">Coupon Code</label>
+                            <input type="text" class="form-control" name="coupon_code"  placeholder="Enter coupon code">
+                        </div>
+                    @else 
+                        <input type="hidden" name="coupon_option" value="{{ $coupon['coupon_option'] }}">
+                        <input type="hidden" name="coupon_code" value="{{ $coupon['coupon_code'] }}">
+                        <div class="form-group">
+                            <label for="coupon_code">Coupon Code</label>
+                            <span>{{ $coupon['coupon_code'] }}</span>
+                        </div>
+                    @endif
                     <div class="form-group">
                         <label for="coupon_type">Coupon Type</label><br>
                         <span><input type="radio" name="coupon_type" value="Multiple Times" checked="">&nbsp;Multiple Times&nbsp;&nbsp;</span>
