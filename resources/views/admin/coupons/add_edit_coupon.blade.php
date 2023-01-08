@@ -75,7 +75,7 @@
                     </div>
                     <div class="form-group" style="display: none" id="couponField">
                         <label for="coupon_code">Coupon Code</label>
-                        <input type="text" class="form-control" name="coupon_code"  placeholder="Enter coupon Code" required>
+                        <input type="text" class="form-control" name="coupon_code"  placeholder="Enter coupon code">
                     </div>
                     <div class="form-group">
                         <label for="coupon_type">Coupon Type</label><br>
@@ -104,7 +104,7 @@
                     </div>
                     <div class="form-group">
                         <label for="coupon_name"> Amount </label>
-                        <input type="text" class="form-control" id="coupon_name" name="coupon_name" placeholder="Enter coupon Name" required>
+                        <input type="text" class="form-control" id="amount" name="amount" placeholder="Enter Coupon Amount" required>
                     </div>
                     <div class="form-group">
                         <label for="brands">Select Brand</label>

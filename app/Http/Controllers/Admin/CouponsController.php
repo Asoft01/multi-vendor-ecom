@@ -58,7 +58,70 @@ class CouponsController extends Controller
 
         if($request->isMethod('post')){
             $data = $request->all(); 
-            echo "<pre>"; print_r($data); die;
+            // echo "<pre>"; print_r($data); die;
+
+            $rules = [
+                'categories' => 'required',
+                'brands'=> 'required',
+                'coupon_option'=> 'required',
+                'coupon_type'=> 'required',
+                'amount_type'=> 'required',
+                'amount'=> 'required|numeric',
+                'expiry_date'=> 'required',
+            ];
+
+            // $this->validate($request, $rules);
+
+            $customMessages= [
+                'categories.required' => 'Select categories',
+                'brands.required' => 'Select Brands',
+                'coupon_option.required' => 'Select Coupon Option',
+                'coupon_type.required' => 'Select Coupon Type',
+                'amount_type.required' => 'Select Amount Type',
+                'amount.required' => 'Enter Amount',
+                'amount.numeric' =>   'Enter Valid Amount',
+                'expiry_date.required' => 'Enter Expiry Date', 
+            ];
+            
+            $this->validate($request, $rules, $customMessages);
+
+            if(isset($data['categories'])){
+                $categories = implode(",",$data['categories']);
+            }else{
+                $categories = "";
+            }
+
+            if(isset($data['brands'])){
+                $brands = implode(",",$data['brands']);
+            }else{
+                $brands = "";
+            }
+
+            if(isset($data['users'])){
+                $users = implode(",",$data['users']);
+            }else{
+                $users = "";
+            }
+
+            if($data['coupon_option'] == "Automatic"){
+                // echo $coupon_code = str_random(8);
+                $coupon_code = str_random(8);
+            }else{
+                $coupon_code = $data['coupon_code'];
+            }
+            // echo "<pre>"; print_r($data); die;
+            $coupon->coupon_option = $data['coupon_option'];
+            $coupon->coupon_code = $coupon_code;
+            $coupon->categories =  $categories;
+            $coupon->brands =      $brands;
+            $coupon->users =       $users;
+            $coupon->coupon_type = $data['coupon_type'];
+            $coupon->amount_type = $data['amount_type'];
+            $coupon->amount =      $data['amount'];
+            $coupon->expiry_date = $data['expiry_date'];
+            $coupon->status = 1;
+            $coupon->save();
+            return redirect('admin/coupons')->with('success_message', $message); 
         }
         // Get Sections with Categories and Sub Categories
         $categories = Section::with('categories')->get()->toArray();
