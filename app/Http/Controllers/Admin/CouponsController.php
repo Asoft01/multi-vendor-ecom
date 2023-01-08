@@ -9,6 +9,7 @@ use App\Models\Section;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Session;
+use Auth;
 class CouponsController extends Controller
 {
     public function coupons()
@@ -44,7 +45,7 @@ class CouponsController extends Controller
     }
 
     public function addEditCoupon(Request $request, $id = null){
-        if($id = ""){
+        if($id == ""){
             // Add Coupon
             $title = "Add Coupon"; 
             $coupon = new Coupon;
@@ -110,6 +111,14 @@ class CouponsController extends Controller
                 $coupon_code = $data['coupon_code'];
             }
             // echo "<pre>"; print_r($data); die;
+            
+            $adminType = Auth::guard('admin')->user()->type;
+            if($adminType == "vendor"){
+                $coupon->vendor_id = Auth::guard('admin')->user()->vendor_id;
+            }else{
+                $coupon->vendor_id = 0;
+            }
+
             $coupon->coupon_option = $data['coupon_option'];
             $coupon->coupon_code = $coupon_code;
             $coupon->categories =  $categories;
