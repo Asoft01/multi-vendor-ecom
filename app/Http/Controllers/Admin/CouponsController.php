@@ -61,6 +61,8 @@ class CouponsController extends Controller
             $selBrands = explode(',', $coupon['brands']);
             $selUsers = explode(',', $coupon['users']);
             $message = "Coupon Updated Successfully";
+            // echo "<pre>"; print_r($coupon); die;
+            // dd($coupon); die;
         }
 
         if($request->isMethod('post')){
