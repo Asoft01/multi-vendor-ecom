@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\ProductsAttribute;
 use App\Models\ProductsFilter;
@@ -387,6 +388,27 @@ class ProductsController extends Controller
                 'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')), 
                 'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
             ]);
+        }
+    }
+
+    public function applyCoupon(Request $request){
+        if($request->ajax()){
+            $data = $request->all(); 
+            // echo "<pre>"; print_r($data); die;
+            $getCartItems = Cart::getCartItems();
+            $totalCartItems = totalCartItems();
+            $couponCount = Coupon::where('coupon_code', $data['code'])->count(); 
+            if($couponCount == 0){
+                return response()->json([
+                    'status' => false, 
+                    'totalCartItems' => $totalCartItems,
+                    'message' => 'The coupon is not valid!', 
+                    'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')), 
+                    'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+                ]);
+            }else{
+                echo "Check for other coupon conditions"; die;
+            }
         }
     }
 }

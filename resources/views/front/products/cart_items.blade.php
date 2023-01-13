@@ -81,9 +81,11 @@
         <div class="coupon-area">
             <h6>Enter your coupon code if you have one.</h6>
             <div class="coupon-field">
-                <label class="sr-only" for="coupon-code">Apply Coupon</label>
-                <input id="coupon-code" type="text" class="text-field" placeholder="Coupon Code">
-                <button type="submit" class="button">Apply Coupon</button>
+                <form method="post" id="ApplyCoupon" action="javascript:void(0);" @if(Auth::check()) user="1" @endif>@csrf
+                    <label class="sr-only" for="coupon-code">Apply Coupon</label>
+                    <input id="code" name="code" type="text" class="text-field" placeholder="Enter Coupon Code">
+                    <button type="submit" class="button">Apply Coupon</button>
+                </form>
             </div>
         </div>
         <div class="button-area">

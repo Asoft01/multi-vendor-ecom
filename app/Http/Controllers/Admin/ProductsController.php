@@ -22,6 +22,8 @@ class ProductsController extends Controller
         Session::put('page', 'products');
         $adminType = Auth::guard('admin')->user()->type;
         $vendor_id = Auth::guard('admin')->user()->vendor_id;
+        // dd($vendor_id); die;
+        // dd(Auth::guard('admin')->user()->id);
         if ($adminType == "vendor") {
             $vendorStatus = Auth::guard('admin')->user()->status;
             if ($vendorStatus == "0") {
@@ -39,7 +41,7 @@ class ProductsController extends Controller
         }
 
         $products = $products->get()->toArray();
-        // dd($products);
+        // dd($products); die;
 
         return view('admin.products.products')->with(compact('products'));
     }

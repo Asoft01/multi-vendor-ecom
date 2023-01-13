@@ -173,6 +173,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
         // User Update Password 
         Route::post('user/update-password', 'UserController@userUpdatePassword');
+
+        // Apply Coupon
+        Route::post('/apply-coupon', 'ProductsController@applyCoupon'); 
     });
 
     // User login

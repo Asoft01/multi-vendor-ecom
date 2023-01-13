@@ -457,5 +457,6 @@ $(document).ready(function(){
     });
     $("#AutomaticCoupon").click(function(){
         $("#couponField").hide();
-    })
+    }); 
+
 });
