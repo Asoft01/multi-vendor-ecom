@@ -11,6 +11,7 @@ use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\ProductsAttribute;
 use App\Models\ProductsFilter;
+use App\Models\User;
 use App\Models\Vendor;
 // use Session;
 // use DB;
@@ -414,7 +415,7 @@ class ProductsController extends Controller
                 //Check If Coupon is active
                 if($couponDetails->status == 0){
                     $message = "The coupon is not active!";
-                } 
+                }
 
                 // Check if coupon is expired 
                 $expiry_date = $couponDetails->expiry_date;
@@ -423,6 +424,37 @@ class ProductsController extends Controller
                     $message = "The coupon is expired!";
                 }
 
+                // Check if coupon is from selected categories 
+
+                // Get all selected categories from coupon and convert to array 
+                $catArr = explode(",",$couponDetails->categories);
+
+                // Check if any cart item not belong to coupon category
+                foreach($getCartItems as $key => $item){
+                    if(!in_array($item['product']['category_id'], $catArr)){
+                        $message = "This coupon is not for one of the selected product!";
+                    }                    
+                }
+
+                // Check if coupon is from selected users 
+                // Get all selected users from coupon and convert to array 
+                $usersArr = explode(",",$couponDetails->users);
+
+                // Get User Id's of all selected users
+                foreach($usersArr as $key => $user){
+                    $getUserId = User::select('id')->where('email', $user)->first()->toArray(); 
+                    $usersId[] = $getUserId['id']; 
+                }
+                
+                // Check if any cart item not belong to coupon user 
+                foreach($getCartItems as $item){
+                    if(count($usersArr) > 0){
+                        if(!in_array($item['user_id'], $usersId)){
+                            $message = "This coupon code is not for you. Try with valid coupon";
+                        }
+                    }
+                }
+                
                 // If error message is there 
                 if(isset($message)){
                     return response()->json([
@@ -431,7 +463,7 @@ class ProductsController extends Controller
                         'message' => $message, 
                         'view' => (String)View::make('front.products.cart_items')->with(compact('getCartItems')), 
                         'headerview' => (String)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
-                    ]); 
+                    ]);
                 }
             }
         }
