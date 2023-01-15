@@ -343,7 +343,6 @@ $(document).ready(function(){
             alert("Please login to apply Coupon");
             return false; 
         }
-
         var code = $("#code").val(); 
         $.ajax({ 
             headers: {

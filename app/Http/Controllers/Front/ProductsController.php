@@ -345,8 +345,8 @@ class ProductsController extends Controller
                 return response()->json([
                     'status' => false,
                     'message' => 'Product Stock is not available',
-                    'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')), 
-                    'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+                    'view' => (String)View::make('front.products.cart_items')->with(compact('getCartItems')), 
+                    'headerview' => (String)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
                 ]);
             }
 
@@ -357,8 +357,8 @@ class ProductsController extends Controller
                 return response()->json([
                     'status' => false,
                     'message' => 'Product Size is not available. Please remove this Product and choose another one!',
-                    'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')), 
-                    'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+                    'view' => (String)View::make('front.products.cart_items')->with(compact('getCartItems')), 
+                    'headerview' => (String)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
                 ]);
             }
 
@@ -369,8 +369,8 @@ class ProductsController extends Controller
             return response()->json([
                 'status' => true,
                 'totalCartItems' => $totalCartItems,
-                'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')),
-                'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+                'view' => (String)View::make('front.products.cart_items')->with(compact('getCartItems')),
+                'headerview' => (String)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
             ]);
         }
     }
@@ -385,8 +385,8 @@ class ProductsController extends Controller
             $totalCartItems = totalCartItems();
             return response()->json([
                 'totalCartItems' => $totalCartItems,
-                'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')), 
-                'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+                'view' => (String)View::make('front.products.cart_items')->with(compact('getCartItems')), 
+                'headerview' => (String)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
             ]);
         }
     }
@@ -403,11 +403,29 @@ class ProductsController extends Controller
                     'status' => false, 
                     'totalCartItems' => $totalCartItems,
                     'message' => 'The coupon is not valid!', 
-                    'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')), 
-                    'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+                    'view' => (String)View::make('front.products.cart_items')->with(compact('getCartItems')), 
+                    'headerview' => (String)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
                 ]);
             }else{
-                echo "Check for other coupon conditions"; die;
+                // echo "Check for other coupon conditions"; die; 
+                
+                // Get Coupon Details 
+                $couponDetails = Coupon::where('coupon_code', $data['code'])->first(); 
+                //Check If Coupon is active
+                if($couponDetails->status == 0){
+                    $message = "The coupon is not active";
+                } 
+
+                // If error message is there 
+                if(isset($message)){
+                    return response()->json([
+                        'status' => false, 
+                        'totalCartItems' => $totalCartItems,
+                        'message' => $message, 
+                        'view' => (String)View::make('front.products.cart_items')->with(compact('getCartItems')), 
+                        'headerview' => (String)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+                    ]); 
+                }
             }
         }
     }
