@@ -15,7 +15,21 @@ class CouponsController extends Controller
     public function coupons()
     {
         Session::put('page', 'coupons');
-        $coupons = Coupon::get()->toArray();
+        $adminType = Auth::guard('admin')->user()->type;
+        $vendor_id = Auth::guard('admin')->user()->vendor_id;
+        // dd($vendor_id); die;
+        // dd(Auth::guard('admin')->user()->id);
+        if ($adminType == "vendor") {
+            $vendorStatus = Auth::guard('admin')->user()->status;
+            if ($vendorStatus == "0") {
+                return redirect("admin/update-vendor-details/personal")->with('error_message', 'Your Vendor Account is not approved yet. Please make sure you fill your valid personal, business and bank details');
+            }
+            $coupons = Coupon::where('vendor_id', $vendor_id)->get()->toArray();
+            // dd($coupons); die; 
+        }else {
+            $coupons = Coupon::get()->toArray(); 
+            // dd($coupons); die;  
+        }
         // dd($coupons); die;
         return view('admin.coupons.coupons')->with(compact('coupons'));
     }

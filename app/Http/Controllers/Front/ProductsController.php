@@ -346,8 +346,8 @@ class ProductsController extends Controller
                 return response()->json([
                     'status' => false,
                     'message' => 'Product Stock is not available',
-                    'view' => (String)View::make('front.products.cart_items')->with(compact('getCartItems')), 
-                    'headerview' => (String)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+                    'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')),
+                    'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
                 ]);
             }
 
@@ -358,8 +358,8 @@ class ProductsController extends Controller
                 return response()->json([
                     'status' => false,
                     'message' => 'Product Size is not available. Please remove this Product and choose another one!',
-                    'view' => (String)View::make('front.products.cart_items')->with(compact('getCartItems')), 
-                    'headerview' => (String)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+                    'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')),
+                    'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
                 ]);
             }
 
@@ -370,8 +370,8 @@ class ProductsController extends Controller
             return response()->json([
                 'status' => true,
                 'totalCartItems' => $totalCartItems,
-                'view' => (String)View::make('front.products.cart_items')->with(compact('getCartItems')),
-                'headerview' => (String)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+                'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')),
+                'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
             ]);
         }
     }
@@ -386,83 +386,102 @@ class ProductsController extends Controller
             $totalCartItems = totalCartItems();
             return response()->json([
                 'totalCartItems' => $totalCartItems,
-                'view' => (String)View::make('front.products.cart_items')->with(compact('getCartItems')), 
-                'headerview' => (String)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+                'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')),
+                'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
             ]);
         }
     }
 
-    public function applyCoupon(Request $request){
-        if($request->ajax()){
-            $data = $request->all(); 
+    public function applyCoupon(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
             // echo "<pre>"; print_r($data); die;
             $getCartItems = Cart::getCartItems();
             $totalCartItems = totalCartItems();
-            $couponCount = Coupon::where('coupon_code', $data['code'])->count(); 
-            if($couponCount == 0){
+            $couponCount = Coupon::where('coupon_code', $data['code'])->count();
+            if ($couponCount == 0) {
                 return response()->json([
-                    'status' => false, 
+                    'status' => false,
                     'totalCartItems' => $totalCartItems,
-                    'message' => 'The coupon is not valid!', 
-                    'view' => (String)View::make('front.products.cart_items')->with(compact('getCartItems')), 
-                    'headerview' => (String)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+                    'message' => 'The coupon is not valid!',
+                    'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')),
+                    'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
                 ]);
-            }else{
+            } else {
                 // echo "Check for other coupon conditions"; die; 
-                
+
                 // Get Coupon Details 
-                $couponDetails = Coupon::where('coupon_code', $data['code'])->first(); 
+                $couponDetails = Coupon::where('coupon_code', $data['code'])->first();
                 //Check If Coupon is active
-                if($couponDetails->status == 0){
+                if ($couponDetails->status == 0) {
                     $message = "The coupon is not active!";
                 }
 
                 // Check if coupon is expired 
                 $expiry_date = $couponDetails->expiry_date;
-                $current_date = date('Y-m-d'); 
-                if($expiry_date < $current_date){
+                $current_date = date('Y-m-d');
+                if ($expiry_date < $current_date) {
                     $message = "The coupon is expired!";
                 }
 
                 // Check if coupon is from selected categories 
 
                 // Get all selected categories from coupon and convert to array 
-                $catArr = explode(",",$couponDetails->categories);
+                $catArr = explode(",", $couponDetails->categories);
 
                 // Check if any cart item not belong to coupon category
-                foreach($getCartItems as $key => $item){
-                    if(!in_array($item['product']['category_id'], $catArr)){
+                // dd($getCartItems); die;
+                foreach ($getCartItems as $key => $item) {
+                    if (!in_array($item['product']['category_id'], $catArr)) {
                         $message = "This coupon is not for one of the selected product!";
-                    }                    
+                    }
                 }
 
                 // Check if coupon is from selected users 
                 // Get all selected users from coupon and convert to array 
-                $usersArr = explode(",",$couponDetails->users);
+                // dd($couponDetails->users); die;
+                if (isset($couponDetails->users) && !empty($couponDetails->users)) {
+                    $usersArr = explode(",", $couponDetails->users);
+                    // dd($usersArr); die;
+                    if (count($usersArr)) {
+                        // dd($usersArr); die;
+                        // Get User Id's of all selected users
+                        foreach ($usersArr as $key => $user) {
+                            $getUserId = User::select('id')->where('email', $user)->first()->toArray();
+                            $usersId[] = $getUserId['id'];
+                        }
 
-                // Get User Id's of all selected users
-                foreach($usersArr as $key => $user){
-                    $getUserId = User::select('id')->where('email', $user)->first()->toArray(); 
-                    $usersId[] = $getUserId['id']; 
-                }
-                
-                // Check if any cart item not belong to coupon user 
-                foreach($getCartItems as $item){
-                    if(count($usersArr) > 0){
-                        if(!in_array($item['user_id'], $usersId)){
-                            $message = "This coupon code is not for you. Try with valid coupon";
+                        // Check if any cart item not belong to coupon user 
+                        foreach ($getCartItems as $item) {
+                            // if(count($usersArr) > 0){
+                            if (!in_array($item['user_id'], $usersId)) {
+                                $message = "This coupon code is not for you. Try with valid coupon";
+                            }
+                            // }
                         }
                     }
                 }
-                
+
+                if ($couponDetails->vendor_id > 0) {
+                    // echo $couponDetails->vendor_id;die;
+                    $productIds = Product::select('id')->where('vendor_id', $couponDetails->vendor_id)->pluck('id')->toArray();
+                    // echo "<pre>";print_r($productIds); die;
+                    // Check if coupon belongs to Vendor Products 
+                    foreach ($getCartItems as $item) {
+                        if(!in_array($item['product']['id'], $productIds)){
+                            $message = "The coupon code is not for you. Try with valid coupon code (vendor validation!)";
+                        }
+                    }
+                }
                 // If error message is there 
-                if(isset($message)){
+                if (isset($message)) {
                     return response()->json([
-                        'status' => false, 
+                        'status' => false,
                         'totalCartItems' => $totalCartItems,
-                        'message' => $message, 
-                        'view' => (String)View::make('front.products.cart_items')->with(compact('getCartItems')), 
-                        'headerview' => (String)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+                        'message' => $message,
+                        'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')),
+                        'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
                     ]);
                 }
             }
