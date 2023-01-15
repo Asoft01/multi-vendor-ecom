@@ -413,8 +413,15 @@ class ProductsController extends Controller
                 $couponDetails = Coupon::where('coupon_code', $data['code'])->first(); 
                 //Check If Coupon is active
                 if($couponDetails->status == 0){
-                    $message = "The coupon is not active";
+                    $message = "The coupon is not active!";
                 } 
+
+                // Check if coupon is expired 
+                $expiry_date = $couponDetails->expiry_date;
+                $current_date = date('Y-m-d'); 
+                if($expiry_date < $current_date){
+                    $message = "The coupon is expired!";
+                }
 
                 // If error message is there 
                 if(isset($message)){

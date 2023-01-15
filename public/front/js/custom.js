@@ -352,6 +352,7 @@ $(document).ready(function(){
             data: {code: code}, 
             url: '/apply-coupon', 
             success: function(resp){
+                // alert(resp.message); return false;
                 if(resp.message != ""){
                     alert(resp.message);
                 }
