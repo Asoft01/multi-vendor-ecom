@@ -431,11 +431,13 @@ class ProductsController extends Controller
                 $catArr = explode(",", $couponDetails->categories);
 
                 // Check if any cart item not belong to coupon category
+                $total_amount = 0;
                 // dd($getCartItems); die;
                 foreach ($getCartItems as $key => $item) {
                     if (!in_array($item['product']['category_id'], $catArr)) {
                         $message = "This coupon is not for one of the selected product!";
                     }
+                    // $attrPrice = Product::getDiscountAttributePrice($item['product_id']);
                 }
 
                 // Check if coupon is from selected users 
@@ -468,6 +470,7 @@ class ProductsController extends Controller
                     $productIds = Product::select('id')->where('vendor_id', $couponDetails->vendor_id)->pluck('id')->toArray();
                     // echo "<pre>";print_r($productIds); die;
                     // Check if coupon belongs to Vendor Products 
+                    // dd($getCartItems); die;
                     foreach ($getCartItems as $item) {
                         if(!in_array($item['product']['id'], $productIds)){
                             $message = "The coupon code is not for you. Try with valid coupon code (vendor validation!)";
@@ -483,6 +486,9 @@ class ProductsController extends Controller
                         'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')),
                         'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
                     ]);
+                }else{
+                    // Coupon code is correct 
+
                 }
             }
         }
