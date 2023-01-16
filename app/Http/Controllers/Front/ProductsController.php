@@ -440,7 +440,7 @@ class ProductsController extends Controller
                     // $attrPrice = Product::getDiscountAttributePrice($item['product_id']);
                 }
 
-                // Check if coupon is from selected users 
+                // Check if coupon is from selected userss
                 // Get all selected users from coupon and convert to array 
                 // dd($couponDetails->users); die;
                 if (isset($couponDetails->users) && !empty($couponDetails->users)) {
