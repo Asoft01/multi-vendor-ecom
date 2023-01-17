@@ -440,7 +440,7 @@ class ProductsController extends Controller
                     }
                     $attrPrice = Product::getDiscountAttributePrice($item['product_id'], $item['size']);
                     // echo "<pre>"; print_r($attrPrice); die;
-                    $total_amount = $total_amount + ($attrPrice['final_price'] + $item['quantity']); 
+                    $total_amount = $total_amount + ($attrPrice['final_price'] * $item['quantity']); 
                 }
 
                 // Check if coupon is from selected userss
@@ -500,7 +500,20 @@ class ProductsController extends Controller
                     }
 
                     $grand_total = $total_amount - $couponAmount; 
-                    
+                    // Add Coupon Code and Amount in Session Variables 
+                    Session::put('couponAmount', $couponAmount);
+                    Session::put('couponCode', $data['code']);
+                    $message = "Coupon Code Successfully applied. You are availing disount!";
+
+                    return response()->json([
+                        'status' => true,
+                        'totalCartItems' => $totalCartItems,
+                        'couponAmount' => $couponAmount, 
+                        'grand_total' => $grand_total, 
+                        'message' => $message,
+                        'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')),
+                        'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
+                    ]);
                 }
             }
         }
