@@ -398,6 +398,7 @@ class ProductsController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
             $getCartItems = Cart::getCartItems();
+            // echo "<pre>"; print_r($getCartItems); die;
             $totalCartItems = totalCartItems();
             $couponCount = Coupon::where('coupon_code', $data['code'])->count();
             if ($couponCount == 0) {
@@ -437,7 +438,9 @@ class ProductsController extends Controller
                     if (!in_array($item['product']['category_id'], $catArr)) {
                         $message = "This coupon is not for one of the selected product!";
                     }
-                    // $attrPrice = Product::getDiscountAttributePrice($item['product_id']);
+                    $attrPrice = Product::getDiscountAttributePrice($item['product_id'], $item['size']);
+                    // echo "<pre>"; print_r($attrPrice); die;
+                    $total_amount = $total_amount + ($attrPrice['final_price'] + $item['quantity']); 
                 }
 
                 // Check if coupon is from selected userss
@@ -488,7 +491,16 @@ class ProductsController extends Controller
                     ]);
                 }else{
                     // Coupon code is correct 
+                    
+                    // Check if Coupon Amount type is Fixed or Percentage 
+                    if($couponDetails->amount_type == "Fixed"){
+                        $couponAmount = $couponDetails->amount;
+                    }else{
+                        $couponAmount = $total_amount * ($couponDetails->amount/100);
+                    }
 
+                    $grand_total = $total_amount - $couponAmount; 
+                    
                 }
             }
         }
