@@ -100,7 +100,13 @@
                         <h3 class="calc-h3 u-s-m-b-0">Coupon Discount</h3>
                     </td>
                     <td>
-                        <span class="calc-text couponAmount">Rs.0</span>
+                        <span class="calc-text couponAmount">
+                            @if(Session::has('couponAmount'))
+                                    Rs.{{ Session::get('couponAmount') }}
+                                @else 
+                                    Rs.0
+                            @endif
+                        </span>
                     </td>
                 </tr>
                 <tr>
@@ -108,7 +114,7 @@
                         <h3 class="calc-h3 u-s-m-b-0">Grand Total</h3>
                     </td>
                     <td>
-                        <span class="calc-text grand_total">Rs.{{ $total_price }}</span>
+                        <span class="calc-text grand_total">Rs.{{ $total_price - Session::get('couponAmount') }}</span>
                     </td>
                 </tr>
             </tbody>
