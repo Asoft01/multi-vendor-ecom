@@ -80,13 +80,38 @@ class ProductsController extends Controller
                     $categoryProducts->whereIn('products.id', $productIds);
                 }
 
-                // Checking for size 
+                // Checking for brands 
                 if (isset($data['brand']) && !empty($data['brand'])) {
                     $productIds = Product::select('id')->whereIn('brand_id', $data['brand'])->pluck('id')->toArray();
                     $categoryProducts->whereIn('products.id', $productIds);
                 }
 
                 // checking for Price 
+                // if (isset($data['price']) && !empty($data['price'])) {
+
+                //     //////////////////////// First Method  But it is displaying other products outside range of the price  ///////////////
+                //     // echo "<pre>"; print_r($data['price']); die;
+                //     // echo $implodePrices = implode('-', $data['price']); 
+                //     // $implodePrices = implode('-', $data['price']); 
+                //     // $explodePrices = explode('-', $implodePrices); 
+                //     // // echo "<pre>"; print_r($explodePrices); die;
+                //     // $min = reset($explodePrices); 
+                //     // $max = end($explodePrices); 
+                //     // $productIds = Product::select('id')->whereBetween('product_price', [$min, $max])->pluck('id')->toArray(); 
+                //     // $categoryProducts->whereIn('products.id', $productIds);
+                //     ////////////////////// End of First Method ////////////////////////////////
+                //     foreach ($data['price'] as $key => $price) {
+                //         $priceArr = explode("-", $price);
+                //         $productIds[] = Product::select('id')->whereBetween('product_price', [$priceArr[0], $priceArr[1]])->pluck('id')->toArray();
+                //     }
+                //     // echo "<pre>"; print_r($productIds); die;
+                //     $productIds = call_user_func_array('array_merge', $productIds);
+                //     // echo "<pre>"; print_r($productIds); die;
+                //     $categoryProducts->whereIn('products.id', $productIds);
+                // }
+
+                // Checking for price
+                $productIds = array();
                 if (isset($data['price']) && !empty($data['price'])) {
 
                     //////////////////////// First Method  But it is displaying other products outside range of the price  ///////////////
@@ -102,13 +127,18 @@ class ProductsController extends Controller
                     ////////////////////// End of First Method ////////////////////////////////
                     foreach ($data['price'] as $key => $price) {
                         $priceArr = explode("-", $price);
-                        $productIds[] = Product::select('id')->whereBetween('product_price', [$priceArr[0], $priceArr[1]])->pluck('id')->toArray();
+                        if (isset($priceArr[0]) && isset($priceArr[1])) {
+                            $productIds[] = Product::select('id')->whereBetween('product_price', [$priceArr[0], $priceArr[1]])->pluck('id')->toArray();
+                        }
                     }
                     // echo "<pre>"; print_r($productIds); die;
-                    $productIds = call_user_func_array('array_merge', $productIds);
+                    $productIds = array_unique(array_flatten($productIds));
                     // echo "<pre>"; print_r($productIds); die;
                     $categoryProducts->whereIn('products.id', $productIds);
                 }
+
+
+
 
                 $categoryProducts = $categoryProducts->Paginate(30);
                 // $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->simplePaginate(3);
@@ -446,7 +476,7 @@ class ProductsController extends Controller
                     }
                     $attrPrice = Product::getDiscountAttributePrice($item['product_id'], $item['size']);
                     // echo "<pre>"; print_r($attrPrice); die;
-                    $total_amount = $total_amount + ($attrPrice['final_price'] * $item['quantity']); 
+                    $total_amount = $total_amount + ($attrPrice['final_price'] * $item['quantity']);
                 }
 
                 // Check if coupon is from selected userss
@@ -481,7 +511,7 @@ class ProductsController extends Controller
                     // Check if coupon belongs to Vendor Products 
                     // dd($getCartItems); die;
                     foreach ($getCartItems as $item) {
-                        if(!in_array($item['product']['id'], $productIds)){
+                        if (!in_array($item['product']['id'], $productIds)) {
                             $message = "The coupon code is not for you. Try with valid coupon code (vendor validation!)";
                         }
                     }
@@ -495,17 +525,17 @@ class ProductsController extends Controller
                         'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')),
                         'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
                     ]);
-                }else{
+                } else {
                     // Coupon code is correct 
-                    
+
                     // Check if Coupon Amount type is Fixed or Percentage 
-                    if($couponDetails->amount_type == "Fixed"){
+                    if ($couponDetails->amount_type == "Fixed") {
                         $couponAmount = $couponDetails->amount;
-                    }else{
-                        $couponAmount = $total_amount * ($couponDetails->amount/100);
+                    } else {
+                        $couponAmount = $total_amount * ($couponDetails->amount / 100);
                     }
 
-                    $grand_total = $total_amount - $couponAmount; 
+                    $grand_total = $total_amount - $couponAmount;
                     // Add Coupon Code and Amount in Session Variables 
                     Session::put('couponAmount', $couponAmount);
                     Session::put('couponCode', $data['code']);
@@ -514,8 +544,8 @@ class ProductsController extends Controller
                     return response()->json([
                         'status' => true,
                         'totalCartItems' => $totalCartItems,
-                        'couponAmount' => $couponAmount, 
-                        'grand_total' => $grand_total, 
+                        'couponAmount' => $couponAmount,
+                        'grand_total' => $grand_total,
                         'message' => $message,
                         'view' => (string)View::make('front.products.cart_items')->with(compact('getCartItems')),
                         'headerview' => (string)View::make('front.layout.header_cart_items')->with(compact('getCartItems'))
