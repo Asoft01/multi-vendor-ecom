@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Session;
 
 class UserController extends Controller
 {
     public function users()
     {
+        Session::put('page', 'users');
         $users = User::get()->toArray();
         // dd($users); die;
         return view('admin.users.users')->with(compact('users'));
