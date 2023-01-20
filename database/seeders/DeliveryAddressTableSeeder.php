@@ -22,3 +22,4 @@ class DeliveryAddressTableSeeder extends Seeder
         DeliveryAddress::insert($deliveryRecords); 
     }
 }
+// Delivery Address 
