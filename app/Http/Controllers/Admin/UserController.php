@@ -11,6 +11,7 @@ class UserController extends Controller
 {
     public function users()
     {
+        // Save the users session 
         Session::put('page', 'users');
         $users = User::get()->toArray();
         // dd($users); die;
