@@ -181,6 +181,8 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
         // Apply Coupon
         Route::post('/apply-coupon', 'ProductsController@applyCoupon'); 
 
+        // Checkout 
+        Route::match(['GET', 'POST'], '/checkout', 'ProductsController@checkout');
     });
 
     // User login
