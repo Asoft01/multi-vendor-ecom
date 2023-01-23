@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Country;
 use App\Models\Coupon;
 use App\Models\DeliveryAddress;
 use App\Models\Product;
@@ -556,10 +557,11 @@ class ProductsController extends Controller
         }
     }
 
-    public function checkout(){
-        $deliveryAddresses = DeliveryAddress::deliveryAddresses(); 
-        // dd($deliveryAddresses); die;
-        return view('front.products.checkout')->with(compact('deliveryAddresses'));
-
+    public function checkout()
+    {
+        $deliveryAddresses = DeliveryAddress::deliveryAddresses();
+        $countries = Country::where('status', 1)->get()->toArray();
+        // dd($countries); die;
+        return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries'));
     }
 }

@@ -183,6 +183,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
         // Checkout 
         Route::match(['GET', 'POST'], '/checkout', 'ProductsController@checkout');
+
+        // Get Delivery Address 
+        
     });
 
     // User login

@@ -373,6 +373,22 @@ $(document).ready(function(){
             }
         })
     });
+
+    // Edit Delivery Address 
+    $(document).on('click', '.editAddress', function(){
+        var addressid = $(this).data("addressid"); 
+        // alert(addressid); 
+        $.ajax({
+            data:{addressid:addressid}, 
+            url: '/get-delivery-address', 
+            type: 'post', 
+            success: function(resp){
+
+            }, error: function(){
+                alert("Error"); 
+            }
+        });
+    });
 }); 
 
 // $('.fabric').on('click', function(){
