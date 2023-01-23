@@ -386,6 +386,9 @@ $(document).ready(function(){
             url: '/get-delivery-address', 
             type: 'post', 
             success: function(resp){
+                $("#showdifferent").removeClass("collapse");
+                $(".newAddress").hide();
+                $(".deliveryText").text("Edit Delivery Address");
                 $('[name=delivery_id]').val(resp.address['id']); 
                 $('[name=delivery_name]').val(resp.address['name']); 
                 $('[name=delivery_name]').val(resp.address['name']); 

@@ -8,10 +8,10 @@
                 <a style="float: right;" href="javascript:;" data-addressid="{{ $address['id'] }}" class="editAddress">Edit</a>
             </div><br>
     @endforeach
-    <h4 class="section-h4">Add New Delivery Address</h4>
+    <h4 class="section-h4 deliveryText">Add New Delivery Address</h4>
     <div class="u-s-m-b-24">
     <input type="checkbox" class="check-box" id="ship-to-different-address" data-toggle="collapse" data-target="#showdifferent">
-        <label class="label-text" for="ship-to-different-address">Ship to a different address?</label>
+        <label class="label-text newAddress" for="ship-to-different-address">Ship to a different address?</label>
     </div>
     <div class="collapse" id="showdifferent">
     <!-- Form-Fields -->
