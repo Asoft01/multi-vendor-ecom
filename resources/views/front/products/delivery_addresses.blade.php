@@ -5,7 +5,7 @@
             <div class="control-group" style="float:left; margin-right:5px;"><input type="radio" name="address_id" id="address{{ $address['id'] }}" value="{{ $address['id'] }}">
             </div>
             <div><label class="control-label" for="">{{ $address['name'] }}, {{ $address['city'] }}, {{ $address['state'] }}, {{ $address['country'] }} ({{ $address['mobile'] }})</label>
-                <a style="float: right;" href="javascript;" data-addressid="{{ $address['id'] }}" class="editAddress">Edit</a>
+                <a style="float: right;" href="javascript:;" data-addressid="{{ $address['id'] }}" class="editAddress">Edit</a>
             </div><br>
     @endforeach
     <h4 class="section-h4">Add New Delivery Address</h4>
@@ -15,97 +15,68 @@
     </div>
     <div class="collapse" id="showdifferent">
     <!-- Form-Fields -->
-    <div class="group-inline u-s-m-b-13">
-        <div class="group-1 u-s-p-r-16">
-            <label for="first-name-extra">Name
-                <span class="astk">*</span>
-            </label>
-            <input type="text" name="delivery_name" id="delivery_name" class="text-field">
+    <form id="addressAddEditForm" action="javascript:;" method="post">@csrf
+        <div class="group-inline u-s-m-b-13">
+            <div class="group-1 u-s-p-r-16">
+                <label for="first-name-extra">Name
+                    <span class="astk">*</span>
+                </label>
+                <input type="text" name="delivery_name" id="delivery_name" class="text-field">
+            </div>
+            <div class="group-2">
+                <label for="last-name-extra">Address
+                    <span class="astk">*</span>
+                </label>
+                <input type="text" name="delivery_address" id="delivery_address" class="text-field">
+            </div>
         </div>
-        <div class="group-2">
-            <label for="last-name-extra">Address
-                <span class="astk">*</span>
-            </label>
-            <input type="text" name="delivery_address" id="delivery_address" class="text-field">
+        <div class="group-inline u-s-m-b-13">
+            <div class="group-1 u-s-p-r-16">
+                <label for="first-name-extra">City
+                    <span class="astk">*</span>
+                </label>
+                <input type="text" name="delivery_city" id="delivery_city" class="text-field">
+            </div>
+            <div class="group-2">
+                <label for="last-name-extra">State
+                    <span class="astk">*</span>
+                </label>
+                <input type="text" name="delivery_state" id="delivery_state" class="text-field">
+            </div>
         </div>
-    </div>
-    <div class="group-inline u-s-m-b-13">
-        <div class="group-1 u-s-p-r-16">
-            <label for="first-name-extra">City
-                <span class="astk">*</span>
-            </label>
-            <input type="text" name="delivery_city" id="delivery_city" class="text-field">
-        </div>
-        <div class="group-2">
-            <label for="last-name-extra">State
-                <span class="astk">*</span>
-            </label>
-            <input type="text" name="delivery_state" id="delivery_state" class="text-field">
-        </div>
-    </div>
 
-    <div class="u-s-m-b-13">
-        <label for="select-country-extra">Country
-            <span class="astk">*</span>
-        </label>
-        <div class="select-box-wrapper">
-            <select class="select-box" name="delivery_country" id="delivery_country">
-                <option value="">Select Country</option>
-                @foreach($countries as $country)
-                    <option value="{{ $country['country_name'] }}" @if($country['country_name'] == Auth::user()->country) selected @endif> 
-                        {{ $country['country_name'] }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-    </div>
-    <div class="street-address u-s-m-b-13">
-        <label for="req-st-address-extra">Street Address
-            <span class="astk">*</span>
-        </label>
-        <input type="text" id="req-st-address-extra" class="text-field" placeholder="House name and street name">
-        <label class="sr-only" for="opt-st-address-extra"></label>
-        <input type="text" id="opt-st-address-extra" class="text-field" placeholder="Apartment, suite unit etc. (optional)">
-    </div>
-    <div class="u-s-m-b-13">
-        <label for="town-city-extra">Town / City
-            <span class="astk">*</span>
-        </label>
-        <input type="text" id="town-city-extra" class="text-field">
-    </div>
-    <div class="u-s-m-b-13">
-        <label for="select-state-extra">State / Country
-            <span class="astk"> *</span>
-        </label>
-        <div class="select-box-wrapper">
-            <select class="select-box" id="select-state-extra">
-                <option selected="selected" value="">Choose your state...</option>
-                <option value="">Alabama</option>
-                <option value="">Alaska</option>
-                <option value="">Arizona</option>
-            </select>
-        </div>
-    </div>
-    <div class="u-s-m-b-13">
-        <label for="postcode-extra">Postcode / Zip
-            <span class="astk">*</span>
-        </label>
-        <input type="text" id="postcode-extra" class="text-field">
-    </div>
-    <div class="group-inline u-s-m-b-13">
-        <div class="group-1 u-s-p-r-16">
-            <label for="email-extra">Email address
+        <div class="u-s-m-b-13">
+            <label for="select-country-extra">Country
                 <span class="astk">*</span>
             </label>
-            <input type="text" id="email-extra" class="text-field">
+            <div class="select-box-wrapper">
+                <select class="select-box" name="delivery_country" id="delivery_country">
+                    <option value="">Select Country</option>
+                    @foreach($countries as $country)
+                        <option value="{{ $country['country_name'] }}" @if($country['country_name'] == Auth::user()->country) selected @endif> 
+                            {{ $country['country_name'] }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
         </div>
-        <div class="group-2">
-            <label for="phone-extra">Phone
+    
+        <div class="u-s-m-b-13">
+            <label for="postcode-extra">Pincode
                 <span class="astk">*</span>
             </label>
-            <input type="text" id="phone-extra" class="text-field">
+            <input type="text" id="delivery_pincode" name="delivery_pincode" class="text-field">
         </div>
-    </div>
+        <div class="u-s-m-b-13">
+            <label for="postcode-extra">Mobile
+                <span class="astk">*</span>
+            </label>
+            <input type="text" id="delivery_mobile" name="delivery_mobile" class="text-field">
+        </div>
+        <div class="u-s-m-b-13">
+            <button style="width:100%" type="submit" class="button button-outline-secondary">Save</button>
+        </div>
+    </form>
     <!-- Form-Fields /- -->
     </div>
     <div>
