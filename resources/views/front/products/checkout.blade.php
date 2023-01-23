@@ -86,7 +86,9 @@
                         <div class="row">
                             <!-- Billing-&-Shipping-Details -->
                             <div class="col-lg-6">
-                                <h4 class="section-h4">Billing Details</h4>
+                                <h4 class="section-h4">Add New Delivery Address</h4>
+                                
+                                <h4 class="section-h4">Add New Delivery Address</h4>
                                 <!-- Form-Fields -->
                                 <div class="group-inline u-s-m-b-13">
                                     <div class="group-1 u-s-p-r-16">

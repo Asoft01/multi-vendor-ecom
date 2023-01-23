@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class DeliveryAddress extends Model
 {
     use HasFactory;
+
+    public static function DeliveryAddresses(){
+
+    }
 }
