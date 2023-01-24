@@ -28,7 +28,7 @@ class UserController extends Controller
             } else {
                 $status = 1;
             }
-
+            // Minor fix
             User::where('id', $data['user_id'])->update(['status' => $status]);
             return response()->json(['status' => $status, 'user_id' => $data['user_id']]);
         }
