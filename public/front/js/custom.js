@@ -403,6 +403,22 @@ $(document).ready(function(){
             }
         });
     });
+
+    // Save Delivery Address 
+    $(document).on('submit', "#addressAddEditForm", function(){
+        var formdata = $("#addressAddEditForm").serialize(); 
+        $.ajax({
+            url: '/save-delivery-address', 
+            type: 'post', 
+            data : formdata, 
+            success: function(data){
+                // alert(data);
+                $("#deliveryAddresses").html(data.view); 
+            }, error: function(){
+                alert("Error"); 
+            }
+        });
+    });
 }); 
 
 // $('.fabric').on('click', function(){
