@@ -413,6 +413,21 @@ $(document).ready(function(){
             data : formdata, 
             success: function(resp){
                 // alert(data);
+                if(resp.type == "error"){
+                    $(".loader").hide();
+                    $.each(resp.errors, function(i, error){
+                        // console.log(i, error);
+                        $("#delivery-"+i).attr('style', 'color:red');
+                        $("#delivery-"+i).html(error);
+                        setTimeout(function(){
+                            $("#delivery-"+i).css({
+                                'display':'none'
+                            });
+                        }, 3000);
+                    });
+                }else{
+                    $("#deliveryAddresses").html(resp.view);
+                }
                 $("#deliveryAddresses").html(resp.view); 
             }, error: function(){
                 alert("Error"); 
