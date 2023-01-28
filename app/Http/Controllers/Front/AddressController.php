@@ -51,4 +51,19 @@ class AddressController extends Controller
             ]);
         }
     }
+
+    public function removeDeliveryAddress(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+            // echo "<pre>"; print_r($data); die;
+            DeliveryAddress::where('id', $data['addressid'])->delete();
+            $deliveryAddresses = DeliveryAddress::deliveryAddresses();
+            $countries = Country::where('status', 1)->get()->toArray();
+
+            return response()->json([
+                'view' => (string)View::make('front.products.delivery_addresses')->with(compact('deliveryAddresses', 'countries'))
+            ]);
+        }
+    }
 }

@@ -22,13 +22,13 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function(){
+Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function () {
     //Admin Login Routes without the admin group
     Route::match(['get', 'post'], 'login', 'AdminController@login');
-    
-    Route::group(['middleware'=> ['admin']], function(){
+
+    Route::group(['middleware' => ['admin']], function () {
         // Admin Dashboard Route with Admin Group
         Route::get('dashboard', 'AdminController@dashboard');
 
@@ -57,7 +57,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         // Admin Logout 
         Route::get('logout', 'AdminController@logout');
 
-        
+
         // Brands 
         Route::get('brands', 'BrandController@brands');
         Route::post('update-brand-status', 'BrandController@updateBrandStatus');
@@ -78,7 +78,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('append-categories-level', 'CategoryController@appendCategoryLevel');
         Route::get('delete-category/{id}', 'CategoryController@deleteCategory');
         Route::get('delete-category-image/{id}', 'CategoryController@deleteCategoryImage');
-        
+
         // Categories 
         Route::get('products', 'ProductsController@products');
         Route::post('update-product-status', 'ProductsController@updateProductStatus');
@@ -124,16 +124,16 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
     });
 });
 
-Route::namespace('App\Http\Controllers\Front')->group(function(){
-    Route::get('/','IndexController@index');
-    
+Route::namespace('App\Http\Controllers\Front')->group(function () {
+    Route::get('/', 'IndexController@index');
+
     // Listing / Categories Route 
     // $catUrls = Category::select('url')->where('status', 1)->get()->toArray();
     $catUrls = Category::select('url')->where('status', 1)->get()->pluck('url')->toArray();
     // dd($catUrls); die;
-    foreach($catUrls as $key => $url){
+    foreach ($catUrls as $key => $url) {
         // Route::get('/'. $url, 'ProductsController@listing');
-        Route::match(['get', 'post'], '/'. $url, 'ProductsController@listing');
+        Route::match(['get', 'post'], '/' . $url, 'ProductsController@listing');
     }
 
     // Vendor Products 
@@ -145,7 +145,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::post('get-product-price', 'ProductsController@getProductPrice');
 
     // Vendor Login/Register 
-    Route::get('vendor/login-register', 'VendorController@loginRegister'); 
+    Route::get('vendor/login-register', 'VendorController@loginRegister');
 
     // Vendor Register 
     Route::post('vendor/register', 'VendorController@vendorRegister');
@@ -154,24 +154,24 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('vendor/confirm/{code}', 'VendorController@confirmVendor');
 
     // Add to cart route 
-    Route::post('cart/add', 'ProductsController@cartAdd'); 
+    Route::post('cart/add', 'ProductsController@cartAdd');
 
     // Cart Route
     Route::get('/cart', 'ProductsController@cart');
 
     // Update Cart Item Quantity
     Route::post('cart/update', 'ProductsController@cartUpdate');
-    
+
     // Delete Cart Item
     Route::post('cart/delete', 'ProductsController@cartDelete');
 
     // User Login/Register 
     Route::get('user/login-register', ['as' => 'login', 'uses' => 'UserController@loginRegister']);
-    
+
     // User Register 
     Route::post('user/register', 'UserController@userRegister');
 
-    Route::group(['middleware' => ['auth']], function(){
+    Route::group(['middleware' => ['auth']], function () {
         // User Account 
         Route::match(['GET', 'POST'], 'user/account', 'UserController@userAccount');
 
@@ -179,7 +179,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
         Route::post('user/update-password', 'UserController@userUpdatePassword');
 
         // Apply Coupon
-        Route::post('/apply-coupon', 'ProductsController@applyCoupon'); 
+        Route::post('/apply-coupon', 'ProductsController@applyCoupon');
 
         // Checkout 
         Route::match(['GET', 'POST'], '/checkout', 'ProductsController@checkout');
@@ -189,11 +189,14 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
         // Save Delivery Address 
         Route::post('save-delivery-address', 'AddressController@saveDeliveryAddress');
+
+        // Remove Delivery Address 
+        Route::post('remove-delivery-address', 'AddressController@removeDeliveryAddress');
     });
 
     // User login
     Route::post('user/login', 'UserController@userLogin');
-    
+
     // User Forgot Password 
     Route::match(['get', 'post'], 'user/forgot-password', 'UserController@forgotPassword');
 
@@ -201,8 +204,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('user/logout', 'UserController@userLogout');
 
     // Confirm User Account 
-    Route::get('user/confirm/{code}', 'UserController@confirmAccount'); 
-
+    Route::get('user/confirm/{code}', 'UserController@confirmAccount');
 });
 
 // Admin Login Routes without the admin group
@@ -210,4 +212,3 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
 
 // Admin Dashboard Route with Admin Group
 // Route::get('admin/dashboard', 'App\Http\Controllers\Admin\AdminController@dashboard');
-

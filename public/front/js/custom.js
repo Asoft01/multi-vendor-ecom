@@ -411,13 +411,33 @@ $(document).ready(function(){
             url: '/save-delivery-address', 
             type: 'post', 
             data : formdata, 
-            success: function(data){
+            success: function(resp){
                 // alert(data);
-                $("#deliveryAddresses").html(data.view); 
+                $("#deliveryAddresses").html(resp.view); 
             }, error: function(){
                 alert("Error"); 
             }
         });
+    });
+
+    // Remove Delivery Address 
+    $(document).on('click', '.removeAddress', function(){
+        if(confirm("Are you sure to remove ?")){
+            var addressid = $(this).data("addressid"); 
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: 'remove-delivery-address', 
+                type: 'post', 
+                data: {addressid:addressid}, 
+                success: function(resp){
+                    $("#deliveryAddresses").html(resp.view); 
+                }, error: function(){
+                    alert("Error"); 
+                }
+            });
+        }
     });
 }); 
 

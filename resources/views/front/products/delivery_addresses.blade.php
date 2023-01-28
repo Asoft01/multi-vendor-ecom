@@ -5,9 +5,12 @@
             <div class="control-group" style="float:left; margin-right:5px;"><input type="radio" name="address_id" id="address{{ $address['id'] }}" value="{{ $address['id'] }}">
             </div>
             <div><label class="control-label" for="">{{ $address['name'] }}, {{ $address['city'] }}, {{ $address['state'] }}, {{ $address['country'] }} ({{ $address['mobile'] }})</label>
+                <a style="float: right; margin-left:10px" href="javascript:;" data-addressid="{{ $address['id'] }}" class="removeAddress">Remove</a>
                 <a style="float: right;" href="javascript:;" data-addressid="{{ $address['id'] }}" class="editAddress">Edit</a>
-            </div><br>
+            </div>
+            <br>
     @endforeach
+@endif
     <h4 class="section-h4 deliveryText">Add New Delivery Address</h4>
     <div class="u-s-m-b-24">
     <input type="checkbox" class="check-box" id="ship-to-different-address" data-toggle="collapse" data-target="#showdifferent">
@@ -84,5 +87,3 @@
     <label for="order-notes">Order Notes</label>
     <textarea class="text-area" id="order-notes" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
     </div>
- 
-@endif
