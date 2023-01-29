@@ -68,8 +68,11 @@
                                                 ?>
                                         <tr>
                                             <td>
-                                                <h6 class="order-h6">{{ $item['product']['product_name'] }}</h6>
-                                                <span class="order-span-quantity">{{ $item['quantity'] }}</span>
+                                                <a href="{{ url('product/'.$item['product_id']) }}">
+                                                    <img width="50" src="{{ asset('admin/images/product_images/small/'.$item['product']['product_image']) }}" alt="Product">
+                                                    <h6 class="order-h6">{{ $item['product']['product_name'] }}<br> {{ $item['size'] }}/{{ $item['product']['product_color'] }}</h6>
+                                                </a>
+                                                <span class="order-span-quantity">x {{ $item['quantity'] }}</span>
                                             </td>
                                             <td>
                                                 <h6 class="order-h6">Rs. {{ $getDiscountAttributePrice['final_price'] * $item['quantity'] }}</h6>
