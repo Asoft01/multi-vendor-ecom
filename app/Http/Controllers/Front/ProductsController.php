@@ -559,6 +559,17 @@ class ProductsController extends Controller
 
     public function checkout(Request $request)
     {
+        $deliveryAddresses = DeliveryAddress::deliveryAddresses();
+        $countries = Country::where('status', 1)->get()->toArray();
+        $getCartItems = Cart::getCartItems();
+        // dd($countries); die;
+        // dd($getCartItems); die;
+
+        if (count($getCartItems) == 0) {
+            $message = "Shopping Cart is empty! Please add products to checkout";
+            return redirect('cart')->with('error_message', $message);
+        }
+
         if ($request->isMethod('post')) {
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
@@ -581,13 +592,9 @@ class ProductsController extends Controller
                 return redirect()->back()->with('error_message', $message);
             }
 
-            echo "ready to place order"; die;
+            echo "ready to place order";
+            die;
         }
-        $deliveryAddresses = DeliveryAddress::deliveryAddresses();
-        $countries = Country::where('status', 1)->get()->toArray();
-        $getCartItems = Cart::getCartItems();
-        // dd($countries); die;
-        // dd($getCartItems); die;
 
         return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries', 'getCartItems'));
     }
