@@ -23,6 +23,25 @@
     <div class="page-cart u-s-p-t-80">
         <div class="container">
             <div class="row">
+                @if(Session::has('error_message')) 
+                    <div class="alert alert-danger alert-dismissbible fade show" role="alert">
+                        <strong>Error: </strong> <?php echo Session::get('error_message') ?> 
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong>{!! session('flash_message_error') !!}</strong>
+                    </div>
+                @endif  
+                
+                @if(Session::has('success_message')) 
+                    <div class="alert alert-success alert-dismissbible fade show" role="alert">
+                        <strong>Success: </strong> <?php echo Session::get('success_message') ?>  
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong>{!! session('flash_message_success') !!}</strong>
+                    </div>
+                @endif  
                 <div class="col-lg-12">
                     <div id="appendCartItems">
                         @include('front.products.cart_items')
