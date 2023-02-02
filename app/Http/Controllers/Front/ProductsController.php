@@ -586,14 +586,28 @@ class ProductsController extends Controller
                 return redirect()->back()->with('error_message', $message);
             }
 
-            // Payment Method 
+            // Agree to T&C Validation
             if (empty($data['accept'])) {
                 $message = "Please agree to T&C!";
                 return redirect()->back()->with('error_message', $message);
             }
 
-            echo "ready to place order";
-            die;
+            // echo "<pre>"; print_r($data); die;
+
+            // echo "ready to place order"; die;
+
+            // Get Delivery Address from address_id 
+            $deliveryAddress = DeliveryAddress::where('id', $data['address_id'])->first()->toArray();
+            // dd($deliveryAddress); die;
+
+            // Set Payment Method as COD if COD is selected from user otherwise set as Prepaid 
+            if ($data['payment_gateway'] == "COD") {
+                $payment_method = "COD";
+                $order_status = "New";
+            } else {
+                $payment_method = "Prepaid";
+                $order_status = "Pending";
+            }
         }
 
         return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries', 'getCartItems'));
