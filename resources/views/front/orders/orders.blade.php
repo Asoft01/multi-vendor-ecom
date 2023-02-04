@@ -24,7 +24,7 @@
         <div class="container">
             <div class="row">
                 <table class="table table-striped table-borderless">
-                    <tr>
+                    <tr class="table-danger">
                         <th>Order ID</th>
                         <th>Ordered Products</th>
                         <th>Payment Method</th>

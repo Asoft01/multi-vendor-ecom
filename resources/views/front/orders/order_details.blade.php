@@ -24,7 +24,7 @@
         <div class="container">
             <div class="row">
                 <table class="table table-striped table-borderless">
-                    <tr class="table-primary"><td colspan="2"><strong>Order Details</strong></td></tr>
+                    <tr class="table-danger"><td colspan="2"><strong>Order Details</strong></td></tr>
                     <tr><td>Order Date</td><td>{{ date('Y-m-d h:i:s', strtotime($orderDetails['created_at'])); }}</td></tr>
                     <tr><td>Order Status</td><td>{{ $orderDetails['order_status'] }}</td></tr>
                     <tr><td>Order Total</td><td>{{ $orderDetails['order_status'] }}</td></tr>
