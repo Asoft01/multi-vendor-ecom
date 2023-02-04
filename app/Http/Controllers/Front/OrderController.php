@@ -9,9 +9,16 @@ use Auth;
 
 class OrderController extends Controller
 {
-    public function orders(){
-        $orders = Order::with('orders_products')->where('user_id', Auth::user()->id)->orderBy('id', 'Desc')->get()->toArray();
-        // dd($orders); die; 
-        return view('front.orders.orders')->with(compact('orders'));
+    public function orders($id = null)
+    {
+        if (empty($id)) {
+            $orders = Order::with('orders_products')->where('user_id', Auth::user()->id)->orderBy('id', 'Desc')->get()->toArray();
+            // dd($orders); die; 
+            return view('front.orders.orders')->with(compact('orders'));
+        }else{ 
+            // echo "order details"; die;
+            $orderDetails = Order::with('orders_products')->where('id', $id)->first()->toArray();
+            // dd($orderDetails); die; 
+        }
     }
 }

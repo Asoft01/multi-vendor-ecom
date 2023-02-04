@@ -197,7 +197,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
         Route::get('thanks', 'ProductsController@thanks');
 
         // Users Orders 
-        Route::get('user/orders', 'OrderController@orders');
+        Route::get('user/orders/{id?}', 'OrderController@orders');
     });
 
     // User login
