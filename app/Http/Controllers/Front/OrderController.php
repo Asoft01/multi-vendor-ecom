@@ -19,6 +19,7 @@ class OrderController extends Controller
             // echo "order details"; die;
             $orderDetails = Order::with('orders_products')->where('id', $id)->first()->toArray();
             // dd($orderDetails); die; 
+            return view('front.orders.order_details')->with(compact('orderDetails'));
         }
     }
 }
