@@ -53,6 +53,11 @@
                                         My Account </a>
                                 </li>
                                 <li>
+                                    <a href="{{ url('user/orders') }}">
+                                        <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
+                                        My Orders </a>
+                                </li>
+                                <li>
                                     <a href="{{ url('user/logout') }}">
                                         <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
                                         Logout </a>
