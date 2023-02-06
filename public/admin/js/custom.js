@@ -9,6 +9,7 @@ $(document).ready(function(){
     $('#filters').DataTable();
     $('#coupons').DataTable();
     $('#users').DataTable();
+    $('#orders').DataTable();
 
     $(".nav-item").removeClass("active");
     $(".nav-link").removeClass("active");

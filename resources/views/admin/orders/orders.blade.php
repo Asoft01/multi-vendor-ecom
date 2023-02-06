@@ -11,7 +11,7 @@
                 <a style="max-width: 150px; float: right; display: inline-block" href="{{ url('admin/add-edit-brand') }}" class="btn btn-block btn-primary">Add Order</a> 
 
                 <div class="table-responsive pt-3">
-                  <table id="brands" class="table table-bordered">
+                  <table id="orders" class="table table-bordered">
                     <thead>
                       <tr>
                         <th>
@@ -51,42 +51,29 @@
                             {{ $order['id'] }}
                           </td>
                           <td>
-                            {{ date('Y-m-d h:i:s', strtotime($orderDetails['created_at'])); }}
+                            {{ date('Y-m-d h:i:s', strtotime($order['created_at'])); }}
                           </td>
                           <td>
                             {{ $order['name'] }}
                           </td>
                           <td>
-                            {{ $order['name'] }}
+                            {{ $order['email'] }}
                           </td>
                           <td>
-                            {{ $order['name'] }}
+                            @foreach ($order['orders_products'] as $product)
+                                {{ $product['product_code'] }} ({{ $product['product_qty'] }}) <br>
+                            @endforeach
                           </td>
                           <td>
-                            {{ $order['name'] }}
-                          </td>
-                          
-                          <td>
-                            @if($order['status'] == 1)
-                              {{-- Active --}}
-                              <a class="updateBrandStatus" id="brand-{{ $brand['id'] }}" brand_id="{{ $brand['id'] }}" href="javascript:void(0)"><i style="font-size:25px" class="mdi mdi-bookmark-check" status="Active"></i>
-                              </a>
-                            @else 
-                              {{-- Inactive --}}
-                              <a class="updateBrandStatus" id="brand-{{ $brand['id'] }}" brand_id="{{ $brand['id'] }}" href="javascript:void(0)">
-                                <i style="font-size:25px" class="mdi mdi-bookmark-outline" status="Inactive"></i>
-                              </a>
-                            @endif
+                            {{ $order['grand_total'] }}
                           </td>
                           <td>
-                              <?php /*
-                              <a title="brand" class="confirmDelete" href="{{ url('admin/delete-brand/'.$brand['id']) }}"><i style="font-size:25px" class="mdi mdi-file-excel-box"></i></a>
-                              */ 
-                              ?>
-                              <a href="{{ url('admin/add-edit-brand/'.$brand['id']) }}"><i style="font-size:25px" class="mdi mdi-pencil-box"></i></a>
-
-                              <a href="javascript:void(0)" class="confirmDelete" module="brand" moduleid="{{ $brand['id'] }}"><i style="font-size:25px" class="mdi mdi-file-excel-box"></i></a>
-                          </td>                     
+                            {{ $order['order_status'] }}
+                          </td>
+                          <td>
+                            {{ $order['payment_method'] }}
+                          </td>
+                        <td></td>  
                         </tr>
                       @endforeach
                     </tbody>
