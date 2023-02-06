@@ -46,35 +46,37 @@
                     </thead>
                     <tbody>
                       @foreach($orders as $order)
-                        <tr>
-                          <td>
-                            {{ $order['id'] }}
-                          </td>
-                          <td>
-                            {{ date('Y-m-d h:i:s', strtotime($order['created_at'])); }}
-                          </td>
-                          <td>
-                            {{ $order['name'] }}
-                          </td>
-                          <td>
-                            {{ $order['email'] }}
-                          </td>
-                          <td>
-                            @foreach ($order['orders_products'] as $product)
-                                {{ $product['product_code'] }} ({{ $product['product_qty'] }}) <br>
-                            @endforeach
-                          </td>
-                          <td>
-                            {{ $order['grand_total'] }}
-                          </td>
-                          <td>
-                            {{ $order['order_status'] }}
-                          </td>
-                          <td>
-                            {{ $order['payment_method'] }}
-                          </td>
-                        <td></td>  
-                        </tr>
+                        @if ($order['orders_products'])
+                            <tr>
+                                <td>
+                                    {{ $order['id'] }}
+                                </td>
+                                <td>
+                                    {{ date('Y-m-d h:i:s', strtotime($order['created_at'])); }}
+                                </td>
+                                <td>
+                                    {{ $order['name'] }}
+                                </td>
+                                <td>
+                                    {{ $order['email'] }}
+                                </td>
+                                <td>
+                                    @foreach ($order['orders_products'] as $product)
+                                        {{ $product['product_code'] }} ({{ $product['product_qty'] }}) <br>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    {{ $order['grand_total'] }}
+                                </td>
+                                <td>
+                                    {{ $order['order_status'] }}
+                                </td>
+                                <td>
+                                    {{ $order['payment_method'] }}
+                                </td>
+                                <td></td>  
+                            </tr>
+                        @endif
                       @endforeach
                     </tbody>
                   </table>
