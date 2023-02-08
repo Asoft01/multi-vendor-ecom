@@ -6,7 +6,7 @@
             <div class="col-md-12 grid-margin">
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">Order #{{ $orderDetails['id'] }} Details</h3>
+                    <h3 class="font-weight-bold">Order Details</h3>
                     <h6 class="font-weight-normal mb-0"><a href="{{ url('admin/admins/orders') }}"> Back to Orders </a></h6>
                     </div>
                     <div class="col-12 col-xl-4">
@@ -33,10 +33,46 @@
                     <div class="card-body">
                         <h4 class="card-title"> Order Details</h4>
 
-                        <div class="form-group">
-                            <label for="admin_email">Order Date</label>
+                        <div class="form-group" style="height: 15px;">
+                            <label style="font-weight: 550">Order ID: </label>
+                            <label>#{{ $orderDetails['id'] }}</label>
+                        </div>
+                        
+                        <div class="form-group" style="height: 15px;">
+                            <label style="font-weight: 550">Order Date</label>
                             <label>{{ date('Y-m-d h:i:s', strtotime($orderDetails['created_at'])); }}</label>
                         </div>
+                        <div class="form-group" style="height: 15px;">
+                            <label style="font-weight: 550">Order Status: </label>
+                            <label>{{ $orderDetails['order_status'] }}</label>
+                        </div>
+                        <div class="form-group" style="height: 15px;">
+                            <label style="font-weight: 550">Order Total</label>
+                            <label>Rs. {{ $orderDetails['grand_total'] }}</label>
+                        </div>
+                        <div class="form-group" style="height: 15px;">
+                            <label style="font-weight: 550">Shipping Charges</label>
+                            <label>Rs. {{ $orderDetails['shipping_charges'] }}</label>
+                        </div>
+                        @if(!empty($orderDetails['coupon_code']))
+                            <div class="form-group" style="height: 15px;">
+                                <label style="font-weight: 550">Coupon Code</label>
+                                <label>{{ $orderDetails['coupon_code'] }}</label>
+                            </div>
+                            <div class="form-group" style="height: 15px;">
+                                <label style="font-weight: 550">Coupon Amount</label>
+                                <label>Rs. {{ $orderDetails['coupon_amount'] }}</label>
+                            </div>
+                        @endif 
+                        <div class="form-group" style="height: 15px;">
+                            <label style="font-weight: 550">Payment Method</label>
+                            <label>{{ $orderDetails['payment_method'] }}</label>
+                        </div>
+                        <div class="form-group" style="height: 15px;">
+                            <label style="font-weight: 550">Payment Gateway</label>
+                            <label>{{ $orderDetails['payment_gateway'] }}</label>
+                        </div>
+                       
                     </div>
                 </div>
             </div>
