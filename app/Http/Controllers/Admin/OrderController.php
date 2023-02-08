@@ -34,7 +34,7 @@ class OrderController extends Controller
     }
 
     public function orderDetails($id){
-        $orderDetails = Order::with('order_products')->where('id', $id)->first()->toArray();
+        $orderDetails = Order::with('orders_products')->where('id', $id)->first()->toArray();
         $userDetails = User::where('id', $orderDetails['user_id'])->first()->toArray();
         return view('admin.orders.order_details')->with(compact('orderDetails', 'userDetails'));
     }
