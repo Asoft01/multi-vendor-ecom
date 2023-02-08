@@ -1,3 +1,4 @@
+<?php use App\Models\Product; ?>
 @extends('admin.layout.layout')
 @section('content')
 <div class="main-panel">
@@ -174,6 +175,46 @@
                             <label>{{ $orderDetails['mobile'] }}</label>
                         </div>
                             
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 grid-margin stretch-card">    
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title"> Update Order Status </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 grid-margin stretch-card">    
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title"> Ordered Products </h4>
+                        <table class="table table-striped table-borderless">
+                            <tr class="table-danger">
+                                <th>Product Image</th>
+                                <th>Product Code</th>
+                                <th>Product Name</th>
+                                <th>Product Size</th>
+                                <th>Product Color</th>
+                                <th>Product Qty</th>
+                            </tr>
+                            @foreach ($orderDetails['orders_products'] as $product)
+                                <tr>
+                                    <td>
+                                        @php
+                                            $getProductImage = Product::getProductImage($product['product_id'])
+                                        @endphp
+                                        <a target="_blank" href="{{ url('product/'.$product['product_id']) }}"><img style="width:80px" src="{{ asset('admin/images/product_images/small/'.$getProductImage) }}" alt="Dummy Image Here">
+                                    </td>
+                                    <td>{{ $product['product_code'] }}</td>
+                                    <td>{{ $product['product_name'] }}</td>
+                                    <td>{{ $product['product_size'] }}</td>
+                                    <td>{{ $product['product_color'] }}</td>
+                                    <td>{{ $product['product_qty'] }}</td>
+                                </tr>
+                            @endforeach
+                        </table>
                     </div>
                 </div>
             </div>
