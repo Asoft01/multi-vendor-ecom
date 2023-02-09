@@ -3,6 +3,14 @@
 @section('content')
 <div class="main-panel">
     <div class="content-wrapper">
+        @if(Session::has('success_message')) 
+            <div class="alert alert-success alert-dismissbible fade show" role="alert">
+                <strong>Success: </strong> {{ Session::get('success_message') }}  
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif  
         <div class="row">
             <div class="col-md-12 grid-margin">
                 <div class="row">
@@ -183,6 +191,18 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title"> Update Order Status </h4>
+
+                        <form action="{{ url('admin/update-order-status') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="order_id" value="{{ $orderDetails['id'] }}">
+                            <select name="order_status" required>
+                                <option value="">Select</option>
+                                @foreach ($orderStatuses as $status)
+                                    <option value="{{ $status['name'] }}">{{ $status['name'] }}</option>
+                                @endforeach
+                            </select>
+                            <button type="submit">Update</button>
+                        </form>
                     </div>
                 </div>
             </div>
