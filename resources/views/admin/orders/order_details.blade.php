@@ -191,18 +191,21 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title"> Update Order Status </h4>
-
-                        <form action="{{ url('admin/update-order-status') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="order_id" value="{{ $orderDetails['id'] }}">
-                            <select name="order_status" required>
-                                <option value="">Select</option>
-                                @foreach ($orderStatuses as $status)
-                                    <option value="{{ $status['name'] }}" @if(!empty($orderDetails['order_status']) && $orderDetails['order_status'] == $status['name']) selected="" @endif>{{ $status['name'] }}</option>
-                                @endforeach
-                            </select>
-                            <button type="submit">Update</button>
-                        </form>
+                        @if(Auth::guard('admin')->user()->type!="vendor")
+                            <form action="{{ url('admin/update-order-status') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="order_id" value="{{ $orderDetails['id'] }}">
+                                <select name="order_status" required>
+                                    <option value="">Select</option>
+                                    @foreach ($orderStatuses as $status)
+                                        <option value="{{ $status['name'] }}" @if(!empty($orderDetails['order_status']) && $orderDetails['order_status'] == $status['name']) selected="" @endif>{{ $status['name'] }}</option>
+                                    @endforeach
+                                </select>
+                                <button type="submit">Update</button>
+                            </form>
+                        @else
+                            This feature is restricted.
+                        @endif
                     </div>
                 </div>
             </div>
@@ -237,7 +240,7 @@
                                         <form action="{{ url('admin/update-order-item-status') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="order_item_id" value="{{ $orderDetails['id'] }}">
-                                            <select name="order_status" required>
+                                            <select name="order_item_status" required>
                                                 <option value="">Select</option>
                                                 @foreach ($orderItemStatuses as $status)
                                                     <option value="{{ $status['name'] }}" @if(!empty($product['item_status']) && $product['item_status'] == $status['name']) selected="" @endif>{{ $status['name'] }}</option>
