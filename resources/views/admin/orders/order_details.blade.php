@@ -218,6 +218,7 @@
                                 <th>Product Size</th>
                                 <th>Product Color</th>
                                 <th>Product Qty</th>
+                                <th>Item Status</th>
                             </tr>
                             @foreach ($orderDetails['orders_products'] as $product)
                                 <tr>
@@ -232,6 +233,19 @@
                                     <td>{{ $product['product_size'] }}</td>
                                     <td>{{ $product['product_color'] }}</td>
                                     <td>{{ $product['product_qty'] }}</td>
+                                    <td>
+                                        <form action="{{ url('admin/update-order-item-status') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="order_item_id" value="{{ $orderDetails['id'] }}">
+                                            <select name="order_status" required>
+                                                <option value="">Select</option>
+                                                @foreach ($orderItemStatuses as $status)
+                                                    <option value="{{ $status['name'] }}" @if(!empty($product['item_status']) && $product['item_status'] == $status['name']) selected="" @endif>{{ $status['name'] }}</option>
+                                                @endforeach
+                                            </select>
+                                            <button type="submit">Update</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </table>
