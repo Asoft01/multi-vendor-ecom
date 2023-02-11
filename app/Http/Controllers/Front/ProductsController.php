@@ -21,6 +21,7 @@ use App\Models\Vendor;
 // use DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 
@@ -675,6 +676,25 @@ class ProductsController extends Controller
 
             DB::commit();
             // echo "order successfully placed"; die;
+
+            $orderDetails = Order::with('orders_products')->where('id', $order_id)->first()->toArray();
+
+            if($data['payment_gateway'] == "COD"){
+                // Send Order Email 
+                $email = Auth::user()->email;
+                $messageData = [
+                    'email' => $email, 
+                    'name' => Auth::user()->name, 
+                    'order_id' => $order_id, 
+                    'orderDetails' => $orderDetails
+                ];
+                Mail::send('emails.order', $messageData, function($message) use($mail){
+                    $message->to($email)->Subject('Order Placed - ASoft.com');
+                });
+                // Send Order SMS
+            }else{
+                echo "Prepaid payment methods coming soon"; 
+            }
 
             return redirect('thanks');
         }
