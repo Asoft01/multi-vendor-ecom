@@ -688,7 +688,7 @@ class ProductsController extends Controller
                     'order_id' => $order_id, 
                     'orderDetails' => $orderDetails
                 ];
-                Mail::send('emails.order', $messageData, function($message) use($mail){
+                Mail::send('emails.order', $messageData, function($message) use($email){
                     $message->to($email)->Subject('Order Placed - ASoft.com');
                 });
                 // Send Order SMS
