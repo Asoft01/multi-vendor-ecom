@@ -7,13 +7,17 @@ use App\Models\Order;
 use App\Models\OrderItemStatus;
 use App\Models\OrdersProduct;
 use App\Models\OrderStatus;
+use App\Models\Sms;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Session;
 use Auth;
+use Illuminate\Support\Facades\Mail;
+
 class OrderController extends Controller
 {
-    public function orders(){
+    public function orders()
+    {
         Session::put('page', 'orders');
         $vendor_id = Auth::guard('admin')->user()->vendor_id;
         // dd($vendor_id); die;
@@ -25,18 +29,19 @@ class OrderController extends Controller
                 return redirect("admin/update-vendor-details/personal")->with('error_message', 'Your Vendor Account is not approved yet. Please make sure you fill your valid personal, business and bank details');
             }
         }
-        if($adminType == "vendor"){
-            $orders = Order::with(['orders_products' => function($query) use($vendor_id){
-                $query->where('vendor_id', $vendor_id);  
+        if ($adminType == "vendor") {
+            $orders = Order::with(['orders_products' => function ($query) use ($vendor_id) {
+                $query->where('vendor_id', $vendor_id);
             }])->orderBy('id', 'Desc')->get()->toArray();
-        }else{
+        } else {
             $orders = Order::with('orders_products')->orderBy('id', 'Desc')->get()->toArray();
-        }        
+        }
         // dd($orders); die; 
         return view('admin.orders.orders')->with(compact('orders'));
     }
 
-    public function orderDetails($id){
+    public function orderDetails($id)
+    {
         $vendor_id = Auth::guard('admin')->user()->vendor_id;
         // dd($vendor_id); die;
         // dd(Auth::guard('admin')->user()->id);
@@ -48,39 +53,84 @@ class OrderController extends Controller
             }
         }
 
-        if($adminType == "vendor"){        
-            $orderDetails = Order::with(['orders_products' => function($query)use($vendor_id){
+        if ($adminType == "vendor") {
+            $orderDetails = Order::with(['orders_products' => function ($query) use ($vendor_id) {
                 $query->where('vendor_id', $vendor_id);
             }])->where('id', $id)->first()->toArray();
-        }else{
-
+        } else {
             $orderDetails = Order::with('orders_products')->where('id', $id)->first()->toArray();
         }
         $userDetails = User::where('id', $orderDetails['user_id'])->first()->toArray();
-        $orderStatuses = OrderStatus::where('status', 1)->get()->toArray(); 
-        $orderItemStatuses = OrderItemStatus::where('status', 1)->get()->toArray(); 
+        $orderStatuses = OrderStatus::where('status', 1)->get()->toArray();
+        $orderItemStatuses = OrderItemStatus::where('status', 1)->get()->toArray();
         return view('admin.orders.order_details')->with(compact('orderDetails', 'userDetails', 'orderStatuses', 'orderItemStatuses'));
     }
 
-    public function updateorderStatus(Request $request){
-        if($request->isMethod('post')){
-            $data = $request->all(); 
+    public function updateorderStatus(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $data = $request->all();
             // dd($data); die;
             // Update Order Status 
             Order::where('id', $data['order_id'])->update(['order_status' => $data['order_status']]);
+
+            // Get Delivery Details 
+            $deliveryDetails = Order::select('mobile', 'email', 'name')->where('id', $data['order_id'])->first()->toArray();
+            $orderDetails = Order::with('orders_products')->where('id', $data['order_id'])->first()->toArray(); 
+            // Send Order Status Update Email 
+            $email = $deliveryDetails['email'];
+            $messageData = [
+                'email' => $email,
+                'name' => $deliveryDetails['name'],
+                'order_id' => $data['order_id'],
+                'orderDetails' => $orderDetails, 
+                'order_status' => $data['order_status']
+            ];
+            Mail::send('emails.order_status', $messageData, function ($message) use ($email) {
+                $message->to($email)->Subject('Order Status Updated - ASoft.com');
+            });
+            
+             // Send Order SMS
+            $message = "Dear Customer, your order #".$order_id." status has been updated to ".$data['order_status']. "placed with A-Soft";
+            $mobile = $deliveryDetails['mobile'];
+            Sms::sendSms($message, $mobile);
+            // Send Order Status Update SMS
             $message = "Order Status has been updated successfully!";
-            return redirect()->back()->with('success_message', $message); 
+            return redirect()->back()->with('success_message', $message);
         }
     }
 
-    public function updateOrderItemStatus(Request $request){
-        if($request->isMethod('post')){
-            $data = $request->all(); 
+    public function updateOrderItemStatus(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $data = $request->all();
             // dd($data); die;
             // Update Order Item Status 
             OrdersProduct::where('id', $data['order_item_id'])->update(['item_status' => $data['order_item_status']]);
+            // Get Delivery Details 
+            $getOrderId = OrdersProduct::select('order_id')->where('id', $data['order_item_id'])->first()->toArray();
+            $deliveryDetails = Order::select('mobile', 'email', 'name')->where('id', $getOrderId)->first()->toArray();
+            $orderDetails = Order::with('orders_products')->where('id', $getOrderId['order_id'])->first()->toArray(); 
+            // Send Order Status Update Email 
+            $email = $deliveryDetails['email'];
+            $messageData = [
+                'email' => $email,
+                'name' => $deliveryDetails['name'],
+                'order_id' => $getOrderId['order_id'],
+                'orderDetails' => $orderDetails, 
+                'order_status' => $data['order_item_status']
+            ];
+            Mail::send('emails.order_status', $messageData, function ($message) use ($email) {
+                $message->to($email)->Subject('Order Status Updated - ASoft.com');
+            });
+            
+             // Send Order SMS
+            // $message = "Dear Customer, your order #".$order_id." status has been updated to ".$data['order_status']. "placed with A-Soft";
+            // $mobile = $deliveryDetails['mobile'];
+            // Sms::sendSms($message, $mobile);
+            // Send Order Status Update SMS
             $message = "Order Item Status has been updated successfully!";
-            return redirect()->back()->with('success_message', $message); 
+            return redirect()->back()->with('success_message', $message);
         }
     }
 }
