@@ -28,7 +28,7 @@
                     <td>Product Price</td>
                 </tr>
                 @foreach ($orderDetails['orders_products'] as $order)
-                    <tr bgcolor="#cccccc">
+                    <tr bgcolor="#f9f9f9">
                         <td>{{ $order['product_name'] }}</td>
                         <td>{{ $order['product_code'] }}</td>
                         <td>{{ $order['product_size'] }}</td>
@@ -43,7 +43,13 @@
                 </tr>
                 <tr>
                     <td colspan="5" align="right">Coupon Discount</td>
-                    <td>INR {{ $orderDetails['coupon_amount'] }}</td>
+                    <td>INR 
+                            @if($orderDetails['coupon_amount']> 0)
+                                {{ $orderDetails['coupon_amount'] }}
+                            @else
+                                0
+                            @endif
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="5" align="right">Grand Total</td>

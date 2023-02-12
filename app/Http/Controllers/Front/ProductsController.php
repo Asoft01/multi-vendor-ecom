@@ -15,6 +15,7 @@ use App\Models\OrdersProduct;
 use App\Models\Product;
 use App\Models\ProductsAttribute;
 use App\Models\ProductsFilter;
+use App\Models\Sms;
 use App\Models\User;
 use App\Models\Vendor;
 // use Session;
@@ -663,11 +664,11 @@ class ProductsController extends Controller
                 $cartItem->product_id =   $item['product_id'];
                 $cartItem->product_code = $getProductDetails['product_code'];
                 $cartItem->product_name = $getProductDetails['product_name'];
-                $cartItem->product_color =$getProductDetails['product_color'];
+                $cartItem->product_color = $getProductDetails['product_color'];
                 $cartItem->product_size = $item['size'];
                 $getDiscountAttributePrice = Product::getDiscountAttributePrice($item['product_id'], $item['size']);
                 $cartItem->product_price = $getDiscountAttributePrice['final_price'];
-                $cartItem->product_qty=    $item['quantity'];
+                $cartItem->product_qty =    $item['quantity'];
                 $cartItem->save();
             }
 
@@ -679,21 +680,24 @@ class ProductsController extends Controller
 
             $orderDetails = Order::with('orders_products')->where('id', $order_id)->first()->toArray();
 
-            if($data['payment_gateway'] == "COD"){
+            if ($data['payment_gateway'] == "COD") {
                 // Send Order Email 
                 $email = Auth::user()->email;
                 $messageData = [
-                    'email' => $email, 
-                    'name' => Auth::user()->name, 
-                    'order_id' => $order_id, 
+                    'email' => $email,
+                    'name' => Auth::user()->name,
+                    'order_id' => $order_id,
                     'orderDetails' => $orderDetails
                 ];
-                Mail::send('emails.order', $messageData, function($message) use($email){
+                Mail::send('emails.order', $messageData, function ($message) use ($email) {
                     $message->to($email)->Subject('Order Placed - ASoft.com');
                 });
                 // Send Order SMS
-            }else{
-                echo "Prepaid payment methods coming soon"; 
+                // $message = "Dear Customer, your order ".$order_id." has been successfully placed with ASoft.com. We will intimate you once your order is shipped";
+                // $mobile = Auth::user()->mobile;
+                // Sms::sendSms($message, $mobile);
+            } else {
+                echo "Prepaid payment methods coming soon";
             }
 
             return redirect('thanks');
@@ -702,12 +706,13 @@ class ProductsController extends Controller
         return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries', 'getCartItems'));
     }
 
-    public function thanks(){ 
-        if(Session::has('order_id')){
+    public function thanks()
+    {
+        if (Session::has('order_id')) {
             // Empty the Cart
-            Cart::where('user_id', Auth::user()->id)->delete(); 
+            Cart::where('user_id', Auth::user()->id)->delete();
             return view('front.products.thanks');
-        }else{
+        } else {
             return redirect('cart');
         }
     }
