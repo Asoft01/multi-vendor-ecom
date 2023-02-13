@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItemStatus;
+use App\Models\OrdersLog;
 use App\Models\OrdersProduct;
 use App\Models\OrderStatus;
 use App\Models\Sms;
@@ -63,7 +64,8 @@ class OrderController extends Controller
         $userDetails = User::where('id', $orderDetails['user_id'])->first()->toArray();
         $orderStatuses = OrderStatus::where('status', 1)->get()->toArray();
         $orderItemStatuses = OrderItemStatus::where('status', 1)->get()->toArray();
-        return view('admin.orders.order_details')->with(compact('orderDetails', 'userDetails', 'orderStatuses', 'orderItemStatuses'));
+        $orderLog = OrdersLog::where('order_id', $id)->get()->toArray();
+        return view('admin.orders.order_details')->with(compact('orderDetails', 'userDetails', 'orderStatuses', 'orderItemStatuses', 'orderLog'));
     }
 
     public function updateorderStatus(Request $request)
@@ -73,7 +75,13 @@ class OrderController extends Controller
             // dd($data); die;
             // Update Order Status 
             Order::where('id', $data['order_id'])->update(['order_status' => $data['order_status']]);
-
+            
+            // Update Order Log 
+            $log =               new OrdersLog(); 
+            $log->order_id =     $data['order_id'];
+            $log->order_status = $data['order_status']; 
+            $log->save(); 
+            
             // Get Delivery Details 
             $deliveryDetails = Order::select('mobile', 'email', 'name')->where('id', $data['order_id'])->first()->toArray();
             $orderDetails = Order::with('orders_products')->where('id', $data['order_id'])->first()->toArray(); 
@@ -90,11 +98,11 @@ class OrderController extends Controller
                 $message->to($email)->Subject('Order Status Updated - ASoft.com');
             });
             
-             // Send Order SMS
-            $message = "Dear Customer, your order #".$order_id." status has been updated to ".$data['order_status']. "placed with A-Soft";
-            $mobile = $deliveryDetails['mobile'];
-            Sms::sendSms($message, $mobile);
             // Send Order Status Update SMS
+            // $message = "Dear Customer, your order #".$data['order_id']." status has been updated to ".$data['order_status']. "placed with A-Soft";
+            // $mobile = $deliveryDetails['mobile'];
+            // Sms::sendSms($message, $mobile);
+
             $message = "Order Status has been updated successfully!";
             return redirect()->back()->with('success_message', $message);
         }
@@ -109,6 +117,7 @@ class OrderController extends Controller
             OrdersProduct::where('id', $data['order_item_id'])->update(['item_status' => $data['order_item_status']]);
             // Get Delivery Details 
             $getOrderId = OrdersProduct::select('order_id')->where('id', $data['order_item_id'])->first()->toArray();
+
             $deliveryDetails = Order::select('mobile', 'email', 'name')->where('id', $getOrderId)->first()->toArray();
             $orderDetails = Order::with('orders_products')->where('id', $getOrderId['order_id'])->first()->toArray(); 
             // Send Order Status Update Email 
