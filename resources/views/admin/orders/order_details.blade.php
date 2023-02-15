@@ -201,6 +201,8 @@
                                         <option value="{{ $status['name'] }}" @if(!empty($orderDetails['order_status']) && $orderDetails['order_status'] == $status['name']) selected="" @endif>{{ $status['name'] }}</option>
                                     @endforeach
                                 </select>
+                                <input type="text" name="courier_name" id="courier_number" placeholder="Courier Name">
+                                <input type="text" name="tracking_number" id="tracking_number" placeholder="Tracking Number">
                                 <button type="submit">Update</button>
                             </form>
                             <br>

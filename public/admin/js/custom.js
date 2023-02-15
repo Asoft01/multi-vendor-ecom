@@ -489,4 +489,5 @@ $(document).ready(function(){
         $("#couponField").hide();
     }); 
 
+    // Show Courier Name and Tracking Number in case of Shipped Order Status
 });
