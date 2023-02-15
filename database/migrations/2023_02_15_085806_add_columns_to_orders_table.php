@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             $table->string('courier_name')->after('grand_total')->nullable();
-            $table->string('track_number')->after('courier_name')->nullable();
+            $table->string('tracking_number')->after('courier_name')->nullable();
         });
     }
 

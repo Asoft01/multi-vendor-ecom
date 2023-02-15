@@ -195,19 +195,29 @@
                             <form action="{{ url('admin/update-order-status') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="order_id" value="{{ $orderDetails['id'] }}">
-                                <select name="order_status" required>
-                                    <option value="">Select</option>
+                                <select name="order_status" id="order_status" required>
+                                    <option value="" selected>Select</option>
                                     @foreach ($orderStatuses as $status)
                                         <option value="{{ $status['name'] }}" @if(!empty($orderDetails['order_status']) && $orderDetails['order_status'] == $status['name']) selected="" @endif>{{ $status['name'] }}</option>
                                     @endforeach
                                 </select>
-                                <input type="text" name="courier_name" id="courier_number" placeholder="Courier Name">
+                                <input type="text" name="courier_name" id="courier_name" placeholder="Courier Name">
                                 <input type="text" name="tracking_number" id="tracking_number" placeholder="Tracking Number">
                                 <button type="submit">Update</button>
                             </form>
                             <br>
                             @foreach ($orderLog as $log)
                                 <strong>{{ $log['order_status'] }}</strong><br>
+                                @if($log['order_status'] == "Shipped")
+                                    @if(!empty($orderDetails['courier_name']))
+                                        <br><span>Courier Name: {{ $orderDetails['courier_name'] }}</span>
+                                    @endif
+                                    
+                                    @if(!empty($orderDetails['courier_name']))
+                                        <br><span>Tracking Number: {{ $orderDetails['tracking_number'] }}</span>
+                                    @endif
+                                    <br>
+                                @endif
                                 {{ date('Y-m-d h:i:s', strtotime($log['created_at'])); }}<br>
                                 <hr>
                                 @endforeach
