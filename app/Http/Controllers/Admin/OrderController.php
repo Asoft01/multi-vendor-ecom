@@ -119,6 +119,11 @@ class OrderController extends Controller
             // dd($data); die;
             // Update Order Item Status 
             OrdersProduct::where('id', $data['order_item_id'])->update(['item_status' => $data['order_item_status']]);
+
+            // Update Courier Name & Tracking Number
+            if(!empty($data['item_courier_name']) && !empty($data['item_tracking_number'])){
+                Order::where('id', $data['order_item_id'])->update(['courier_name' => $data['item_courier_name'], 'tracking_number' => $data['item_tracking_number']]);
+            }
             // Get Delivery Details 
             $getOrderId = OrdersProduct::select('order_id')->where('id', $data['order_item_id'])->first()->toArray();
 

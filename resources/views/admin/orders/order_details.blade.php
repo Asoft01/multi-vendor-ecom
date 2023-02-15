@@ -258,12 +258,15 @@
                                         <form action="{{ url('admin/update-order-item-status') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="order_item_id" value="{{ $orderDetails['id'] }}">
-                                            <select name="order_item_status" required>
+                                            <select name="order_item_status" id="order_item_status" required>
                                                 <option value="">Select</option>
                                                 @foreach ($orderItemStatuses as $status)
                                                     <option value="{{ $status['name'] }}" @if(!empty($product['item_status']) && $product['item_status'] == $status['name']) selected="" @endif>{{ $status['name'] }}</option>
                                                 @endforeach
                                             </select>
+                                            <input style="width:110px;" type="text" name="item_courier_name" id="item_courier_name" placeholder="Courier Name" @if(!empty($product['courier_name'])) value="{{ $product['courier_name'] }}" @endif>
+                                            <input style="width:110px;" type="text" name="item_tracking_number" id="item_tracking_number" placeholder="Tracking Number" @if(!empty($product['tracking_number'])) value="{{ $product['tracking_number'] }}" @endif>
+                                            <button type="submit">Update</button>
                                             <button type="submit">Update</button>
                                         </form>
                                     </td>
