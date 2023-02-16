@@ -1,4 +1,4 @@
-<?php use App\Models\Product; ?>
+<?php use App\Models\Product; use App\Models\OrdersLog; ?>
 @extends('admin.layout.layout')
 @section('content')
 <div class="main-panel">
@@ -206,17 +206,31 @@
                                 <button type="submit">Update</button>
                             </form>
                             <br>
-                            @foreach ($orderLog as $log)
+                            @foreach ($orderLog as $key => $log)
+                            <?php //echo "<pre>"; print_r($log['orders_products'][$key]['product_code']); die; ?>
                                 <strong>{{ $log['order_status'] }}</strong><br>
-                                @if($log['order_status'] == "Shipped")
-                                    @if(!empty($orderDetails['courier_name']))
+                                {{-- @if($log['order_status'] == "Shipped") --}}
+                                @if(isset($log['order_item_id']) && $log['order_item_id'] > 0)
+                                    @php $getItemDetails = OrdersLog::getItemDetails($log['order_item_id']) @endphp
+                                    {{-- @if(isset($getItemDetails['product_code'])) --}}
+                                    - for item {{ $getItemDetails['product_code']; }}
+                                    @if(!empty($log['order_products'][$key]['courier_name']))
+                                        <br><span>Courier Name: {{ $getItemDetails['courier_name'] }}</span>
+                                    @endif
+
+                                    @if(!empty($getItemDetails['tracking_number']))
+                                        <br><span>Tracking Number: {{ $getItemDetails['tracking_number'] }}</span>
+                                    @endif
+                                    <br>
+                                    {{-- @if(!empty($orderDetails['courier_name']))
                                         <br><span>Courier Name: {{ $orderDetails['courier_name'] }}</span>
                                     @endif
                                     
                                     @if(!empty($orderDetails['courier_name']))
                                         <br><span>Tracking Number: {{ $orderDetails['tracking_number'] }}</span>
                                     @endif
-                                    <br>
+                                        <br> --}}
+                                    {{-- @endif --}}
                                 @endif
                                 {{ date('Y-m-d h:i:s', strtotime($log['created_at'])); }}<br>
                                 <hr>
@@ -266,7 +280,6 @@
                                             </select>
                                             <input style="width:110px;" type="text" name="item_courier_name" id="item_courier_name" placeholder="Courier Name" @if(!empty($product['courier_name'])) value="{{ $product['courier_name'] }}" @endif>
                                             <input style="width:110px;" type="text" name="item_tracking_number" id="item_tracking_number" placeholder="Tracking Number" @if(!empty($product['tracking_number'])) value="{{ $product['tracking_number'] }}" @endif>
-                                            <button type="submit">Update</button>
                                             <button type="submit">Update</button>
                                         </form>
                                     </td>
