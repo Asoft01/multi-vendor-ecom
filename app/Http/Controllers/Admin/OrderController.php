@@ -90,19 +90,38 @@ class OrderController extends Controller
             // Get Delivery Details 
             $deliveryDetails = Order::select('mobile', 'email', 'name')->where('id', $data['order_id'])->first()->toArray();
             $orderDetails = Order::with('orders_products')->where('id', $data['order_id'])->first()->toArray(); 
-            // Send Order Status Update Email 
-            $email = $deliveryDetails['email'];
-            $messageData = [
-                'email' => $email,
-                'name' => $deliveryDetails['name'],
-                'order_id' => $data['order_id'],
-                'orderDetails' => $orderDetails, 
-                'order_status' => $data['order_status']
-            ];
-            Mail::send('emails.order_status', $messageData, function ($message) use ($email) {
-                $message->to($email)->Subject('Order Status Updated - ASoft.com');
-            });
             
+            if(!empty($data['courier_name']) && !empty($data['tracking_number'])){
+                  // Send Order Status Update Email 
+                $email = $deliveryDetails['email'];
+                $messageData = [
+                    'email' => $email,
+                    'name' => $deliveryDetails['name'],
+                    'order_id' => $data['order_id'],
+                    'orderDetails' => $orderDetails, 
+                    'order_status' => $data['order_status'], 
+                    'courier_name' => $data['courier_name'], 
+                    'tracking_number' => $data['tracking_number'], 
+                ];
+                Mail::send('emails.order_status', $messageData, function ($message) use ($email) {
+                    $message->to($email)->Subject('Order Status Updated - ASoft.com');
+                });
+            }else{
+                  // Send Order Status Update Email 
+                $email = $deliveryDetails['email'];
+                $messageData = [
+                    'email' => $email,
+                    'name' => $deliveryDetails['name'],
+                    'order_id' => $data['order_id'],
+                    'orderDetails' => $orderDetails, 
+                    'order_status' => $data['order_status']
+                ];
+                Mail::send('emails.order_status', $messageData, function ($message) use ($email) {
+                    $message->to($email)->Subject('Order Status Updated - ASoft.com');
+                });
+                
+            }
+          
             // Send Order Status Update SMS
             // $message = "Dear Customer, your order #".$data['order_id']." status has been updated to ".$data['order_status']. "placed with A-Soft";
             // $mobile = $deliveryDetails['mobile'];
@@ -138,19 +157,38 @@ class OrderController extends Controller
 
             $deliveryDetails = Order::select('mobile', 'email', 'name')->where('id', $getOrderId)->first()->toArray();
             $orderDetails = Order::with('orders_products')->where('id', $getOrderId['order_id'])->first()->toArray(); 
-            // Send Order Status Update Email 
-            $email = $deliveryDetails['email'];
-            $messageData = [
-                'email' => $email,
-                'name' => $deliveryDetails['name'],
-                'order_id' => $getOrderId['order_id'],
-                'orderDetails' => $orderDetails, 
-                'order_status' => $data['order_item_status']
-            ];
-            Mail::send('emails.order_status', $messageData, function ($message) use ($email) {
-                $message->to($email)->Subject('Order Status Updated - ASoft.com');
-            });
-            
+
+            if(!empty($data['item_courier_name']) && !empty($data['item_tracking_number'])){    
+                // Send Order Status Update Email 
+                $email = $deliveryDetails['email'];
+                $messageData = [
+                    'email' => $email,
+                    'name' => $deliveryDetails['name'],
+                    'order_id' => $getOrderId['order_id'],
+                    'orderDetails' => $orderDetails, 
+                    'order_status' => $data['order_item_status'], 
+                    'courier_name' => $data['item_courier_name'], 
+                    'tracking_number' => $data['item_tracking_number']
+                ];
+                Mail::send('emails.order_status', $messageData, function ($message) use ($email) {
+                    $message->to($email)->Subject('Order Status Updated - ASoft.com');
+                });
+                
+            }else{    
+                // Send Order Status Update Email 
+                $email = $deliveryDetails['email'];
+                $messageData = [
+                    'email' => $email,
+                    'name' => $deliveryDetails['name'],
+                    'order_id' => $getOrderId['order_id'],
+                    'orderDetails' => $orderDetails, 
+                    'order_status' => $data['order_item_status']
+                ];
+                Mail::send('emails.order_status', $messageData, function ($message) use ($email) {
+                    $message->to($email)->Subject('Order Status Updated - ASoft.com');
+                });
+                
+            }
              // Send Order SMS
             // $message = "Dear Customer, your order #".$order_id." status has been updated to ".$data['order_status']. "placed with A-Soft";
             // $mobile = $deliveryDetails['mobile'];

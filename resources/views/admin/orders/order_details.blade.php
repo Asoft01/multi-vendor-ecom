@@ -214,7 +214,7 @@
                                     @php $getItemDetails = OrdersLog::getItemDetails($log['order_item_id']) @endphp
                                     {{-- @if(isset($getItemDetails['product_code'])) --}}
                                     - for item {{ $getItemDetails['product_code']; }}
-                                    @if(!empty($log['order_products'][$key]['courier_name']))
+                                    @if(!empty($getItemDetails['courier_name']))
                                         <br><span>Courier Name: {{ $getItemDetails['courier_name'] }}</span>
                                     @endif
 
@@ -234,7 +234,7 @@
                                 @endif
                                 {{ date('Y-m-d h:i:s', strtotime($log['created_at'])); }}<br>
                                 <hr>
-                                @endforeach
+                            @endforeach
                         @else
                             This feature is restricted.
                         @endif
