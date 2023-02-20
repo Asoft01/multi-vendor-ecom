@@ -50,14 +50,13 @@
     			<div class="col-xs-6">
     				<address>
     					<strong>Payment Method:</strong><br>
-    					Visa ending **** 4242<br>
-    					jsmith@email.com
+    					{{ $orderDetails['payment_method'] }}
     				</address>
     			</div>
     			<div class="col-xs-6 text-right">
     				<address>
     					<strong>Order Date:</strong><br>
-    					March 7, 2014<br><br>
+    					{{ date('Y-m-d h:i:s', strtotime($orderDetails['created_at'])); }}<br><br>
     				</address>
     			</div>
     		</div>
@@ -75,7 +74,9 @@
     					<table class="table table-condensed">
     						<thead>
                                 <tr>
-        							<td><strong>Item</strong></td>
+        							<td><strong>Product Code</strong></td>
+        							<td class="text-center"><strong>Size</strong></td>
+        							<td class="text-center"><strong>Color</strong></td>
         							<td class="text-center"><strong>Price</strong></td>
         							<td class="text-center"><strong>Quantity</strong></td>
         							<td class="text-right"><strong>Totals</strong></td>
@@ -83,12 +84,16 @@
     						</thead>
     						<tbody>
     							<!-- foreach ($order->lineItems as $line) or some such thing here -->
-    							<tr>
-    								<td>BS-200</td>
-    								<td class="text-center">$10.99</td>
-    								<td class="text-center">1</td>
-    								<td class="text-right">$10.99</td>
-    							</tr>
+                                @foreach ($orderDetails['orders_products'] as $product)
+                                    <tr>
+                                        <td>{{ $product['product_code'] }}</td>
+                                        <td class="text-center">{{ $product['product_size'] }}</td>
+                                        <td class="text-center">{{ $product['product_color'] }}</td>
+                                        <td class="text-right">INR {{ $product['product_price'] }}</td>
+                                        <td class="text-right">{{ $product['product_qty'] }}</td>
+                                        <td class="text-right">INR {{ $product['product_price'] * $product['product_qty'] }}</td>
+                                    </tr>
+                                @endforeach
                                 <tr>
         							<td>BS-400</td>
     								<td class="text-center">$20.00</td>
