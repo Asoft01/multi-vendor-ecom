@@ -84,6 +84,7 @@
     						</thead>
     						<tbody>
     							<!-- foreach ($order->lineItems as $line) or some such thing here -->
+                                @php $subTotal = 0; @endphp
                                 @foreach ($orderDetails['orders_products'] as $product)
                                     <tr>
                                         <td>{{ $product['product_code'] }}</td>
@@ -93,36 +94,31 @@
                                         <td class="text-right">{{ $product['product_qty'] }}</td>
                                         <td class="text-right">INR {{ $product['product_price'] * $product['product_qty'] }}</td>
                                     </tr>
+                                @php $subTotal = $subTotal + ($product['product_price'] * $product['product_qty']);  @endphp
                                 @endforeach
-                                <tr>
-        							<td>BS-400</td>
-    								<td class="text-center">$20.00</td>
-    								<td class="text-center">3</td>
-    								<td class="text-right">$60.00</td>
-    							</tr>
-                                <tr>
-            						<td>BS-1000</td>
-    								<td class="text-center">$600.00</td>
-    								<td class="text-center">1</td>
-    								<td class="text-right">$600.00</td>
-    							</tr>
     							<tr>
+    								<td class="thick-line"></td>
+    								<td class="thick-line"></td>
     								<td class="thick-line"></td>
     								<td class="thick-line"></td>
     								<td class="thick-line text-center"><strong>Subtotal</strong></td>
-    								<td class="thick-line text-right">$670.99</td>
+    								<td class="thick-line text-right">INR {{ $subTotal }}</td>
     							</tr>
     							<tr>
     								<td class="no-line"></td>
     								<td class="no-line"></td>
-    								<td class="no-line text-center"><strong>Shipping</strong></td>
-    								<td class="no-line text-right">$15</td>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line text-center"><strong>Shipping Charges</strong></td>
+    								<td class="no-line text-right">INR 0</td>
     							</tr>
     							<tr>
     								<td class="no-line"></td>
     								<td class="no-line"></td>
-    								<td class="no-line text-center"><strong>Total</strong></td>
-    								<td class="no-line text-right">$685.99</td>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line text-center"><strong>Grand Total</strong></td>
+    								<td class="no-line text-right"><strong> INR {{ $orderDetails['grand_total'] }} </strong></td>
     							</tr>
     						</tbody>
     					</table>
