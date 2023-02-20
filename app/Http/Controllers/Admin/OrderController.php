@@ -204,6 +204,6 @@ class OrderController extends Controller
         $orderDetails = Order::with('orders_products')->where('id', $order_id)->first()->toArray();
         // $user_id = $orderDetails['user_id'];
         $userDetails = User::where('id', $orderDetails['user_id'])->first()->toArray();
-        return view('admin.orders.orders_invoice')->with(compact('orderDetails', 'userDetails')); 
+        return view('admin.orders.order_invoice')->with(compact('orderDetails', 'userDetails')); 
     }
 }
