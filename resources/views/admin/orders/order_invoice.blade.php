@@ -90,8 +90,8 @@
                                         <td>{{ $product['product_code'] }}</td>
                                         <td class="text-center">{{ $product['product_size'] }}</td>
                                         <td class="text-center">{{ $product['product_color'] }}</td>
-                                        <td class="text-right">INR {{ $product['product_price'] }}</td>
-                                        <td class="text-right">{{ $product['product_qty'] }}</td>
+                                        <td class="text-center">INR {{ $product['product_price'] }}</td>
+                                        <td class="text-center">{{ $product['product_qty'] }}</td>
                                         <td class="text-right">INR {{ $product['product_price'] * $product['product_qty'] }}</td>
                                     </tr>
                                 @php $subTotal = $subTotal + ($product['product_price'] * $product['product_qty']);  @endphp
@@ -101,7 +101,7 @@
     								<td class="thick-line"></td>
     								<td class="thick-line"></td>
     								<td class="thick-line"></td>
-    								<td class="thick-line text-center"><strong>Subtotal</strong></td>
+    								<td class="thick-line text-right"><strong>Subtotal</strong></td>
     								<td class="thick-line text-right">INR {{ $subTotal }}</td>
     							</tr>
     							<tr>
@@ -109,7 +109,7 @@
     								<td class="no-line"></td>
     								<td class="no-line"></td>
     								<td class="no-line"></td>
-    								<td class="no-line text-center"><strong>Shipping Charges</strong></td>
+    								<td class="no-line text-right"><strong>Shipping Charges</strong></td>
     								<td class="no-line text-right">INR 0</td>
     							</tr>
     							<tr>
@@ -117,8 +117,12 @@
     								<td class="no-line"></td>
     								<td class="no-line"></td>
     								<td class="no-line"></td>
-    								<td class="no-line text-center"><strong>Grand Total</strong></td>
-    								<td class="no-line text-right"><strong> INR {{ $orderDetails['grand_total'] }} </strong></td>
+    								<td class="no-line text-right"><strong>Grand Total</strong></td>
+    								<td class="no-line text-right"><strong> INR {{ $orderDetails['grand_total'] }} </strong><br>
+									@if($orderDetails['payment_method'] == "COD")
+										<font color="red">(Already Paid)</font>
+									@endif
+									</td>
     							</tr>
     						</tbody>
     					</table>
