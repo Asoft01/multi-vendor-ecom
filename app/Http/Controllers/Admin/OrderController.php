@@ -14,7 +14,8 @@ use Illuminate\Http\Request;
 use Session;
 use Auth;
 use Illuminate\Support\Facades\Mail;
-use DomPdf\DomPdf;
+// use DomPdf\DomPdf;
+use Dompdf\Dompdf;
 
 class OrderController extends Controller
 {
@@ -227,6 +228,4 @@ class OrderController extends Controller
         // Output the generated PDF to Browser
         $dompdf->stream();
     }
-
-    
 }
