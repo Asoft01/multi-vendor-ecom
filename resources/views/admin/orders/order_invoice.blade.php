@@ -9,7 +9,7 @@
     		<div class="invoice-title">
     			<h2>
 					Invoice</h2><h3 class="pull-right">Order # {{ $orderDetails['id'] }}
-					<?php echo DNS1D::getBarcodeSVG($orderDetails['id'], 'C39'); ?>
+					<?php echo DNS1D::getBarcodeHTML($orderDetails['id'], 'C39'); ?>
 				</h3>
     		</div>
     		<hr>
