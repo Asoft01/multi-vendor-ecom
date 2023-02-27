@@ -22,3 +22,4 @@ composer dump-autoload
 composer require laravel/helpers
 composer require milon/barcode
 https://github.com/milon/barcode
+https://github.com/dompdf/dompdf

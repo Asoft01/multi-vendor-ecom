@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Session;
 use Auth;
 use Illuminate\Support\Facades\Mail;
+use DomPdf\DomPdf;
 
 class OrderController extends Controller
 {
@@ -206,4 +207,26 @@ class OrderController extends Controller
         $userDetails = User::where('id', $orderDetails['user_id'])->first()->toArray();
         return view('admin.orders.order_invoice')->with(compact('orderDetails', 'userDetails')); 
     }
+
+    public function viewPDFInvoice($order_id){
+        // dd("Hello"); die;
+        $orderDetails = Order::with('orders_products')->where('id', $order_id)->first()->toArray();
+        // $user_id = $orderDetails['user_id'];
+        $userDetails = User::where('id', $orderDetails['user_id'])->first()->toArray();
+        
+        // instantiate and use the dompdf class
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml('hello world');
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream();
+    }
+
+    
 }
