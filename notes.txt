@@ -20,3 +20,5 @@ https://i-like-robots.github.io/EasyZoom/
 
 composer dump-autoload
 composer require laravel/helpers
+composer require milon/barcode
+https://github.com/milon/barcode

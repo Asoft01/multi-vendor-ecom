@@ -7,7 +7,10 @@
     <div class="row">
         <div class="col-xs-12">
     		<div class="invoice-title">
-    			<h2>Invoice</h2><h3 class="pull-right">Order # {{ $orderDetails['id'] }}</h3>
+    			<h2>
+					Invoice</h2><h3 class="pull-right">Order # {{ $orderDetails['id'] }}
+					<?php echo DNS1D::getBarcodeSVG($orderDetails['id'], 'C39'); ?>
+				</h3>
     		</div>
     		<hr>
     		<div class="row">
@@ -47,7 +50,7 @@
     			</div>
     		</div>
     		<div class="row">
-    			<div class="col-xs-6">
+    			<div class="col-xs-6"> 
     				<address>
     					<strong>Payment Method:</strong><br>
     					{{ $orderDetails['payment_method'] }}
@@ -87,7 +90,7 @@
                                 @php $subTotal = 0; @endphp
                                 @foreach ($orderDetails['orders_products'] as $product)
                                     <tr>
-                                        <td>{{ $product['product_code'] }}</td>
+                                        <td>{{ $product['product_code'] }}<?php echo DNS2D::getBarcodeHTML($product['product_code'], 'QRCODE'); ?></td>
                                         <td class="text-center">{{ $product['product_size'] }}</td>
                                         <td class="text-center">{{ $product['product_color'] }}</td>
                                         <td class="text-center">INR {{ $product['product_price'] }}</td>
