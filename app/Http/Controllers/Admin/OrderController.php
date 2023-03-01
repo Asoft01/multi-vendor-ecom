@@ -374,7 +374,7 @@ class OrderController extends Controller
               <div id="project">
                 <div><span>PROJECT</span> Website development</div>
                 <div><span>CLIENT</span> '.$orderDetails['name'].' </div>
-                <div><span>ADDRESS</span> '.$orderDetails['address'].' '.$orderDetails['city'].' '.$orderDetails['state'].' '.$orderDetails['country'].'-'.$orderDetails['pincode'].' </div>
+                <div><span>ADDRESS</span> '.$orderDetails['address'].', '.$orderDetails['city'].', '.$orderDetails['state'].', '.$orderDetails['country'].'-'.$orderDetails['pincode'].' </div>
                 <div><span>EMAIL</span> <a href="mailto:'.$orderDetails['email'].'">'.$orderDetails['email'].'</a></div>
                 <div><span>'.$orderDetails['id'].'</span></div>
                 <div><span>Order Date</span>'.date('Y-m-d h:i:s', strtotime($orderDetails['created_at'])).'</div>
@@ -404,20 +404,20 @@ class OrderController extends Controller
                         <td class="unit">'.$product['product_color'].'</td>
                         <td class="qty">'.$product['product_qty'].'</td>
                         <td class="unit">INR '.$product['product_price'].'</td>
-                        <td class="total">'.$product['product_price']*$product['product_qty'].'</td>
+                        <td class="total">INR '.$product['product_price']*$product['product_qty'].'</td>
                     </tr>';
                     $subTotal = $subTotal + ($product['product_price'] * $product['product_qty']);
                 }
                 $invoiceHTML .= '<tr>
-                        <td colspan="4">SUBTOTAL</td>
+                        <td colspan="5">SUBTOTAL</td>
                         <td class="total">INR '.$subTotal.'</td>
                     </tr>
                     <tr>
-                        <td colspan="4">SHIPPING CHARGES/td>
+                        <td colspan="5">SHIPPING CHARGES</td>
                         <td class="total">INR 0</td>
                     </tr>
                     <tr>
-                        <td colspan="4">COUPON DISCOUNT/td>';
+                        <td colspan="5">COUPON DISCOUNT</td>';
                         if($orderDetails['coupon_amount'] > 0){
                             $invoiceHTML .= '<td class="total">INR '.$orderDetails['coupon_amount'].'</td>';
                         }else{
@@ -425,15 +425,11 @@ class OrderController extends Controller
                         }
                     '</tr>
                     <tr>
-                        <td colspan="4" class="grand total">GRAND TOTAL</td>
+                        <td colspan="5" class="grand total">GRAND TOTAL</td>
                         <td class="grand total">INR '.$orderDetails['grand_total'].'</td>
                     </tr>
                 </tbody>
               </table>
-              <div id="notices">
-                <div>NOTICE:</div>
-                <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
-              </div>
             </main>
             <footer>
               Invoice was created on a computer and is valid without the signature and seal.
