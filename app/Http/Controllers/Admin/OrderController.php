@@ -387,54 +387,47 @@ class OrderController extends Controller
               <table>
                 <thead>
                   <tr>
-                    <th class="service">SERVICE</th>
-                    <th class="desc">DESCRIPTION</th>
-                    <th>PRICE</th>
-                    <th>QTY</th>
-                    <th>TOTAL</th>
+                    <th class="service">Product Code</th>
+                    <th class="desc">Size</th>
+                    <th class="unit">Color</th>
+                    <th class="qty">Quantity</th>
+                    <th class="unit">Unit Price</th>
+                    <th class="total">Total</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td class=service">Design</td>
-                    <td class="desc">Creating a recognizable design solution based on the company existing visual identity</td>
-                    <td class="unit">$40.00</td>
-                    <td class="qty">26</td>
-                    <td class="total">$1,040.00</td>
-                  </tr>
-                  <tr>
-                    <td class="service">Development</td>
-                    <td class="desc">Developing a Content Management System-based Website</td>
-                    <td class="unit">$40.00</td>
-                    <td class="qty">80</td>
-                    <td class="total">$3,200.00</td>
-                  </tr>
-                  <tr>
-                    <td class="service">SEO</td>
-                    <td class="desc">Optimize the site for search engines (SEO)</td>
-                    <td class="unit">$40.00</td>
-                    <td class="qty">20</td>
-                    <td class="total">$800.00</td>
-                  </tr>
-                  <tr>
-                    <td class="service">Training</td>
-                    <td class="desc">Initial training sessions for staff responsible for uploading web content</td>
-                    <td class="unit">$40.00</td>
-                    <td class="qty">4</td>
-                    <td class="total">$160.00</td>
-                  </tr>
-                  <tr>
-                    <td colspan="4">SUBTOTAL</td>
-                    <td class="total">$5,200.00</td>
-                  </tr>
-                  <tr>
-                    <td colspan="4">TAX 25%</td>
-                    <td class="total">$1,300.00</td>
-                  </tr>
-                  <tr>
-                    <td colspan="4" class="grand total">GRAND TOTAL</td>
-                    <td class="grand total">$6,500.00</td>
-                  </tr>
+                <tbody>';
+                $subTotal = 0;
+                foreach($orderDetails['orders_products'] as $product){ 
+                    $invoiceHTML .= '<tr>
+                        <td class=service">'.$product['product_code'].'</td>
+                        <td class="desc">'.$product['product_size'].'</td>
+                        <td class="unit">'.$product['product_color'].'</td>
+                        <td class="qty">'.$product['product_qty'].'</td>
+                        <td class="unit">INR '.$product['product_price'].'</td>
+                        <td class="total">'.$product['product_price']*$product['product_qty'].'</td>
+                    </tr>';
+                    $subTotal = $subTotal + ($product['product_price'] * $product['product_qty']);
+                }
+                $invoiceHTML .= '<tr>
+                        <td colspan="4">SUBTOTAL</td>
+                        <td class="total">INR '.$subTotal.'</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">SHIPPING CHARGES/td>
+                        <td class="total">INR 0</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">COUPON DISCOUNT/td>';
+                        if($orderDetails['coupon_amount'] > 0){
+                            $invoiceHTML .= '<td class="total">INR '.$orderDetails['coupon_amount'].'</td>';
+                        }else{
+                            $invoiceHTML .= '<td class="total">INR 0</td>';
+                        }
+                    '</tr>
+                    <tr>
+                        <td colspan="4" class="grand total">GRAND TOTAL</td>
+                        <td class="grand total">INR '.$orderDetails['grand_total'].'</td>
+                    </tr>
                 </tbody>
               </table>
               <div id="notices">
