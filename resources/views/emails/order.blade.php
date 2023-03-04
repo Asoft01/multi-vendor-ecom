@@ -87,6 +87,11 @@
             </table>    
         </td></tr>
         <tr><td>&nbsp;</td></tr>
+        <tr><td>Download Order Invoice at <a href="{{ url('orders/invoice/download'.$orderDetails['id'].'') }}">
+            {{ url('orders/invoice/download/'.$orderDetails['id'].'') }}</a><br>
+            (Copy and Paste to open if link does not work)
+        </td></tr>
+        <tr><td>&nbsp;</td></tr>
         <tr><td>For any queries, you can contact us at <a href="mailto:info@asoft.com">
         <tr><td>&nbsp;</td></tr>
         <tr><td>Regards, <br>Team ASOFT</td></tr>
