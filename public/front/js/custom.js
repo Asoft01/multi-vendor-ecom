@@ -427,6 +427,7 @@ $(document).ready(function(){
                     });
                 }else{
                     $("#deliveryAddresses").html(resp.view);
+                    window.location.href = "checkout"; 
                 }
                 $("#deliveryAddresses").html(resp.view); 
             }, error: function(){
@@ -448,6 +449,7 @@ $(document).ready(function(){
                 data: {addressid:addressid}, 
                 success: function(resp){
                     $("#deliveryAddresses").html(resp.view); 
+                    window.location.href = "checkout"; 
                 }, error: function(){
                     alert("Error"); 
                 }

@@ -437,7 +437,7 @@ class OrderController extends Controller
           </body>
         </html>';
 
-        // instantiate and use the dompdf cla
+        // instantiate and use the dompdf class
         $dompdf = new Dompdf();
         // $dompdf->loadHtml('hello world');
         $dompdf->loadHtml($invoiceHTML);
