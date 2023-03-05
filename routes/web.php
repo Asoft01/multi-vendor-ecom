@@ -128,7 +128,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::post('update-order-status', 'OrderController@updateOrderStatus');
         Route::post('update-order-item-status', 'OrderController@updateOrderItemStatus');
 
-        // Order Invoices 
+        // Order Invoice
         Route::get('orders/invoice/{id}', 'OrderController@viewOrderInvoice');
         Route::get('orders/invoice/pdf/{id}', 'OrderController@viewPDFInvoice');
     });
