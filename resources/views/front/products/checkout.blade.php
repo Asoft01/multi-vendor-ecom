@@ -141,7 +141,7 @@
                                                 <a href="terms-and-conditions.html" class="u-c-brand">terms & conditions</a>
                                             </label>
                                         </div>
-                                        <button type="submit" class="button button-outline-secondary">Place Order</button>
+                                        <button type="submit" id="placeOrder" class="button button-outline-secondary">Place Order</button>
                                     </div>
                                 </form>
                             </div>

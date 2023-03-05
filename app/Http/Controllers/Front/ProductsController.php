@@ -468,6 +468,20 @@ class ProductsController extends Controller
                     $message = "The coupon is expired!";
                 }
 
+                // Check if coupon is for single time 
+                if($couponDetails->coupon_type == "Single Time"){
+                    // check in orders table if the coupon is already availed by the user
+                    $couponCount = Order::where(['coupon_code' => $data['code'], 'user_id' => Auth::user()->id])->count();
+                    if($couponCount >=1){
+                        $message = "This Coupon Code is already availed by you";
+                    }
+                }else if ($couponDetails->coupon_type == "Multiple Times"){
+                    $couponDetails = Order::where(['coupon_code' => $data['code'], 'user_id' => Auth::user()->id])->count(); 
+                    if($couponCount >=1){
+                        $message = "This Coupon Code is already availed by you";
+                    }
+                }
+
                 // Check if coupon is from selected categories 
 
                 // Get all selected categories from coupon and convert to array 
