@@ -478,6 +478,7 @@ class ProductsController extends Controller
                 }else if ($couponDetails->coupon_type == "Multiple Times"){
                     $couponDetails = Order::where(['coupon_code' => $data['code'], 'user_id' => Auth::user()->id])->count(); 
                     if($couponCount >=1){
+                        // uhk
                         $message = "This Coupon Code is already availed by you";
                     }
                 }
