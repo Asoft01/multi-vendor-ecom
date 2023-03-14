@@ -627,6 +627,7 @@ class ProductsController extends Controller
             } else {
                 $payment_method = "Prepaid";
                 $order_status = "Pending";
+
             }
 
             DB::beginTransaction();
@@ -712,8 +713,12 @@ class ProductsController extends Controller
                 // $message = "Dear Customer, your order ".$order_id." has been successfully placed with ASoft.com. We will intimate you once your order is shipped";
                 // $mobile = Auth::user()->mobile;
                 // Sms::sendSms($message, $mobile);
-            } else {
-                echo "Prepaid payment methods coming soon";
+            }else if($data['payment_gateway'] == "COD"){
+                // PayPal - Redirect User to PayPal page after saving order 
+                return redirect('/paypal');
+            }
+             else {
+                echo "Other Prepaid payment methods coming soon";
             }
 
             return redirect('thanks');
