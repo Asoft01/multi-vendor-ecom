@@ -210,6 +210,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
 
         // Users Orders 
         Route::get('user/orders/{id?}', 'OrderController@orders');
+
+        // PayPal 
+        Route::get('paypal', 'PaypalController@paypal');
     });
 
     // User login

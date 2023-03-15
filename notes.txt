@@ -23,3 +23,6 @@ composer require laravel/helpers
 composer require milon/barcode
 https://github.com/milon/barcode
 https://github.com/dompdf/dompdf
+
+https://developer.paypal.com/dashboard/applications/sandbox/create
+https://developer.paypal.com/dashboard/applications/edit/SB:QVdiZllqbkF5b0RhclFZQVN6dWlLQ1BPb2paV3BERGFlSHJ0T1ljUjZQRzlrai1mSVAwdjhfcFZNVHJ1ZGJDR1M0VEgwczBnUDFhdER4MDE=

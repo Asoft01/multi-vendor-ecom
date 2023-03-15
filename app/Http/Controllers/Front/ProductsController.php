@@ -713,11 +713,10 @@ class ProductsController extends Controller
                 // $message = "Dear Customer, your order ".$order_id." has been successfully placed with ASoft.com. We will intimate you once your order is shipped";
                 // $mobile = Auth::user()->mobile;
                 // Sms::sendSms($message, $mobile);
-            }else if($data['payment_gateway'] == "COD"){
+            }else if($data['payment_gateway'] == "Paypal"){
                 // PayPal - Redirect User to PayPal page after saving order 
                 return redirect('/paypal');
-            }
-             else {
+            }else {
                 echo "Other Prepaid payment methods coming soon";
             }
 
