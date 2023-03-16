@@ -211,8 +211,12 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
         // Users Orders 
         Route::get('user/orders/{id?}', 'OrderController@orders');
 
-        // PayPal 
+        // PayPal Routes
         Route::get('paypal', 'PaypalController@paypal');
+
+        Route::post('pay', 'PaypalController@pay')->name('payment');
+        Route::get('success', 'PaypalController@success');
+        Route::get('error', 'PaypalController@error');
     });
 
     // User login

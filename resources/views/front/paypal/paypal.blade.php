@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-lg-12" align="center">
                     <h3>PLEASE MAKE PAYMENT FOR YOUR ORDER</h3>
-                    <form action="#" method="post">
+                    <form action="{{ route('payment') }}" method="post">
                     @csrf
                         <input type="hidden" name="amount" value="{{ round(Session::get('grand_total')/80,2) }}">
                         <input type="image" src="https://www.paypalobjects.com/digitalassets/c/website/marketing/apac/C2/logos-buttons/44_Yellow_CheckOut_Pill_Button.png" alt="Check out with PayPal"/>
