@@ -35,8 +35,17 @@ class PaypalController extends Controller
                 'returnUrl' => url('success'), 
                 'cancelUrl' => url('error')
             ))->send();
+
+            if($response->isRedirect()){
+                $response->redirect();
+            }else{
+                return $response->getMessage();
+            }
         }catch (\Throwable $th){
             return $th->getMessage();
         }
     }
+
+    
+
 }
