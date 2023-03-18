@@ -68,7 +68,9 @@ class PaypalController extends Controller
                 $payment->currency= env('PAYPAL_CURRENCY');
                 $payment->payment_status = $arr['state']; 
                 $payment->save();
-                return "Payment is Successful. Your transaction is ".$arr['id'];
+                // return "Payment is Successful. Your transaction is ".$arr['id'];
+
+                
             }else{
                 return $response->getMessage(); 
             }

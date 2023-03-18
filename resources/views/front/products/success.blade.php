@@ -24,18 +24,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12" align="center">
-                    <h3>YOUR ORDER HAS BEEN PLACED SUCCESSFULLY</h3>
-                    <p>Your order number is {{ Session::get('order_id') }} and Grand total is INR {{ Session::get('grand_total') }}</p>
+                    <h3>YOUR PAYMENT HAS BEEN PLACED CONFIRMED</h3>
+                    <p>Thanks for the Payment. We will process your order very soon.</p>
+                    <p>Your order number is {{ Session::get('order_id') }} and total amount paid is INR {{ Session::get('grand_total') }}</p>
                 </div>
             </div>
         </div>
     </div>
     <!-- Cart-Page /- -->
 @endsection
-
-<?php 
-    Session::forget('grand_total');
-    Session::forget('order_id');
-    Session::forget('couponCode');
-    Session::forget('couponAmount');
-?>
