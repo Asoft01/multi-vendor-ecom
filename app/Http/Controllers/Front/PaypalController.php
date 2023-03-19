@@ -55,6 +55,7 @@ class PaypalController extends Controller
                 'transactionReference' =>$request->input('paymentId')
             ));
 
+            // response to the paypal 
             $response = $transaction->send(); 
             if($response->isSuccessful()){
                 $arr = $response->getData(); 
