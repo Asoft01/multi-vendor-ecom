@@ -12,7 +12,7 @@
                         <a href="index.html">Home</a>
                     </li>
                     <li class="is-marked">
-                        <a href="#">Thanks</a>
+                        <a href="#">Payment Fail</a>
                     </li>
                 </ul>
             </div>
@@ -24,12 +24,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12" align="center">
-                    <h3>YOUR PAYMENT HAS BEEN PLACED CONFIRMED</h3>
-                    <p>Thanks for the Payment. We will process your order very soon.</p>
-                    <p>Your order number is {{ Session::get('order_id') }} and total amount paid is INR {{ Session::get('grand_total') }}</p>
+                    <h3>YOUR PAYMENT HAS BEEN FAILED</h3>
+                    <p>Please try again after some time and contact us if there is any enquiry.</p>
                 </div>
             </div>
         </div>
     </div>
     <!-- Cart-Page /- -->
 @endsection
+
+<?php 
+    Session::forget('grand_total');
+    Session::forget('order_id');
+    Session::forget('couponCode');
+    Session::forget('couponAmount');
+?>
