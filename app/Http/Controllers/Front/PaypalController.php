@@ -83,7 +83,7 @@ class PaypalController extends Controller
                 // Update Order Status to Paid 
                 Order::where('id', $order_id)->update(['order_status' => 'Paid']);
 
-                // Send Order SMS
+                // Send Order SMS s
                 // $message = "Dear Customer, your order ".$order_id." has been successfully placed with ASoft.com. We will intimate you once your order is shipped";
                 // $mobile = Auth::user()->mobile;
                 // Sms::sendSms($message, $mobile);
