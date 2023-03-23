@@ -670,6 +670,7 @@ class ProductsController extends Controller
             $order->save();
             $order_id = DB::getPdo()->lastInsertId();
 
+            // code 
             foreach ($getCartItems as $item) {
                 $cartItem = new OrdersProduct();
                 $cartItem->order_id = $order_id;
