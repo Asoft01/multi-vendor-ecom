@@ -677,6 +677,7 @@ class ProductsController extends Controller
                 $cartItem->user_id = Auth::user()->id;
                 $getProductDetails = Product::select('product_code', 'product_name', 'product_color', 'admin_id', 'vendor_id')->where('id', $item['product_id'])->first()->toArray();
                 // dd($getProductDetails); die;
+                //
                 $cartItem->admin_id =     $getProductDetails['admin_id'];
                 $cartItem->vendor_id =    $getProductDetails['vendor_id'];
                 $cartItem->product_id =   $item['product_id'];
