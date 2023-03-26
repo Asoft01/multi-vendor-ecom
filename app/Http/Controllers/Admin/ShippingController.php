@@ -11,8 +11,8 @@ class ShippingController extends Controller
 {
     public function shippingCharges(){
         Session::put('page', 'shipping'); 
-        $shippinCharges = ShippingCharge::get()->toArray(); 
-        // dd($shippinCharges); die;
+        $shippingCharges = ShippingCharge::get()->toArray(); 
+        // dd($shippingCharges); die;
         return view('admin.shipping.shipping_charges')->with(compact('shippingCharges')); 
     }
 }

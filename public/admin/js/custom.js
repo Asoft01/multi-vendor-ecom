@@ -10,6 +10,7 @@ $(document).ready(function(){
     $('#coupons').DataTable();
     $('#users').DataTable();
     $('#orders').DataTable();
+    $('#shipping').DataTable();
 
     $(".nav-item").removeClass("active");
     $(".nav-link").removeClass("active");
