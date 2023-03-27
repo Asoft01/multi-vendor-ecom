@@ -134,6 +134,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
         // Shipping Charges 
         Route::get('shipping-charges', 'ShippingController@shippingCharges');
+        Route::post('update-shipping-status', 'ShippingController@updateShippingStatus');
     });
 });
 

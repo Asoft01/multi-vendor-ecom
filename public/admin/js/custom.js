@@ -207,6 +207,35 @@ $(document).ready(function(){
         })
     });
 
+     // Update Shipping Status 
+     $(document).on('click', ".updateShippingStatus", function(){
+        // alert("test"); return true;
+        var status = $(this).children("i").attr("status");
+        // alert(status); return true;
+        var shipping_id = $(this).attr("shipping_id");
+        // alert(shipping_id); return true;
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'post',
+            url: '/admin/update-shipping-status',
+            data : { status : status, shipping_id : shipping_id }, 
+            success: function(resp){
+                // alert(url); return true;
+                if(resp['status'] == 0){
+                    $("#shipping-"+shipping_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-outline' status='Inactive'></i>");
+                }else if(resp['status'] == 1){
+                    $("#shipping-"+shipping_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-check' status='Active'></i>");
+                }
+            }, 
+            error: function(){
+                alert("Error");
+            }
+        })
+    });
+
+    
     // Update Product Status
     $(document).on('click', ".updateProductStatus", function(){
         // alert("test"); return true;
