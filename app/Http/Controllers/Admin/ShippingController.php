@@ -30,4 +30,17 @@ class ShippingController extends Controller
             return response()->json(['status' =>$status, 'shipping_id' => $data['shipping_id']]);
         }
     }
+
+    public function editShippingCharges($id, Request $request){
+        Session::put('page', 'shipping');
+        if($request->isMethod('post')){
+            $data = $request->all();
+            ShippingCharge::where('id', $id)->update(['rate' => $data['rate']]);
+            $message = "Shipping Charges Updated Successfully"; 
+            return redirect()->back()->with('success_message', $message);
+        }
+        $shippingDetails = ShippingCharge::where('id', $id)->first(); 
+        $title = "Edit Shipping Charges";
+        return view('admin.shipping.edit_shipping_charges')->with(compact('shippingDetails', 'title'));
+    }
 }
