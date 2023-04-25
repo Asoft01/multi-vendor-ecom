@@ -581,6 +581,7 @@ class ProductsController extends Controller
     public function checkout(Request $request)
     {
         $deliveryAddresses = DeliveryAddress::deliveryAddresses();
+        // dd($deliveryAddresses); die;
         foreach ($deliveryAddresses as $key => $value){
             $shippingCharges = ShippingCharge::getShippingCharges($value['country']);
             $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges; 
@@ -732,7 +733,13 @@ class ProductsController extends Controller
             return redirect('thanks');
         }
 
-        return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries', 'getCartItems'));
+        $total_price = 0; 
+        foreach($getCartItems as $item){
+            $attrPrice = Product::getDiscountAttributePrice($item['product_id'], $item['size']);
+            $total_price = $total_price + ($attrPrice['final_price'] * $item['quantity']);  
+        }
+        // echo $total_price; die;
+        return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries', 'getCartItems', 'total_price'));
     }
 
     public function thanks()
