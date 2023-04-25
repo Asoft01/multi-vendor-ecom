@@ -105,7 +105,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <h6 class="order-h6">Coupon Amount</h6>
+                                                        <h6 class="order-h6">Coupon Discount</h6>
                                                     </td>
                                                     <td>
                                                         <h6 class="order-h6">

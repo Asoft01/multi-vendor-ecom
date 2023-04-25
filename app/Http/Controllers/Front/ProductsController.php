@@ -689,16 +689,16 @@ class ProductsController extends Controller
                 $getProductDetails = Product::select('product_code', 'product_name', 'product_color', 'admin_id', 'vendor_id')->where('id', $item['product_id'])->first()->toArray();
                 // dd($getProductDetails); die;
                 //
-                $cartItem->admin_id =     $getProductDetails['admin_id'];
-                $cartItem->vendor_id =    $getProductDetails['vendor_id'];
-                $cartItem->product_id =   $item['product_id'];
-                $cartItem->product_code = $getProductDetails['product_code'];
-                $cartItem->product_name = $getProductDetails['product_name'];
-                $cartItem->product_color = $getProductDetails['product_color'];
-                $cartItem->product_size = $item['size'];
+                $cartItem->admin_id =        $getProductDetails['admin_id'];
+                $cartItem->vendor_id =       $getProductDetails['vendor_id'];
+                $cartItem->product_id =      $item['product_id'];
+                $cartItem->product_code =    $getProductDetails['product_code'];
+                $cartItem->product_name =    $getProductDetails['product_name'];
+                $cartItem->product_color =   $getProductDetails['product_color'];
+                $cartItem->product_size =    $item['size'];
                 $getDiscountAttributePrice = Product::getDiscountAttributePrice($item['product_id'], $item['size']);
-                $cartItem->product_price = $getDiscountAttributePrice['final_price'];
-                $cartItem->product_qty =    $item['quantity'];
+                $cartItem->product_price =   $getDiscountAttributePrice['final_price'];
+                $cartItem->product_qty =     $item['quantity'];
                 $cartItem->save();
             }
 

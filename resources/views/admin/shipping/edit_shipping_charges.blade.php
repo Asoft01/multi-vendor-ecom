@@ -74,10 +74,26 @@
                     </div>
                       
                     <div class="form-group">
-                        <label for="rate"> Rate </label>
-                        <input type="text" class="form-control" id="rate" name="rate" placeholder="Enter Shipping Rate" value="{{ $shippingDetails['rate'] }}">
+                        <label for="rate"> Rate (0-500g)</label>
+                        <input type="text" class="form-control" id="0_500g" name="0_500g" placeholder="Enter Shipping Rate" value="{{ $shippingDetails['0_500g'] }}">
                     </div>
-                   
+                    <div class="form-group">
+                        <label for="rate"> Rate (501-1000g)</label>
+                        <input type="text" class="form-control" id="501_1000g" name="501_1000g" placeholder="Enter Shipping Rate" value="{{ $shippingDetails['501_1000g'] }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="rate"> Rate (1001-2000g)</label>
+                        <input type="text" class="form-control" id="1001_2000g" name="1001_2000g" placeholder="Enter Shipping Rate" value="{{ $shippingDetails['1001_2000g'] }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="rate"> Rate (2001-5000g)</label>
+                        <input type="text" class="form-control" id="2001_5000g" name="2001_5000g" placeholder="Enter Shipping Rate" value="{{ $shippingDetails['2001_5000g'] }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="rate"> Rate (above-5000g)</label>
+                        <input type="text" class="form-control" id="above_5000g" name="above_5000g" placeholder="Enter Shipping Rate" value="{{ $shippingDetails['above_5000g'] }}">
+                    </div>
+                    
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button type="reset" class="btn btn-light">Cancel</button>
                     </form>

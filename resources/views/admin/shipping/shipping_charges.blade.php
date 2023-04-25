@@ -29,7 +29,20 @@
                             Country
                         </th>
                         <th>
-                            Rate
+                            Rate (0g to 500g)
+                        </th>
+                        <th>
+                            Rate (500g to 1000g)
+                        </th>
+                        <th>
+                            Rate (1001g to 2000g)
+                        </th>
+                        <th>
+                            Rate (2001g to 5000g)
+                        </th>
+                        
+                        <th>
+                            Rate (Above 5000g)
                         </th>
                         
                         <th>
@@ -50,7 +63,19 @@
                             {{ $shipping['country'] }}
                           </td>
                           <td>
-                            {{ $shipping['rate'] }}
+                            {{ $shipping['0_500g'] }}
+                          </td>
+                          <td>
+                            {{ $shipping['501_1000g'] }}
+                          </td>
+                          <td>
+                            {{ $shipping['1001_2000g'] }}
+                          </td>
+                          <td>
+                            {{ $shipping['2001_5000g'] }}
+                          </td>
+                          <td>
+                            {{ $shipping['above_5000g'] }}
                           </td>
                           <td>
                             @if($shipping['status'] == 1)
