@@ -65,8 +65,7 @@
                             @endif
                           </td>
                           <td>
-                              <a href="{{ url('admin/edit-shipping-charges
-                              /'.$shipping['id']) }}"><i style="font-size:25px" class="mdi mdi-pencil-box"></i></a>
+                              <a href="{{ url('admin/edit-shipping-charges/'.$shipping['id']) }}"><i style="font-size:25px" class="mdi mdi-pencil-box"></i></a>
 
                               <a href="javascript:void(0)" class="confirmDelete" module="shipping" moduleid="{{ $shipping['id'] }}"><i style="font-size:25px" class="mdi mdi-file-excel-box"></i></a>
                           </td>                     

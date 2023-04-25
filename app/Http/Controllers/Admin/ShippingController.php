@@ -40,6 +40,7 @@ class ShippingController extends Controller
             return redirect()->back()->with('success_message', $message);
         }
         $shippingDetails = ShippingCharge::where('id', $id)->first(); 
+        // echo $shippingDetails->rate; die; 
         $title = "Edit Shipping Charges";
         return view('admin.shipping.edit_shipping_charges')->with(compact('shippingDetails', 'title'));
     }
