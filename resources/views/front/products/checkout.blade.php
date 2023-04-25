@@ -49,7 +49,7 @@
                                         <h4 class="section-h4">Delivery Addresses</h4>
                                         <!-- Form-Fields /- -->
                                         @foreach($deliveryAddresses as $address)
-                                                <div class="control-group" style="float:left; margin-right:5px;"><input type="radio" name="address_id" id="address{{ $address['id'] }}" value="{{ $address['id'] }}">
+                                                <div class="control-group" style="float:left; margin-right:5px;"><input type="radio" name="address_id" id="address{{ $address['id'] }}" value="{{ $address['id'] }}" shipping_charges="{{ $address['shipping_charges']}}" total_price="{{ $total_price }}" coupon_amount="{{ Session::get('couponAmount') }}">
                                                 </div>
                                                 <div><label class="control-label" for="">{{ $address['name'] }}, {{ $address['city'] }}, {{ $address['state'] }}, {{ $address['country'] }} ({{ $address['mobile'] }})</label>
                                                     <a style="float: right; margin-left:10px" href="javascript:;" data-addressid="{{ $address['id'] }}" class="removeAddress">Remove</a>
@@ -100,7 +100,7 @@
                                                         <h6 class="order-h6">Shipping Charges</h6>
                                                     </td>
                                                     <td>
-                                                        <h6 class="order-h6">Rs.0</h6>
+                                                        <h6 class="order-h6"><span class="shipping_charges">Rs.0</span></h6>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -110,7 +110,7 @@
                                                     <td>
                                                         <h6 class="order-h6">
                                                             @if(Session::has('couponAmount'))
-                                                                Rs.{{ Session::get('couponAmount') }}
+                                                                <span class="couponAmount">Rs.{{ Session::get('couponAmount') }} </span>
                                                             @else 
                                                                 Rs.0
                                                             @endif
@@ -122,7 +122,7 @@
                                                         <h3 class="order-h3">Grand Total</h3>
                                                     </td>
                                                     <td>
-                                                        <h3 class="order-h3">Rs. {{ $total_price - Session::get('couponAmount') }}</h3>
+                                                        <h3 class="order-h3"><strong class="grand_total"> Rs. {{ $total_price - Session::get('couponAmount') }}</strong> </h3>
                                                     </td>
                                                 </tr>
                                             </tbody>

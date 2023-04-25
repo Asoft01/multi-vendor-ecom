@@ -651,6 +651,9 @@ class ProductsController extends Controller
             // Calculate Shipping Charges 
             $shipping_charges = 0;
 
+            // Get Shipping Charges 
+            $shipping_charges = ShippingCharge::getShippingCharges($deliveryAddress['country']);
+
             // Calculate Grand Total 
             $grand_total = $total_price + $shipping_charges - Session::get('couponAmount');
 
@@ -739,6 +742,7 @@ class ProductsController extends Controller
             $total_price = $total_price + ($attrPrice['final_price'] * $item['quantity']);  
         }
         // echo $total_price; die;
+
         return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries', 'getCartItems', 'total_price'));
     }
 
