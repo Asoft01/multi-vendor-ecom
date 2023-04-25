@@ -580,14 +580,8 @@ class ProductsController extends Controller
 
     public function checkout(Request $request)
     {
-        $deliveryAddresses = DeliveryAddress::deliveryAddresses();
-        // dd($deliveryAddresses); die;
-        foreach ($deliveryAddresses as $key => $value){
-            $shippingCharges = ShippingCharge::getShippingCharges($value['country']);
-            $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges; 
-        }
         // dd($deliveryAddresses);die;
-        
+
         $countries = Country::where('status', 1)->get()->toArray();
         $getCartItems = Cart::getCartItems();
         // dd($countries); die;
@@ -596,6 +590,24 @@ class ProductsController extends Controller
         if (count($getCartItems) == 0) {
             $message = "Shopping Cart is empty! Please add products to checkout";
             return redirect('cart')->with('error_message', $message);
+        }
+        $total_price = 0; 
+        $total_weight = 0; 
+        foreach($getCartItems as $item){
+            // echo "<pre>"; print_r($item); die;
+            
+            $attrPrice = Product::getDiscountAttributePrice($item['product_id'], $item['size']);
+            $total_price = $total_price + ($attrPrice['final_price'] * $item['quantity']);  
+            $product_weight = $item['product']['product_weight'];
+            $total_weight = $total_weight + $product_weight;
+        }
+        // echo $total_price; die;
+
+        $deliveryAddresses = DeliveryAddress::deliveryAddresses();
+        // dd($deliveryAddresses); die;
+        foreach ($deliveryAddresses as $key => $value){
+            $shippingCharges = ShippingCharge::getShippingCharges($total_weight, $value['country']);
+            $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges; 
         }
 
         if ($request->isMethod('post')) {
@@ -652,7 +664,7 @@ class ProductsController extends Controller
             $shipping_charges = 0;
 
             // Get Shipping Charges 
-            $shipping_charges = ShippingCharge::getShippingCharges($deliveryAddress['country']);
+            $shipping_charges = ShippingCharge::getShippingCharges($total_weight, $deliveryAddress['country']);
 
             // Calculate Grand Total 
             $grand_total = $total_price + $shipping_charges - Session::get('couponAmount');
@@ -735,13 +747,6 @@ class ProductsController extends Controller
 
             return redirect('thanks');
         }
-
-        $total_price = 0; 
-        foreach($getCartItems as $item){
-            $attrPrice = Product::getDiscountAttributePrice($item['product_id'], $item['size']);
-            $total_price = $total_price + ($attrPrice['final_price'] * $item['quantity']);  
-        }
-        // echo $total_price; die;
 
         return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries', 'getCartItems', 'total_price'));
     }
