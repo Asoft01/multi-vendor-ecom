@@ -15,6 +15,7 @@ use App\Models\OrdersProduct;
 use App\Models\Product;
 use App\Models\ProductsAttribute;
 use App\Models\ProductsFilter;
+use App\Models\ShippingCharge;
 use App\Models\Sms;
 use App\Models\User;
 use App\Models\Vendor;
@@ -580,6 +581,12 @@ class ProductsController extends Controller
     public function checkout(Request $request)
     {
         $deliveryAddresses = DeliveryAddress::deliveryAddresses();
+        foreach ($deliveryAddresses as $key => $value){
+            $shippingCharges = ShippingCharge::getShippingCharges($value['country']);
+            $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges; 
+        }
+        // dd($deliveryAddresses);die;
+        
         $countries = Country::where('status', 1)->get()->toArray();
         $getCartItems = Cart::getCartItems();
         // dd($countries); die;

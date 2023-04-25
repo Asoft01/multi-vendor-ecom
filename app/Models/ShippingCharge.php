@@ -10,9 +10,8 @@ class ShippingCharge extends Model
     use HasFactory;
 
     public static function getShippingCharges($country){
-        $shippingDetails = ShippingCharge::select('rate')->where('country', $country)->first(); 
-        return $shipping_charges = $getShippingCharges->rate; 
-
+        $getShippingCharges = ShippingCharge::select('rate')->where('country', $country)->first(); 
+        return $getShippingCharges->rate; 
     }
 }
 
