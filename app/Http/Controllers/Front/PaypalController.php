@@ -101,6 +101,14 @@ class PaypalController extends Controller
                     $message->to($email)->Subject('Order Placed - ASoft.com');
                 });
 
+                // Reduce Stock Script Starts 
+                foreach($orderDetails['orders_products'] as $key => $order){
+                    $getProductStock = ProductsAttribute::getProductStock($order['product_id'], $order['product_size']); 
+                    $newStock = $getProductStock - $item['product_qty']; 
+                    ProductsAttribute::where(['product_id' => $order['product_id'], 'size' => $order['product_size']])->update(['stock' => $newStock]);
+                }
+                 // Reduce Stock Script Ends 
+
                 // Empty the cart 
                 Cart::where('user_id', Auth::user()->id)->delete();
                 return view('front.paypal.success');
