@@ -712,6 +712,10 @@ class ProductsController extends Controller
                 $cartItem->product_price =   $getDiscountAttributePrice['final_price'];
                 $cartItem->product_qty =     $item['quantity'];
                 $cartItem->save();
+
+                // Reduce Stock Script Starts 
+                $getProductStock = ProductsAttribute::getProductStock($item['product_id'], $item['size']);
+                $newStock = 
             }
 
             // Insert order ID in Session Variable 
@@ -761,4 +765,6 @@ class ProductsController extends Controller
             return redirect('cart');
         }
     }
+
+    // write a simple laravel functio to login
 }
