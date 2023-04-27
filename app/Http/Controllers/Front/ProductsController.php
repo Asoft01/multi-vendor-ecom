@@ -715,7 +715,9 @@ class ProductsController extends Controller
 
                 // Reduce Stock Script Starts 
                 $getProductStock = ProductsAttribute::getProductStock($item['product_id'], $item['size']);
-                $newStock = 
+                $newStock = $getProductStock - $item['quantity'];
+                ProductsAttribute::where(['product_id' => $product_id, 'size' => $size])->update(['stock' => $newStock]);
+                // Reduce Stock Script Ends 
             }
 
             // Insert order ID in Session Variable 
