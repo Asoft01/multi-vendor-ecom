@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Session;
 use Omnipay\Omnipay;
 use App\Models\Payment;
+use App\Models\ProductsAttribute;
 use Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -104,7 +105,7 @@ class PaypalController extends Controller
                 // Reduce Stock Script Starts 
                 foreach($orderDetails['orders_products'] as $key => $order){
                     $getProductStock = ProductsAttribute::getProductStock($order['product_id'], $order['product_size']); 
-                    $newStock = $getProductStock - $item['product_qty']; 
+                    $newStock = $getProductStock - $order['product_qty']; 
                     ProductsAttribute::where(['product_id' => $order['product_id'], 'size' => $order['product_size']])->update(['stock' => $newStock]);
                 }
                  // Reduce Stock Script Ends 
