@@ -623,6 +623,22 @@ class ProductsController extends Controller
                     $message = "One of the product is disabled! Please try again."; 
                     return redirect('/cart')->with('error_message', $message);
                 }
+
+                // Prevent Sold Out Products to Order 
+                $getProductStock = ProductsAttribute::getProductStock($item['product_id'], $item['size']); 
+                if($getProductStock == 0){
+                    Product::deleteCartProduct($item['product_id']);
+                    $message = "One of the product is sold ! Please try again."; 
+                    return redirect('/cart')->with('error_message', $message);
+                }
+
+                // Prevent Disabled Attributes to Order 
+                $getAttributeStatus = ProductsAttribute::getAttributeStatus($item['product_id'], $item['size']); 
+                if($getAttributeStatus == 0){
+                    Product::deleteCartProduct($item['product_id']);
+                    $message = "One of the product attribute is disabled ! Please try again."; 
+                    return redirect('/cart')->with('error_message', $message);
+                }
             }
             
             // Delivery Address Validation

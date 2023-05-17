@@ -97,7 +97,7 @@ class Product extends Model
     }
 
     public static function getProductStatus($product_id){
-        $getProductStatus = Product::select('status')->where('id', $product_id)->first()->toArray(); 
+        $getProductStatus = Product::select('status')->where('id', $product_id)->first(); 
         return $getProductStatus->status;
     }
 
