@@ -585,7 +585,7 @@ class ProductsController extends Controller
         $countries = Country::where('status', 1)->get()->toArray();
         $getCartItems = Cart::getCartItems();
         // dd($countries); die;
-        // dd($getCartItems); die;
+        dd($getCartItems); die;
 
         if (count($getCartItems) == 0) {
             $message = "Shopping Cart is empty! Please add products to checkout";
@@ -636,7 +636,15 @@ class ProductsController extends Controller
                 $getAttributeStatus = ProductsAttribute::getAttributeStatus($item['product_id'], $item['size']); 
                 if($getAttributeStatus == 0){
                     Product::deleteCartProduct($item['product_id']);
-                    $message = "One of the product attribute is disabled ! Please try again."; 
+                    $message = "One of the product attribute is disabled! Please try again."; 
+                    return redirect('/cart')->with('error_message', $message);
+                }
+
+                // Prevent Disabled Categories Products to Order 
+                $getCategoryStatus = Category::getCategoryStatus($item['product']['category_id']);
+                if($getCategoryStatus == 0){
+                    Product::deleteCartProduct($item['product_id']);
+                    $message = "One of the product is disabled! Please try again."; 
                     return redirect('/cart')->with('error_message', $message);
                 }
             }
