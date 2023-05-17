@@ -95,4 +95,13 @@ class Product extends Model
         $getProductImage = Product::select('product_image')->where('id', $product_id)->first()->toArray();
         return $getProductImage['product_image']; 
     }
+
+    public static function getProductStatus($product_id){
+        $getProductStatus = Product::select('status')->where('id', $product_id)->first()->toArray(); 
+        return $getProductStatus->status;
+    }
+
+    public static function deleteCartProduct($product_id){
+        Cart::where('product_id', $product_id)->delete();   
+    }
 }

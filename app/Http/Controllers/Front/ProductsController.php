@@ -614,6 +614,17 @@ class ProductsController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
 
+            // Website Security 
+            foreach($getCartItems as $item){
+                // Prevent Disabled Products to Order 
+                $product_status = Product::getProductStatus($item['product_id']);
+                if($product_status == 0){
+                    Product::deleteCartProduct($item['product_id']);
+                    $message = "One of the product is disabled! Please try again."; 
+                    return redirect('/cart')->with('error_message', $message);
+                }
+            }
+            
             // Delivery Address Validation
             if (empty($data['address_id'])) {
                 $message = "Please select the delivery address";
@@ -718,7 +729,6 @@ class ProductsController extends Controller
                 $newStock = $getProductStock - $item['quantity'];
                 ProductsAttribute::where(['product_id' => $item['product_id'], 'size' => $item['size']])->update(['stock' => $newStock]);
                 // Reduce Stock Script Ends 
-                
             }
 
             // Insert order ID in Session Variable 
