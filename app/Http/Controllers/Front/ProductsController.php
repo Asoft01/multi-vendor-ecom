@@ -585,7 +585,7 @@ class ProductsController extends Controller
         $countries = Country::where('status', 1)->get()->toArray();
         $getCartItems = Cart::getCartItems();
         // dd($countries); die;
-        dd($getCartItems); die;
+        // dd($getCartItems); die;
 
         if (count($getCartItems) == 0) {
             $message = "Shopping Cart is empty! Please add products to checkout";

@@ -15,7 +15,7 @@ class ProductsAttribute extends Model
     }
 
     public static function getAttributeStatus($product_id, $size){
-        $getAttributeStatus = ProductsAttribute::select('status')->where(['id' => $product_id, 'size' => $size])->first(); 
+        $getAttributeStatus = ProductsAttribute::select('status')->where(['product_id' => $product_id, 'size' => $size])->first(); 
         return $getAttributeStatus->status; 
     }
     
