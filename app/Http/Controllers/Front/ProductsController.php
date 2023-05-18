@@ -315,6 +315,9 @@ class ProductsController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
 
+            if($data['quantity'] <= 0){
+                $data['quantity'] = 1;
+            }
             // Check Product Stock is Available or Not 
             // echo $getProductStock = ProductsAttribute::getProductStock($data['product_id'], $data['size']); die;
             $getProductStock = ProductsAttribute::getProductStock($data['product_id'], $data['size']);

@@ -186,7 +186,7 @@ class UserController extends Controller
                 // Generate New Password
                 $new_password = Str::random(16);
                 User::where('email', $data['email'])->update(['password' => bcrypt($new_password)]);
-
+                
                 // Get User Details 
                 $userDetails = User::where('email', $data['email'])->first()->toArray(); 
 
@@ -243,6 +243,7 @@ class UserController extends Controller
     // Logout 
     public function userLogout(){
         Auth::logout();
+        Session::flush(); 
         return redirect('/'); 
     }
 
