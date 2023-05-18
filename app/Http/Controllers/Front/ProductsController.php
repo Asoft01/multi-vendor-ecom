@@ -619,32 +619,36 @@ class ProductsController extends Controller
                 // Prevent Disabled Products to Order 
                 $product_status = Product::getProductStatus($item['product_id']);
                 if($product_status == 0){
-                    Product::deleteCartProduct($item['product_id']);
-                    $message = "One of the product is disabled! Please try again."; 
+                    // Product::deleteCartProduct($item['product_id']);
+                    // $message = "One of the product is disabled! Please try again.";
+                    $message = $item['product']['product_name']. "with".$item['size']."Size is not available. Please remove from cart and choose some other product.";
                     return redirect('/cart')->with('error_message', $message);
                 }
 
                 // Prevent Sold Out Products to Order 
                 $getProductStock = ProductsAttribute::getProductStock($item['product_id'], $item['size']); 
                 if($getProductStock == 0){
-                    Product::deleteCartProduct($item['product_id']);
-                    $message = "One of the product is sold ! Please try again."; 
+                    // Product::deleteCartProduct($item['product_id']);
+                    // $message = "One of the product is sold ! Please try again."; 
+                    $message = $item['product']['product_name']. "with".$item['size']."Size is not available. Please remove from cart and choose some other product.";
                     return redirect('/cart')->with('error_message', $message);
                 }
 
                 // Prevent Disabled Attributes to Order 
                 $getAttributeStatus = ProductsAttribute::getAttributeStatus($item['product_id'], $item['size']); 
                 if($getAttributeStatus == 0){
-                    Product::deleteCartProduct($item['product_id']);
-                    $message = "One of the product attribute is disabled! Please try again."; 
+                    // Product::deleteCartProduct($item['product_id']);
+                    // $message = "One of the product attribute is disabled! Please try again.";
+                    $message = $item['product']['product_name']. "with".$item['size']."Size is not available. Please remove from cart and choose some other product.";
                     return redirect('/cart')->with('error_message', $message);
                 }
 
                 // Prevent Disabled Categories Products to Order 
                 $getCategoryStatus = Category::getCategoryStatus($item['product']['category_id']);
                 if($getCategoryStatus == 0){
-                    Product::deleteCartProduct($item['product_id']);
-                    $message = "One of the product is disabled! Please try again."; 
+                    // Product::deleteCartProduct($item['product_id']);
+                    // $message = "One of the product is disabled! Please try again."; 
+                    $message = $item['product']['product_name']. "with".$item['size']."Size is not available. Please remove from cart and choose some other product.";
                     return redirect('/cart')->with('error_message', $message);
                 }
             }
