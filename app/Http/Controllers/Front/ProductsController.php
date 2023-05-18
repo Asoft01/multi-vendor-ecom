@@ -621,7 +621,7 @@ class ProductsController extends Controller
                 if($product_status == 0){
                     // Product::deleteCartProduct($item['product_id']);
                     // $message = "One of the product is disabled! Please try again.";
-                    $message = $item['product']['product_name']. "with".$item['size']."Size is not available. Please remove from cart and choose some other product.";
+                    $message = $item['product']['product_name']. " with ".$item['size']."Size is not available. Please remove from cart and choose some other product.";
                     return redirect('/cart')->with('error_message', $message);
                 }
 
@@ -630,7 +630,7 @@ class ProductsController extends Controller
                 if($getProductStock == 0){
                     // Product::deleteCartProduct($item['product_id']);
                     // $message = "One of the product is sold ! Please try again."; 
-                    $message = $item['product']['product_name']. "with".$item['size']."Size is not available. Please remove from cart and choose some other product.";
+                    $message = $item['product']['product_name']. " with ".$item['size']."Size is not available. Please remove from cart and choose some other product.";
                     return redirect('/cart')->with('error_message', $message);
                 }
 
@@ -639,7 +639,7 @@ class ProductsController extends Controller
                 if($getAttributeStatus == 0){
                     // Product::deleteCartProduct($item['product_id']);
                     // $message = "One of the product attribute is disabled! Please try again.";
-                    $message = $item['product']['product_name']. "with".$item['size']."Size is not available. Please remove from cart and choose some other product.";
+                    $message = $item['product']['product_name']. " with ".$item['size']."Size is not available. Please remove from cart and choose some other product.";
                     return redirect('/cart')->with('error_message', $message);
                 }
 
@@ -648,7 +648,7 @@ class ProductsController extends Controller
                 if($getCategoryStatus == 0){
                     // Product::deleteCartProduct($item['product_id']);
                     // $message = "One of the product is disabled! Please try again."; 
-                    $message = $item['product']['product_name']. "with".$item['size']."Size is not available. Please remove from cart and choose some other product.";
+                    $message = $item['product']['product_name']. " with ".$item['size']."Size is not available. Please remove from cart and choose some other product.";
                     return redirect('/cart')->with('error_message', $message);
                 }
             }
