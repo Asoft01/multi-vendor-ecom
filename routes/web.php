@@ -188,6 +188,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
     // User Register 
     Route::post('user/register', 'UserController@userRegister');
 
+    // Search Products
+    Route::get('search-products', 'ProductsController@listing');
+
     Route::group(['middleware' => ['auth']], function () {
         // User Account 
         Route::match(['GET', 'POST'], 'user/account', 'UserController@userAccount');

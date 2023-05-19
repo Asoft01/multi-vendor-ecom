@@ -159,40 +159,60 @@ class ProductsController extends Controller
             }
         } else {
             // echo "test"; die;
-            // echo $url = Route::getFacadeRoot()->current()->uri(); die;
-            $url = Route::getFacadeRoot()->current()->uri();
-            $categoryCount = Category::where(['url' => $url, 'status' => 1])->count();
-            if ($categoryCount > 0) {
-                // Get Category Details 
-                $categoryDetails = Category::categoryDetails($url);
+            if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) {
+                $search_product = $_REQUEST['search'];
+                $categoryDetails['breadcrumbs'] = $search_product;
+                $categoryDetails['categoryDetails']['category_name'] = $search_product;
+                $categoryDetails['categoryDetails']['description'] = "Search Product for " . $search_product;
+
+                $categoryProducts = Product::select('products.id', 'products.section_id', 'products.category_id', 'products.brand_id', 'products.vendor_id','products.admin_id','products.admin_id','products.admin_type','products.product_name','products.product_code','products.product_color','products.product_price','products.product_discount','products.product_weight','products.product_video','products.group_code','products.product_image','products.description','products.operating_system','products.screen_size','products.ocassion','products.fit','products.pattern','products.sleeve','products.ram','products.fabric','products.meta_title','products.meta_description','products.meta_keywords','products.is_featured','products.is_bestseller','products.status','products.created_at','products.updated_at')->with('brand')->join('categories', 'categories.id', '=', 'products.category_id')->where(function ($query) use ($search_product) {
+                    $query->where('products.product_name', 'like', '%' . $search_product . '%')
+                        ->orWhere('products.product_code', 'like', '%' . $search_product . '%')
+                        ->orWhere('products.product_color', 'like', '%' . $search_product . '%')
+                        ->orWhere('products.description', 'like', '%' . $search_product . '%')
+                        ->orWhere('categories.category_name', 'like', '%' . $search_product . '%');
+                })->where('products.status', 1);
+
+                $categoryProducts = $categoryProducts->get();
                 // dd($categoryDetails); die;
-                // $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->get()->toArray();
-                $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1);
-
-                // checking for sort s
-                if (isset($_GET['sort']) && !empty($_GET['sort'])) {
-                    if ($_GET['sort'] == "product_latest") {
-                        $categoryProducts->orderBy('products.id', 'Desc');
-                    } else if ($_GET['sort'] == "price_lowest") {
-                        $categoryProducts->orderBy('products.product_price', 'Asc');
-                    } else if ($_GET['sort'] == "price_highest") {
-                        $categoryProducts->orderBy('products.product_price', 'Desc');
-                    } else if ($_GET['sort'] == "name_z_a") {
-                        $categoryProducts->orderBy('products.product_name', 'Desc');
-                    } else if ($_GET['sort'] == "name_a_z") {
-                        $categoryProducts->orderBy('products.product_name', 'Asc');
-                    }
-                }
-
-                $categoryProducts = $categoryProducts->Paginate(3);
-                // $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->simplePaginate(3);
-                // $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->cursorPaginate(3);
                 // dd($categoryProducts); die;
-                // dd($categoryDetails); die;
-                // echo "Category Exists"; die;
-                return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts', 'url'));
+                return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts'));
             } else {
-                abort(404);
+                // echo $url = Route::getFacadeRoot()->current()->uri(); die;
+                $url = Route::getFacadeRoot()->current()->uri();
+                $categoryCount = Category::where(['url' => $url, 'status' => 1])->count();
+                if ($categoryCount > 0) {
+                    // Get Category Details 
+                    $categoryDetails = Category::categoryDetails($url);
+                    // dd($categoryDetails); die;
+                    // $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->get()->toArray();
+                    $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1);
+
+                    // checking for sort s
+                    if (isset($_GET['sort']) && !empty($_GET['sort'])) {
+                        if ($_GET['sort'] == "product_latest") {
+                            $categoryProducts->orderBy('products.id', 'Desc');
+                        } else if ($_GET['sort'] == "price_lowest") {
+                            $categoryProducts->orderBy('products.product_price', 'Asc');
+                        } else if ($_GET['sort'] == "price_highest") {
+                            $categoryProducts->orderBy('products.product_price', 'Desc');
+                        } else if ($_GET['sort'] == "name_z_a") {
+                            $categoryProducts->orderBy('products.product_name', 'Desc');
+                        } else if ($_GET['sort'] == "name_a_z") {
+                            $categoryProducts->orderBy('products.product_name', 'Asc');
+                        }
+                    }
+
+                    $categoryProducts = $categoryProducts->Paginate(3);
+                    // $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->simplePaginate(3);
+                    // $categoryProducts = Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->cursorPaginate(3);
+                    // dd($categoryProducts); die;
+                    // dd($categoryDetails); die;
+                    // echo "Category Exists"; die;
+                    return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts', 'url'));
+                } else {
+                    abort(404);
+                }
             }
         }
 
@@ -315,7 +335,7 @@ class ProductsController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
 
-            if($data['quantity'] <= 0){
+            if ($data['quantity'] <= 0) {
                 $data['quantity'] = 1;
             }
             // Check Product Stock is Available or Not 
@@ -474,15 +494,15 @@ class ProductsController extends Controller
                 }
 
                 // Check if coupon is for single time 
-                if($couponDetails->coupon_type == "Single Time"){
+                if ($couponDetails->coupon_type == "Single Time") {
                     // check in orders table if the coupon is already availed by the user
                     $couponCount = Order::where(['coupon_code' => $data['code'], 'user_id' => Auth::user()->id])->count();
-                    if($couponCount >=1){
+                    if ($couponCount >= 1) {
                         $message = "This Coupon Code is already availed by you";
                     }
-                }else if ($couponDetails->coupon_type == "Multiple Times"){
-                    $couponDetails = Order::where(['coupon_code' => $data['code'], 'user_id' => Auth::user()->id])->count(); 
-                    if($couponCount >=1){
+                } else if ($couponDetails->coupon_type == "Multiple Times") {
+                    $couponDetails = Order::where(['coupon_code' => $data['code'], 'user_id' => Auth::user()->id])->count();
+                    if ($couponCount >= 1) {
                         // uhk
                         $message = "This Coupon Code is already availed by you";
                     }
@@ -594,13 +614,13 @@ class ProductsController extends Controller
             $message = "Shopping Cart is empty! Please add products to checkout";
             return redirect('cart')->with('error_message', $message);
         }
-        $total_price = 0; 
-        $total_weight = 0; 
-        foreach($getCartItems as $item){
+        $total_price = 0;
+        $total_weight = 0;
+        foreach ($getCartItems as $item) {
             // echo "<pre>"; print_r($item); die;
-            
+
             $attrPrice = Product::getDiscountAttributePrice($item['product_id'], $item['size']);
-            $total_price = $total_price + ($attrPrice['final_price'] * $item['quantity']);  
+            $total_price = $total_price + ($attrPrice['final_price'] * $item['quantity']);
             $product_weight = $item['product']['product_weight'];
             $total_weight = $total_weight + $product_weight;
         }
@@ -608,9 +628,9 @@ class ProductsController extends Controller
 
         $deliveryAddresses = DeliveryAddress::deliveryAddresses();
         // dd($deliveryAddresses); die;
-        foreach ($deliveryAddresses as $key => $value){
+        foreach ($deliveryAddresses as $key => $value) {
             $shippingCharges = ShippingCharge::getShippingCharges($total_weight, $value['country']);
-            $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges; 
+            $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges;
         }
 
         if ($request->isMethod('post')) {
@@ -618,44 +638,44 @@ class ProductsController extends Controller
             // echo "<pre>"; print_r($data); die;
 
             // Website Security 
-            foreach($getCartItems as $item){
+            foreach ($getCartItems as $item) {
                 // Prevent Disabled Products to Order 
                 $product_status = Product::getProductStatus($item['product_id']);
-                if($product_status == 0){
+                if ($product_status == 0) {
                     // Product::deleteCartProduct($item['product_id']);
                     // $message = "One of the product is disabled! Please try again.";
-                    $message = $item['product']['product_name']. " with ".$item['size']."Size is not available. Please remove from cart and choose some other product.";
+                    $message = $item['product']['product_name'] . " with " . $item['size'] . "Size is not available. Please remove from cart and choose some other product.";
                     return redirect('/cart')->with('error_message', $message);
                 }
 
                 // Prevent Sold Out Products to Order 
-                $getProductStock = ProductsAttribute::getProductStock($item['product_id'], $item['size']); 
-                if($getProductStock == 0){
+                $getProductStock = ProductsAttribute::getProductStock($item['product_id'], $item['size']);
+                if ($getProductStock == 0) {
                     // Product::deleteCartProduct($item['product_id']);
                     // $message = "One of the product is sold ! Please try again."; 
-                    $message = $item['product']['product_name']. " with ".$item['size']."Size is not available. Please remove from cart and choose some other product.";
+                    $message = $item['product']['product_name'] . " with " . $item['size'] . "Size is not available. Please remove from cart and choose some other product.";
                     return redirect('/cart')->with('error_message', $message);
                 }
 
                 // Prevent Disabled Attributes to Order 
-                $getAttributeStatus = ProductsAttribute::getAttributeStatus($item['product_id'], $item['size']); 
-                if($getAttributeStatus == 0){
+                $getAttributeStatus = ProductsAttribute::getAttributeStatus($item['product_id'], $item['size']);
+                if ($getAttributeStatus == 0) {
                     // Product::deleteCartProduct($item['product_id']);
                     // $message = "One of the product attribute is disabled! Please try again.";
-                    $message = $item['product']['product_name']. " with ".$item['size']."Size is not available. Please remove from cart and choose some other product.";
+                    $message = $item['product']['product_name'] . " with " . $item['size'] . "Size is not available. Please remove from cart and choose some other product.";
                     return redirect('/cart')->with('error_message', $message);
                 }
 
                 // Prevent Disabled Categories Products to Order 
                 $getCategoryStatus = Category::getCategoryStatus($item['product']['category_id']);
-                if($getCategoryStatus == 0){
+                if ($getCategoryStatus == 0) {
                     // Product::deleteCartProduct($item['product_id']);
                     // $message = "One of the product is disabled! Please try again."; 
-                    $message = $item['product']['product_name']. " with ".$item['size']."Size is not available. Please remove from cart and choose some other product.";
+                    $message = $item['product']['product_name'] . " with " . $item['size'] . "Size is not available. Please remove from cart and choose some other product.";
                     return redirect('/cart')->with('error_message', $message);
                 }
             }
-            
+
             // Delivery Address Validation
             if (empty($data['address_id'])) {
                 $message = "Please select the delivery address";
@@ -689,7 +709,6 @@ class ProductsController extends Controller
             } else {
                 $payment_method = "Prepaid";
                 $order_status = "Pending";
-
             }
 
             DB::beginTransaction();
@@ -786,10 +805,10 @@ class ProductsController extends Controller
                 // $message = "Dear Customer, your order ".$order_id." has been successfully placed with ASoft.com. We will intimate you once your order is shipped";
                 // $mobile = Auth::user()->mobile;
                 // Sms::sendSms($message, $mobile);
-            }else if($data['payment_gateway'] == "Paypal"){
+            } else if ($data['payment_gateway'] == "Paypal") {
                 // PayPal - Redirect User to PayPal page after saving order 
                 return redirect('/paypal');
-            }else {
+            } else {
                 echo "Other Prepaid payment methods coming soon";
             }
 
