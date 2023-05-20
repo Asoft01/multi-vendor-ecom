@@ -120,17 +120,17 @@
                 <div class="col-lg-6 u-d-none-lg">
                     <form class="form-searchbox" action="{{ url('/search-products') }}" method="GET">
                         <label class="sr-only" for="search-landscape">Search</label>
-                        <input name="search" id="search-landscape" type="text" class="text-field" placeholder="Search everything">
+                        <input name="search" id="search-landscape" type="text" class="text-field" placeholder="Search everything" @if(isset($_REQUEST['search']) && !empty($_REQUEST['search'])) value="{{ $_REQUEST['search'] }}" @endif>
                         <div class="select-box-position">
                             <div class="select-box-wrapper select-hide">
                                 <label class="sr-only" for="select-category">Choose category for search</label>
-                                <select class="select-box" id="select-category">
+                                <select class="select-box" id="select-category" name="section_id">
                                     <option selected="selected" value="">
                                         All
                                     </option>
                                     @foreach($sections as $section)
                                         @if(count($section['categories']) > 0)
-                                            <option value="{{ $section['id'] }}">{{ $section['name'] }}</option>
+                                            <option @if(isset($_REQUEST['section_id']) && !empty($_REQUEST['section_id'])) selected=""  @endif value="{{ $section['id'] }}">{{ $section['name'] }}</option>
                                         @endif
                                     @endforeach
                                 </select>

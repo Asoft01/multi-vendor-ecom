@@ -160,6 +160,7 @@ class ProductsController extends Controller
         } else {
             // echo "test"; die;
             if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) {
+
                 $search_product = $_REQUEST['search'];
                 $categoryDetails['breadcrumbs'] = $search_product;
                 $categoryDetails['categoryDetails']['category_name'] = $search_product;
@@ -172,6 +173,10 @@ class ProductsController extends Controller
                         ->orWhere('products.description', 'like', '%' . $search_product . '%')
                         ->orWhere('categories.category_name', 'like', '%' . $search_product . '%');
                 })->where('products.status', 1);
+
+                if(isset($_REQUEST['section_id']) && !empty($_REQUEST['section_id'])){             
+                   $categoryProducts = $categoryProducts->where('products.section_id', $_REQUEST['section_id']); 
+                }
 
                 $categoryProducts = $categoryProducts->get();
                 // dd($categoryDetails); die;
