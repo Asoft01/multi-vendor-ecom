@@ -636,7 +636,14 @@ class ProductsController extends Controller
         foreach ($deliveryAddresses as $key => $value) {
             $shippingCharges = ShippingCharge::getShippingCharges($total_weight, $value['country']);
             $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges;
+
+            // COD Pincode is Available or Not 
+            $deliveryAddresses[$key]['codpincodeCount'] = DB::table('cod_pincodes')->where('pincode', $value['pincode'])->count();
+
+            // Prepaid Pincode is Available or Not
+            $deliveryAddresses[$key]['prepaidpincodeCount'] = DB::table('prepaid_pincodes')->where('pincode', $value['pincode'])->count();
         }
+        dd($deliveryAddresses); die;
 
         if ($request->isMethod('post')) {
             $data = $request->all();

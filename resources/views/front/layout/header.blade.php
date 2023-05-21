@@ -131,7 +131,7 @@
                                     @foreach($sections as $section)
                                         @if(count($section['categories']) > 0)
                                             <option @if(isset($_REQUEST['section_id']) && !empty($_REQUEST['section_id'])) selected=""  @endif value="{{ $section['id'] }}">{{ $section['name'] }}</option>
-                                        @endif
+                                      i  @endif
                                     @endforeach
                                 </select>
                             </div>
