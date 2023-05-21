@@ -491,6 +491,29 @@ $(document).ready(function(){
         // alert(grand_total); 
         $(".grand_total").html("Rs."+grand_total); 
     });
+
+    // Verify Pincode at Detail Page 
+    $("#checkPincode").click(function(){
+        // alert("test");
+        var pincode = $("#pincode").val(); 
+        if(pincode == ""){
+            alert ("Please enter the pincode");
+            return false;
+        }
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'post', 
+            data: {pincode : pincode}, 
+            url: '/check-pincode', 
+            success: function(resp){
+                alert(resp);
+            }, error: function(){
+                alert("Error");
+            }
+        });
+    });
 }); 
 
 // $('.fabric').on('click', function(){

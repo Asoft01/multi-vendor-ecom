@@ -842,5 +842,21 @@ class ProductsController extends Controller
         }
     }
 
-    // write a simple laravel functio to login
+    public function checkPincode(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all(); 
+            
+            // COD Pincodes is Available or Not 
+            $codPincodeCount = DB::table('cod_pincodes')->where('pincode', $data['pincode'])->count(); 
+
+            // Prepaid Pincode is Not Available or Not 
+            $prepaidPincodeCount = DB::table('prepaid_pincodes')->where('pincode', $data['pincode'])->count(); 
+
+            if($codPincodeCount == 0 && $prepaidPincodeCount == 0){
+                echo "This pincode is not available for delivery";
+            } else {
+                echo "The pincode is available for delivery";
+            }
+        }
+    }
 }

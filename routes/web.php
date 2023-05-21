@@ -191,6 +191,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
     // Search Products
     Route::get('search-products', 'ProductsController@listing');
 
+    // Check Pinode 
+    Route::post('check-pincode', 'ProductsController@checkPincode');
+
     Route::group(['middleware' => ['auth']], function () {
         // User Account 
         Route::match(['GET', 'POST'], 'user/account', 'UserController@userAccount');
