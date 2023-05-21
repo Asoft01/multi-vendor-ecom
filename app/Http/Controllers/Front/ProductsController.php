@@ -642,8 +642,9 @@ class ProductsController extends Controller
 
             // Prepaid Pincode is Available or Not
             $deliveryAddresses[$key]['prepaidpincodeCount'] = DB::table('prepaid_pincodes')->where('pincode', $value['pincode'])->count();
+
         }
-        dd($deliveryAddresses); die;
+        // dd($deliveryAddresses); die;
 
         if ($request->isMethod('post')) {
             $data = $request->all();

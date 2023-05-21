@@ -468,6 +468,21 @@ $(document).ready(function(){
         var total_price =      $(this).attr("total_price"); 
         var coupon_amount =    $(this).attr("coupon_amount"); 
         $(".shipping_charges").html("Rs."+shipping_charges);
+        var codpincodeCount = $(this).attr("codpincodeCount");
+        var prepaidpincodeCount = $(this).attr("prepaidpincodeCount");
+        // alert(codpincodeCount); return false;
+        if(codpincodeCount > 0){
+            $(".codMethod").show();
+        }else{
+            $(".codMethod").hide();
+        }
+
+        if(prepaidpincodeCount > 0){
+            $(".prepaidMethod").show();
+        }else{
+            $(".prepaidMethod").hide();
+        }
+        
         if(coupon_amount == ""){
             coupon_amount = 0;
         }
