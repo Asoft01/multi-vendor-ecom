@@ -175,6 +175,43 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-6 grid-margin stretch-card">
+               
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title"> Commision Information</h4>
+                        @if(Session::has('error_message')) 
+                            <div class="alert alert-danger alert-dismissbible fade show" role="alert">
+                                <strong>Error: </strong> {{ Session::get('error_message') }}  
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <strong>{!! session('flash_message_error') !!}</strong>
+                            </div>
+                        @endif  
+                        
+                        @if(Session::has('success_message')) 
+                            <div class="alert alert-success alert-dismissbible fade show" role="alert">
+                                <strong>Success: </strong> {{ Session::get('success_message') }}  
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <strong>{!! session('flash_message_success') !!}</strong>
+                            </div>
+                        @endif    
+                        <div class="form-group">
+                            <form method="post" action="{{ url('admin/update-vendor-commission') }}">
+                                @csrf
+                                <input type="hidden" name="vendor_id" value="{{ $vendorDetails['vendor_personal']['id'] }}">
+                                <label for="admin_email">Commission Per Order Item (in %)</label>
+                                <input type="text" name="commission" class="form-control" @if(isset($vendorDetails['vendor_personal']['commission'])) value="{{ $vendorDetails['vendor_personal']['commission'] }}" @endif required><br>
+                                <button type="submit">Update</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- content-wrapper ends -->

@@ -136,6 +136,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('shipping-charges', 'ShippingController@shippingCharges');
         Route::post('update-shipping-status', 'ShippingController@updateShippingStatus');
         Route::match(['get', 'post'], 'edit-shipping-charges/{id}', 'ShippingController@editShippingCharges');
+
+        // Update Vendor Commssion 
+        Route::post('update-vendor-commission', 'AdminController@updateVendorCommssion');
     });
 });
 

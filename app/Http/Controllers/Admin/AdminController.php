@@ -285,6 +285,16 @@ class AdminController extends Controller
         return view('admin.settings.update_vendor_details')->with(compact('slug', 'vendorDetails', 'countries'));
     }
 
+    public function updateVendorCommssion(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all(); 
+            // echo "<pre>"; print_r($data); die;
+            // Update in Vendors Table
+            Vendor::where('id', $data['vendor_id'])->update(['commission' => $data['commission']]);
+            return redirect()->back()->with('success_message', 'Vendor Commission Updated Successfully'); 
+        }
+    }
+
     public function login(Request $request){
         // display the password that is hashed 
         // echo $password = Hash::make('Adeleke1234'); die;
