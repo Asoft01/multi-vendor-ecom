@@ -21,4 +21,9 @@ class Vendor extends Model
     public function vendorbusinessdetail(){
         return $this->hasMany(VendorsBusinessDetail::class, 'vendor_id');
     }
+
+    public static function getVendorCommission($vendorid){
+        $getVendorCommission = Vendor::select('commission')->where('id', $vendorid)->first()->toArray();
+        return $getVendorCommission['commission']; 
+    }
 }
