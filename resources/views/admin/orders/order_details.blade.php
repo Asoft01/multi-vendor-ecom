@@ -263,10 +263,11 @@ if(Auth::guard('admin')->user()->type == "vendor"){
                                 <th>Unit Price</th>
                                 <th>Prod Qty</th>
                                 <th>Total Price</th>
-                                @if(Auth::guard('admin')->user()->type == "vendor")
-                                    <th>Commission</th> 
-                                    <th>Final Amount</th>
+                                @if(Auth::guard('admin')->user()->type != "vendor")
+                                    <th>Product by</th>
                                 @endif
+                                <th>Commission</th> 
+                                <th>Final Amount</th>
                                 <th>Item Status</th>
                             </tr>
                             @foreach ($orderDetails['orders_products'] as $product)
@@ -285,6 +286,25 @@ if(Auth::guard('admin')->user()->type == "vendor"){
                                     <td>{{ $product['product_qty'] }}</td>
                                     
                                     <td>{{ $total_price = $product['product_price'] * $product['product_qty'] }}</td>
+                                    @if(Auth::guard('admin')->user()->type != "vendor")
+                                        @if($product['vendor_id'] > 0)
+                                            <td>
+                                               <a target="_blank" href="/admin/view-vendor-details/{{ $product['admin_id'] }}"> Vendor </a>
+                                            </td>
+                                        @else 
+                                            <td>Admin</td>
+                                        @endif
+                                    @endif
+                                    @if($product['vendor_id'] > 0)
+                                        @php $getVendorCommission = 
+                                        Vendor::getVendorCommission($product['vendor_id']); 
+                                        @endphp
+                                        <td>{{ $commission = round($total_price * $getVendorCommission / 100, 2) }}</td>
+                                        <td>{{ $total_price - $commission }}</td>
+                                    @else 
+                                        <td>0</td>
+                                        <td>{{ $total_price }}</td>
+                                    @endif
                                     @if(Auth::guard('admin')->user()->type == "vendor")
                                         <td>{{ $commission = round($total_price * $getVendorCommission / 100, 2) }}</td>
                                         <td>{{ $total_price - $commission }}</td>
