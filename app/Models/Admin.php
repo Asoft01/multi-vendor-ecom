@@ -16,9 +16,10 @@ class Admin extends Authenticable
         return $this->belongsTo('App\Models\Vendor', 'vendor_id')->with('vendorbusinessdetail');
     }
 
-    public function vendorPersonals(){
-        return $this->belongsTo('App\Models\Vendor', 'vendor_id')->with('vendorbank');
-    }
+    // public function vendorPersonals(){
+    //     return $this->belongsTo('App\Models\Vendor', 'vendor_id')->with('vendorbank');
+    // }
+    
     
     // public function vendorPersonal()
     // {

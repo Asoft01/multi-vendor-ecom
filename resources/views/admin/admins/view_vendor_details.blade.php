@@ -35,35 +35,35 @@
 
                         <div class="form-group">
                             <label for="admin_email">Email</label>
-                            <input type="text" class="form-control" value="{{ $vendorDetails['vendor_personal']['email'] }}" readonly>
+                            <input type="text" class="form-control" @if(!isset($vendorDetails['vendor_personal']['email'])) value="No Record Found" readonly @else value="{{ $vendorDetails['vendor_personal']['email'] }}" readonly @endif>
                         </div>
                         <div class="form-group">
                             <label for="admin_name"> Name </label>
-                            <input type="text" class="form-control" value="{{ $vendorDetails['vendor_personal']['name'] }}" readonly>
+                            <input type="text" class="form-control" @if(!isset($vendorDetails['vendor_personal']['name'])) value="No Record Found" readonly @else value="{{ $vendorDetails['vendor_personal']['name'] }}" readonly @endif>
                         </div>
                         <div class="form-group">
                             <label for="vendor_address"> Address </label>
-                            <input type="text" class="form-control" value="{{ $vendorDetails['vendor_personal']['address'] }}" readonly>
+                            <input type="text" class="form-control" @if(!isset($vendorDetails['vendor_personal']['address'])) value="No Record Found" readonly @else value="{{ $vendorDetails['vendor_personal']['address'] }}" readonly @endif>
                         </div>
                         <div class="form-group">
                             <label for="vendor_city"> City </label>
-                            <input type="text" class="form-control" value="{{ $vendorDetails['vendor_personal']['city'] }}" readonly>
+                            <input type="text" class="form-control" @if(!isset($vendorDetails['vendor_personal']['city'])) value="No Record Found" readonly @else value="{{ $vendorDetails['vendor_personal']['city'] }}" readonly @endif>
                         </div>
                         <div class="form-group">
                             <label for="vendor_state"> State </label>
-                            <input type="text" class="form-control" value="{{ $vendorDetails['vendor_personal']['state'] }}" readonly>
+                            <input type="text" class="form-control" @if(!isset($vendorDetails['vendor_personal']['state'])) value="No Record Found" readonly @else value="{{ $vendorDetails['vendor_personal']['state'] }}" readonly @endif>
                         </div>
                         <div class="form-group">
                             <label for="vendor_country"> Country </label>
-                            <input type="text" class="form-control" value="{{ $vendorDetails['vendor_personal']['country'] }}" readonly>
+                            <input type="text" class="form-control" @if(!isset($vendorDetails['vendor_personal']['country'])) value="No Record Found" readonly @else value="{{ $vendorDetails['vendor_personal']['country'] }}" readonly @endif>
                         </div>
                         <div class="form-group">
                             <label for="vendor_pincode"> Pincode </label>
-                            <input type="text" class="form-control" value="{{ $vendorDetails['vendor_personal']['pincode'] }}" readonly>
+                            <input type="text" class="form-control"  @if(!isset($vendorDetails['vendor_personal']['pincode'])) value="No Record Found" readonly @else value="{{ $vendorDetails['vendor_personal']['pincode'] }}" readonly @endif>
                         </div>
                         <div class="form-group">
                             <label for="vendor_mobile"> Mobile </label>
-                            <input type="text" class="form-control" value="{{ $vendorDetails['vendor_personal']['mobile'] }}" readonly>
+                            <input type="text" class="form-control" @if(!isset($vendorDetails['vendor_personal']['mobile'])) value="No Record Found" readonly @else value="{{ $vendorDetails['vendor_personal']['mobile'] }}" readonly @endif>
                         </div>
                         
                         @if(!empty($vendorDetails['image']))
@@ -203,7 +203,7 @@
                         <div class="form-group">
                             <form method="post" action="{{ url('admin/update-vendor-commission') }}">
                                 @csrf
-                                <input type="hidden" name="vendor_id" value="{{ $vendorDetails['vendor_personal']['id'] }}">
+                                <input type="hidden" name="vendor_id"  @if(!isset($vendorDetails['vendor_personal']['id'])) value="No Record Found" readonly @else value="{{ $vendorDetails['vendor_personal']['id'] }}" @endif>
                                 <label for="admin_email">Commission Per Order Item (in %)</label>
                                 <input type="text" name="commission" class="form-control" @if(isset($vendorDetails['vendor_personal']['commission'])) value="{{ $vendorDetails['vendor_personal']['commission'] }}" @endif required><br>
                                 <button type="submit">Update</button>

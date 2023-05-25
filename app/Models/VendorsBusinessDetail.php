@@ -12,5 +12,4 @@ class VendorsBusinessDetail extends Model
     public function vendorbusinessdetail(){
         return $this->belongsTo(Vendor::class, 'vendor_id'); 
     }
-
 }
