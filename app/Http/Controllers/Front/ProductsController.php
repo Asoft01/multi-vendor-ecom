@@ -166,7 +166,7 @@ class ProductsController extends Controller
                 $categoryDetails['categoryDetails']['category_name'] = $search_product;
                 $categoryDetails['categoryDetails']['description'] = "Search Product for " . $search_product;
 
-                $categoryProducts = Product::select('products.id', 'products.section_id', 'products.category_id', 'products.brand_id', 'products.vendor_id','products.admin_id','products.admin_id','products.admin_type','products.product_name','products.product_code','products.product_color','products.product_price','products.product_discount','products.product_weight','products.product_video','products.group_code','products.product_image','products.description','products.operating_system','products.screen_size','products.ocassion','products.fit','products.pattern','products.sleeve','products.ram','products.fabric','products.meta_title','products.meta_description','products.meta_keywords','products.is_featured','products.is_bestseller','products.status','products.created_at','products.updated_at')->with('brand')->join('categories', 'categories.id', '=', 'products.category_id')->where(function ($query) use ($search_product) {
+                $categoryProducts = Product::select('products.id', 'products.section_id', 'products.category_id', 'products.brand_id', 'products.vendor_id', 'products.admin_id', 'products.admin_id', 'products.admin_type', 'products.product_name', 'products.product_code', 'products.product_color', 'products.product_price', 'products.product_discount', 'products.product_weight', 'products.product_video', 'products.group_code', 'products.product_image', 'products.description', 'products.operating_system', 'products.screen_size', 'products.ocassion', 'products.fit', 'products.pattern', 'products.sleeve', 'products.ram', 'products.fabric', 'products.meta_title', 'products.meta_description', 'products.meta_keywords', 'products.is_featured', 'products.is_bestseller', 'products.status', 'products.created_at', 'products.updated_at')->with('brand')->join('categories', 'categories.id', '=', 'products.category_id')->where(function ($query) use ($search_product) {
                     $query->where('products.product_name', 'like', '%' . $search_product . '%')
                         ->orWhere('products.product_code', 'like', '%' . $search_product . '%')
                         ->orWhere('products.product_color', 'like', '%' . $search_product . '%')
@@ -174,8 +174,8 @@ class ProductsController extends Controller
                         ->orWhere('categories.category_name', 'like', '%' . $search_product . '%');
                 })->where('products.status', 1);
 
-                if(isset($_REQUEST['section_id']) && !empty($_REQUEST['section_id'])){             
-                   $categoryProducts = $categoryProducts->where('products.section_id', $_REQUEST['section_id']); 
+                if (isset($_REQUEST['section_id']) && !empty($_REQUEST['section_id'])) {
+                    $categoryProducts = $categoryProducts->where('products.section_id', $_REQUEST['section_id']);
                 }
 
                 $categoryProducts = $categoryProducts->get();
@@ -485,6 +485,8 @@ class ProductsController extends Controller
 
                 // Get Coupon Details 
                 $couponDetails = Coupon::where('coupon_code', $data['code'])->first();
+                // $couponDetails = Coupon::where('coupon_code', $data['code'])->firstOrFail();
+                // dd($couponDetails); die;
                 //Check If Coupon is active
                 if ($couponDetails->status == 0) {
                     $message = "The coupon is not active!";
@@ -642,7 +644,6 @@ class ProductsController extends Controller
 
             // Prepaid Pincode is Available or Not
             $deliveryAddresses[$key]['prepaidpincodeCount'] = DB::table('prepaid_pincodes')->where('pincode', $value['pincode'])->count();
-
         }
         // dd($deliveryAddresses); die;
 
@@ -842,17 +843,18 @@ class ProductsController extends Controller
         }
     }
 
-    public function checkPincode(Request $request){
-        if($request->isMethod('post')){
-            $data = $request->all(); 
-            
+    public function checkPincode(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+
             // COD Pincodes is Available or Not 
-            $codPincodeCount = DB::table('cod_pincodes')->where('pincode', $data['pincode'])->count(); 
+            $codPincodeCount = DB::table('cod_pincodes')->where('pincode', $data['pincode'])->count();
 
             // Prepaid Pincode is Not Available or Not 
-            $prepaidPincodeCount = DB::table('prepaid_pincodes')->where('pincode', $data['pincode'])->count(); 
+            $prepaidPincodeCount = DB::table('prepaid_pincodes')->where('pincode', $data['pincode'])->count();
 
-            if($codPincodeCount == 0 && $prepaidPincodeCount == 0){
+            if ($codPincodeCount == 0 && $prepaidPincodeCount == 0) {
                 echo "This pincode is not available for delivery";
             } else {
                 echo "The pincode is available for delivery";

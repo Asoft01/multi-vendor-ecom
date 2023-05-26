@@ -284,8 +284,16 @@ if(Auth::guard('admin')->user()->type == "vendor"){
                                     <td>{{ $product['product_color'] }}</td>
                                     <td>{{ $product['product_price'] }}</td>
                                     <td>{{ $product['product_qty'] }}</td>
-                                    
-                                    <td>{{ $total_price = $product['product_price'] * $product['product_qty'] }}</td>
+                                    <td>
+                                        @if($product['vendor_id'] > 0)
+                                            @if($orderDetails['coupon_amount'] > 0)
+                                                    {{ $total_price = $product['product_price'] * $product['product_qty'] - $item_discount }}
+                                            @else
+                                                {{ $total_price = $product['product_price'] * $product['product_qty'] }}
+                                            @endif 
+                                        @endif
+                                    </td>
+                                    {{-- <td>{{ $total_price = $product['product_price'] * $product['product_qty'] }}</td> --}}
                                     @if(Auth::guard('admin')->user()->type != "vendor")
                                         @if($product['vendor_id'] > 0)
                                             <td>
@@ -305,10 +313,11 @@ if(Auth::guard('admin')->user()->type == "vendor"){
                                         <td>0</td>
                                         <td>{{ $total_price }}</td>
                                     @endif
-                                    @if(Auth::guard('admin')->user()->type == "vendor")
+
+                                    {{-- @if(Auth::guard('admin')->user()->type == "vendor")
                                         <td>{{ $commission = round($total_price * $getVendorCommission / 100, 2) }}</td>
                                         <td>{{ $total_price - $commission }}</td>
-                                    @endif
+                                    @endif --}}
                                     <td>
                                         <form action="{{ url('admin/update-order-item-status') }}" method="POST">
                                             @csrf
