@@ -508,7 +508,7 @@ class ProductsController extends Controller
                         $message = "This Coupon Code is already availed by you";
                     }
                 } else if ($couponDetails->coupon_type == "Multiple Times") {
-                    $couponDetails = Order::where(['coupon_code' => $data['code'], 'user_id' => Auth::user()->id])->count();
+                    $couponCount = Order::where(['coupon_code' => $data['code'], 'user_id' => Auth::user()->id])->count();
                     if ($couponCount >= 1) {
                         // uhk
                         $message = "This Coupon Code is already availed by you";
@@ -517,7 +517,8 @@ class ProductsController extends Controller
 
                 // Check if coupon is from selected categories 
 
-                // Get all selected categories from coupon and convert to array 
+                // Get all selected categories from coupon and convert to array
+                // dd($couponDetails); die;
                 $catArr = explode(",", $couponDetails->categories);
 
                 // Check if any cart item not belong to coupon category
