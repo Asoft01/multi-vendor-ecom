@@ -340,6 +340,10 @@ class ProductsController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
 
+            // Forget Coupon Sessions
+            Session::forget('couponAmount');
+            Session::forget('couponCode');
+
             if ($data['quantity'] <= 0) {
                 $data['quantity'] = 1;
             }
@@ -397,6 +401,9 @@ class ProductsController extends Controller
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
 
+            // Forget Coupon Sessions
+            Session::forget('couponAmount');
+            Session::forget('couponCode');
             // Get Cart Details 
             $cartDetails = Cart::find($data['cartid']);
 
@@ -450,6 +457,9 @@ class ProductsController extends Controller
             Session::forget('couponCode');
             $data = $request->all();
             // echo "<pre>"; print_r($data); die;
+              // Forget Coupon Sessions
+            //   Session::forget('couponAmount');
+            //   Session::forget('couponCode');
             Cart::where('id', $data['cartid'])->delete();
             $getCartItems = Cart::getCartItems();
             $totalCartItems = totalCartItems();

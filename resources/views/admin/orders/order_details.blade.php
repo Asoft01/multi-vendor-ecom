@@ -311,6 +311,7 @@ if(Auth::guard('admin')->user()->type == "vendor"){
                                         <td>{{ $total_price - $commission }}</td>
                                     @else 
                                         <td>0</td>
+                                        {{-- <td>{{ $total_price = $product['product_price'] * $product['product_qty'] }}</td> --}}
                                         <td>{{ $total_price }}</td>
                                     @endif
 

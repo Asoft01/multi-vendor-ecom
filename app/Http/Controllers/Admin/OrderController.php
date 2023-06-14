@@ -81,6 +81,7 @@ class OrderController extends Controller
         }else{
             $item_discount = 0;
         }
+        // dd($orderDetails); die;
 
         return view('admin.orders.order_details')->with(compact('orderDetails', 'userDetails', 'orderStatuses', 'orderItemStatuses', 'orderLog', 'item_discount'));
         // return view('admin.orders.order_details')->with(compact('orderDetails', 'userDetails', 'orderStatuses', 'orderItemStatuses', 'orderLog'));
