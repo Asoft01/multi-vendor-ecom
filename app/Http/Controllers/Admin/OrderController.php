@@ -36,6 +36,7 @@ class OrderController extends Controller
             $orders = Order::with(['orders_products' => function ($query) use ($vendor_id) {
                 $query->where('vendor_id', $vendor_id);
             }])->orderBy('id', 'Desc')->get()->toArray();
+            // dd($orders); die;
         } else {
             $orders = Order::with('orders_products')->orderBy('id', 'Desc')->get()->toArray();
         }
@@ -62,6 +63,7 @@ class OrderController extends Controller
             }])->where('id', $id)->first()->toArray();
         } else {
             $orderDetails = Order::with('orders_products')->where('id', $id)->first()->toArray();
+            // dd($orderDetails); die;
         }
         $userDetails = User::where('id', $orderDetails['user_id'])->first()->toArray();
         $orderStatuses = OrderStatus::where('status', 1)->get()->toArray();

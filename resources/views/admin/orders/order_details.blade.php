@@ -287,12 +287,18 @@ if(Auth::guard('admin')->user()->type == "vendor"){
                                     <td>{{ $product['product_qty'] }}</td>
                                     <td>
                                         @if($product['vendor_id'] > 0)
-                                            @php $couponDetails = Coupon::couponDetails($orderDetails['coupon_code']) @endphp
-                                                @if($orderDetails['coupon_amount'] > 0 && $couponDetails['vendor_id'] > 0)
-                                                        {{ $total_price = $product['product_price'] * $product['product_qty'] - $item_discount }}
-                                                @else
-                                                    {{ $total_price = $product['product_price'] * $product['product_qty'] }}
-                                                @endif 
+                                            @if($orderDetails['coupon_amount'] > 0)
+                                                @php $couponDetails = Coupon::couponDetails($orderDetails['coupon_code']) @endphp
+                                                    @if($couponDetails['vendor_id'] > 0)
+                                                            {{ $total_price = $product['product_price'] * $product['product_qty'] - $item_discount }}
+                                                    @else
+                                                        {{ $total_price = $product['product_price'] * $product['product_qty'] }}
+                                                    @endif
+                                            @else
+                                                {{ $total_price = $product['product_price'] * $product['product_qty'] }}
+                                            @endif
+                                        @else
+                                                {{ $total_price = $product['product_price'] * $product['product_qty'] }}
                                         @endif
                                     </td>
                                     {{-- <td>{{ $total_price = $product['product_price'] * $product['product_qty'] }}</td> --}}
