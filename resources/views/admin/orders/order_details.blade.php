@@ -2,6 +2,7 @@
 use App\Models\Product; 
 use App\Models\OrdersLog; 
 use App\Models\Vendor;
+use App\Models\Coupon;
 // echo $getVendorCommission = Vendor::getVendorCommission(Auth::guard('admin')->user()->vendor_id); die;
 if(Auth::guard('admin')->user()->type == "vendor"){
     $getVendorCommission = Vendor::getVendorCommission(Auth::guard('admin')->user()->vendor_id);
@@ -286,11 +287,12 @@ if(Auth::guard('admin')->user()->type == "vendor"){
                                     <td>{{ $product['product_qty'] }}</td>
                                     <td>
                                         @if($product['vendor_id'] > 0)
-                                            @if($orderDetails['coupon_amount'] > 0)
-                                                    {{ $total_price = $product['product_price'] * $product['product_qty'] - $item_discount }}
-                                            @else
-                                                {{ $total_price = $product['product_price'] * $product['product_qty'] }}
-                                            @endif 
+                                            @php $couponDetails = Coupon::couponDetails($orderDetails['coupon_code']) @endphp
+                                                @if($orderDetails['coupon_amount'] > 0 && $couponDetails['vendor_id'] > 0)
+                                                        {{ $total_price = $product['product_price'] * $product['product_qty'] - $item_discount }}
+                                                @else
+                                                    {{ $total_price = $product['product_price'] * $product['product_qty'] }}
+                                                @endif 
                                         @endif
                                     </td>
                                     {{-- <td>{{ $total_price = $product['product_price'] * $product['product_qty'] }}</td> --}}
