@@ -1,5 +1,5 @@
 @extends('front.layout.layout')
-@section('extent')
+@section('content')
      <!-- Page Introduction Wrapper -->
      <div class="page-style-a">
         <div class="container">
@@ -25,30 +25,41 @@
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="touch-wrapper">
                         <h1 class="contact-h1">Get In Touch With Us</h1>
-                        <form>
+                        
+                        @if(Session::has('success_message')) 
+                            <div class="alert alert-success alert-dismissbible fade show" role="alert">
+                                <strong>Success: </strong> <?php echo Session::get('success_message') ?>  
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <strong>{!! session('flash_message_success') !!}</strong>
+                            </div>
+                        @endif  
+                        <form action="{{ url('contact') }}" method="POST">
+                            @csrf
                             <div class="group-inline u-s-m-b-30">
                                 <div class="group-1 u-s-p-r-16">
                                     <label for="contact-name">Your Name
                                         <span class="astk">*</span>
                                     </label>
-                                    <input type="text" id="contact-name" class="text-field" placeholder="Name">
+                                    <input type="text" id="contact-name" class="text-field" placeholder="Name" name="name">
                                 </div>
                                 <div class="group-2">
                                     <label for="contact-email">Your Email
                                         <span class="astk">*</span>
                                     </label>
-                                    <input type="text" id="contact-email" class="text-field" placeholder="Email">
+                                    <input type="text" id="contact-email" class="text-field" placeholder="Email" name="email">
                                 </div>
                             </div>
                             <div class="u-s-m-b-30">
                                 <label for="contact-subject">Subject
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="text" id="contact-subject" class="text-field" placeholder="Subject">
+                                <input type="text" id="contact-subject" class="text-field" placeholder="Subject" name="subject">
                             </div>
                             <div class="u-s-m-b-30">
                                 <label for="contact-message">Message:</label>
-                                <textarea class="text-area" id="contact-message"></textarea>
+                                <textarea class="text-area" id="contact-message" name="message"></textarea>
                             </div>
                             <div class="u-s-m-b-30">
                                 <button type="submit" class="button button-outline-secondary">Send Message</button>
