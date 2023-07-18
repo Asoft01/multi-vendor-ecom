@@ -25,7 +25,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="touch-wrapper">
                         <h1 class="contact-h1">Get In Touch With Us</h1>
-                        
+
                         @if(Session::has('success_message')) 
                             <div class="alert alert-success alert-dismissbible fade show" role="alert">
                                 <strong>Success: </strong> <?php echo Session::get('success_message') ?>  
@@ -35,6 +35,14 @@
                                 <strong>{!! session('flash_message_success') !!}</strong>
                             </div>
                         @endif  
+                        @if($errors->any()) 
+                        <div class="alert alert-danger alert-dismissbible fade show" role="alert">
+                                <strong>Error: </strong> <?php echo implode('', $errors->all('<div>:message</div>')); ?> 
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif    
                         <form action="{{ url('contact') }}" method="POST">
                             @csrf
                             <div class="group-inline u-s-m-b-30">
@@ -59,6 +67,7 @@
                             </div>
                             <div class="u-s-m-b-30">
                                 <label for="contact-message">Message:</label>
+                                <span class="astk">*</span>
                                 <textarea class="text-area" id="contact-message" name="message"></textarea>
                             </div>
                             <div class="u-s-m-b-30">
