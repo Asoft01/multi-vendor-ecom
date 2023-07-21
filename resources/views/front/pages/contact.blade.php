@@ -50,25 +50,25 @@
                                     <label for="contact-name">Your Name
                                         <span class="astk">*</span>
                                     </label>
-                                    <input type="text" id="contact-name" class="text-field" placeholder="Name" name="name">
+                                    <input type="text" id="contact-name" class="text-field" placeholder="Name" name="name" value="{{ old('name') }}">
                                 </div>
                                 <div class="group-2">
                                     <label for="contact-email">Your Email
                                         <span class="astk">*</span>
                                     </label>
-                                    <input type="text" id="contact-email" class="text-field" placeholder="Email" name="email">
+                                    <input type="text" id="contact-email" class="text-field" placeholder="Email" name="email" value="{{ old('email') }}">
                                 </div>
                             </div>
                             <div class="u-s-m-b-30">
                                 <label for="contact-subject">Subject
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="text" id="contact-subject" class="text-field" placeholder="Subject" name="subject">
+                                <input type="text" id="contact-subject" class="text-field" placeholder="Subject" name="subject" value="{{ old('subject') }}">
                             </div>
                             <div class="u-s-m-b-30">
                                 <label for="contact-message">Message:</label>
                                 <span class="astk">*</span>
-                                <textarea class="text-area" id="contact-message" name="message"></textarea>
+                                <textarea class="text-area" id="contact-message" name="message">{{ old('message') }}</textarea>
                             </div>
                             <div class="u-s-m-b-30">
                                 <button type="submit" class="button button-outline-secondary">Send Message</button>
