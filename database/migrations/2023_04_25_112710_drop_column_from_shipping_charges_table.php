@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('shipping_charges', function (Blueprint $table) {
-            $table->dropColumn('rate');
+            $table->dropColumn('rate')->nullable();
         });
     }
 

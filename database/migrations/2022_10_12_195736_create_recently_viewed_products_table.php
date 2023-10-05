@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('recently_viewed_products', function (Blueprint $table) {
             $table->id();
-            $table->integer('product_id')->nullable();
-            $table->string('session_id')->nullable();
+            $table->integer('product_id')->nullable()->nullable();
+            $table->string('session_id')->nullable()->nullable();
             $table->timestamps();
         });
     }

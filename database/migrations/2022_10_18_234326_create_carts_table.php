@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->string('session_id')->nullable(); 
-            $table->integer('user_id')->nullable(); 
-            $table->integer('product_id')->nullable();
-            $table->string('size')->nullable();  
-            $table->integer('quantity')->nullable(); 
+            $table->string('session_id')->nullable()->nullable(); 
+            $table->integer('user_id')->nullable()->nullable(); 
+            $table->integer('product_id')->nullable()->nullable();
+            $table->string('size')->nullable()->nullable();  
+            $table->integer('quantity')->nullable()->nullable(); 
             $table->timestamps();
         });
     }

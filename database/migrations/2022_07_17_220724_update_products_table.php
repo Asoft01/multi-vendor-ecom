@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('products', function($table){
-            $table->enum('is_bestseller', ['No', 'Yes'])->after('is_featured');
+            $table->enum('is_bestseller', ['No', 'Yes'])->after('is_featured')->nullable();
         });
     }
 

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('group_code')->after('product_video')->default('DEF001');
+            $table->string('group_code')->after('product_video')->default('DEF001')->nullable();
         });
     }
 

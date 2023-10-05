@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('vendors', function (Blueprint $table) {
-            $table->float('commission')->after('confirm')->nullable();
+            $table->float('commission')->after('status')->nullable();
+            $table->string('confirm')->after('commission')->nullable();
         });
     }
 

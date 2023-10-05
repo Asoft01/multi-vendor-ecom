@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('products_filters', function (Blueprint $table) {
             $table->id();
-            $table->string('cat_ids');
-            $table->string('filter_name');
-            $table->string('filter_column');
-            $table->tinyInteger('status');
+            $table->string('cat_ids')->nullable();
+            $table->string('filter_name')->nullable();
+            $table->string('filter_column')->nullable();
+            $table->tinyInteger('status')->nullable();
             $table->timestamps();
         });
     }

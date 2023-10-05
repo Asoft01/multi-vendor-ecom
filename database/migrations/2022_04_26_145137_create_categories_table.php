@@ -15,17 +15,17 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->integer('parent_id');
-            $table->integer('section_id');
-            $table->string('category_name');
-            $table->string('category_image');
-            $table->float('category_discount');
-            $table->text('description');
-            $table->string('url');
-            $table->string('meta_title');
-            $table->string('meta_description');
-            $table->string('meta_keywords');
-            $table->tinyInteger('status');
+            $table->integer('parent_id')->nullable();
+            $table->integer('section_id')->nullable();
+            $table->string('category_name')->nullable();
+            $table->string('category_image')->nullable();
+            $table->float('category_discount')->nullable();
+            $table->text('description')->nullable();
+            $table->string('url')->nullable();
+            $table->string('meta_title')->nullable();
+            $table->string('meta_description')->nullable();
+            $table->string('meta_keywords')->nullable();
+            $table->tinyInteger('status')->nullable();
             $table->timestamps();
         });
     }
